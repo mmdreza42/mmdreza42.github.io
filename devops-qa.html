@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>DevOps Interview Q&A · Docker · Git · REST · Security · Architecture</title>
+    <link rel="stylesheet" href="assets/css/shared.css" />
+</head>
+
+<body>
+    <nav class="nav-menu">
+        <span class="nav-title">📑 Quick Jump</span>
+        <a href="#docker">🐳 Docker</a>
+        <a href="#git">📦 Git</a>
+        <a href="#rest">🌐 REST</a>
+        <a href="#security">🛡️ Security</a>
+        <a href="#architecture">🧠 Architecture</a>
+        <a href="#soft">🧑‍💻 Soft Skills</a>
+    </nav>
+
+    <div class="container">
+        <h1>🐳 DevOps Interview Q&amp;A <small>Docker · Git · REST · Security · Architecture</small></h1>
+
+        <!-- ========== DOCKER ========== -->
+        <h2 id="docker">🐳 Docker</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">Docker?</span>
+                <span class="a">Docker is a <span class="highlight">containerization platform</span> packaging apps and
+                    dependencies into lightweight, portable containers. Solves "works on my machine" and enables easy
+                    deployment, scaling, and isolation.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Image?</span>
+                <span class="a">A Docker image is a <span class="highlight">read‑only template</span> with app code,
+                    runtime, libraries, and dependencies. Built from a <code>Dockerfile</code>, stored in registries
+                    (Docker Hub). Blueprint for containers.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Container?</span>
+                <span class="a">A <span class="highlight">runnable instance</span> of an image. Isolated but shares the
+                    host kernel — lighter than VMs. Has its own filesystem, network, and process space.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Dockerfile?</span>
+                <span class="a">A <span class="highlight">text file with build instructions</span>. Common:
+                    <code>FROM</code>, <code>WORKDIR</code>, <code>COPY</code>, <code>RUN</code>, <code>EXPOSE</code>,
+                    <code>CMD</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">docker compose?</span>
+                <span class="a">Tool for <span class="highlight">multi‑container apps</span>. Uses
+                    <code>docker-compose.yml</code> to configure services, networks, volumes. Start all with
+                    <code>docker-compose up</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Multi‑stage Build?</span>
+                <span class="a"><span class="highlight">Reduces final image size</span> using multiple <code>FROM</code>
+                    stages. Example: build stage with full toolchain, runtime stage with only production
+                    dependencies.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Volume?</span>
+                <span class="a"><span class="highlight">Persistent storage</span> surviving container restarts. Used for
+                    databases, uploads. Managed independently from container lifecycle.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Port Mapping?</span>
+                <span class="a"><span class="highlight">Maps container port to host port</span> with <code>-p</code>,
+                    e.g., <code>-p 3000:3000</code>. Without it, services are only reachable inside the container
+                    network.</span>
+            </div>
+        </div>
+
+        <!-- ========== GIT ========== -->
+        <h2 id="git">📦 Git</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">Git Flow?</span>
+                <span class="a"><span class="highlight">Branching model</span>: <code>main</code> (production),
+                    <code>develop</code> (integration), <code>feature</code> (new work), <code>release</code> (prep),
+                    <code>hotfix</code> (emergency). Structured but can be heavy for small teams.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">merge?</span>
+                <span class="a">Combines branches with a <span class="highlight">new commit</span> having both as
+                    parents. Preserves history, non‑destructive. Merge commits can clutter history.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">rebase?</span>
+                <span class="a"><span class="highlight">Rewrites commit history</span> by moving commits to a new base.
+                    Creates linear history. <span class="highlight">Destructive</span> — never rebase shared
+                    branches.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">cherry‑pick?</span>
+                <span class="a"><span class="highlight">Applies a specific commit</span> from one branch to another
+                    without merging. Useful for hotfixes. Can create duplicate commits.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">stash?</span>
+                <span class="a"><span class="highlight">Saves uncommitted changes</span> temporarily, reverting working
+                    dir to last commit. Reapply with <code>git stash pop</code> or <code>apply</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">conflict?</span>
+                <span class="a">Occurs when <span class="highlight">two branches modify the same part</span> of a file.
+                    Resolve manually, <code>git add</code>, and complete merge/rebase.</span>
+            </div>
+        </div>
+
+        <!-- ========== REST ========== -->
+        <h2 id="rest">🌐 REST API</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">REST?</span>
+                <span class="a">An <span class="highlight">architectural style</span> using stateless, cacheable HTTP.
+                    Resources identified by URLs, manipulated with GET, POST, PUT, PATCH, DELETE. Emphasizes scalability
+                    and uniform interface.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">PUT vs PATCH?</span>
+                <span class="a"><strong>PUT</strong>: <span class="highlight">replaces entire resource</span>.
+                    <strong>PATCH</strong>: <span class="highlight">partial update</span>. PUT is idempotent; PATCH is
+                    not necessarily.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">POST vs PUT?</span>
+                <span class="a"><strong>POST</strong>: creates new resource, not idempotent. <strong>PUT</strong>:
+                    updates/replaces at a URI, idempotent.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Status Codes?</span>
+                <span class="a"><strong>200</strong> OK, <strong>201</strong> Created, <strong>204</strong> No Content,
+                    <strong>400</strong> Bad Request, <strong>401</strong> Unauthorized, <strong>403</strong> Forbidden,
+                    <strong>404</strong> Not Found, <strong>409</strong> Conflict, <strong>422</strong> Unprocessable,
+                    <strong>500</strong> Server Error.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Pagination?</span>
+                <span class="a"><strong>Offset‑based</strong>: <code>?page=2&limit=20</code> — simple but slow at large
+                    offsets. <strong>Cursor‑based</strong>: <code>?cursor=abc&limit=20</code> — scalable, ideal for
+                    real‑time feeds.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Filtering?</span>
+                <span class="a">Query params: <code>?status=active</code>, <code>?price[gte]=100</code>,
+                    <code>?q=search</code>. Implement with Prisma's <code>where</code> clause for dynamic safe
+                    filters.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Sorting?</span>
+                <span class="a">Use <code>?sort=field:direction</code>, e.g., <code>?sort=createdAt:desc</code>.
+                    Multiple fields: <code>?sort=createdAt:desc,name:asc</code>. Maps to Prisma's
+                    <code>orderBy</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Versioning API?</span>
+                <span class="a">Strategies: <strong>URL</strong> (<code>/api/v1/users</code>), <strong>header</strong>
+                    (<code>Accept-Version: v1</code>), <strong>query</strong> (<code>?version=1</code>). URL versioning
+                    preferred for clarity.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Rate Limiting?</span>
+                <span class="a"><span class="highlight">Controls request count</span> per time window. Use
+                    <code>@nestjs/throttler</code> with Redis. Return <code>429 Too Many Requests</code> when
+                    exceeded.</span>
+            </div>
+        </div>
+
+        <!-- ========== SECURITY ========== -->
+        <h2 id="security">🛡️ Security (OWASP)</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">OWASP Top 10?</span>
+                <span class="a">Most critical web app risks: <strong>Broken Access Control</strong>,
+                    <strong>Cryptographic Failures</strong>, <strong>Injection</strong>, <strong>Insecure
+                        Design</strong>, <strong>Security Misconfiguration</strong>, <strong>Vulnerable
+                        Components</strong>, <strong>Identification Failures</strong>, <strong>Data Integrity
+                        Failures</strong>, <strong>Logging Failures</strong>, <strong>SSRF</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">XSS?</span>
+                <span class="a"><span class="highlight">Malicious scripts injected</span> into trusted pages.
+                    Mitigations: input sanitization, output encoding, CSP, HttpOnly cookies.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">SQL Injection?</span>
+                <span class="a">User input improperly concatenated into SQL. Prevention: <strong>parameterized
+                        queries</strong>, ORMs (Prisma), validate/whitelist input.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">CSRF?</span>
+                <span class="a">Tricks browser into making unwanted requests. Prevention: <strong>SameSite
+                        cookies</strong>, <strong>anti‑CSRF tokens</strong>, double‑submit cookies. JWT in headers
+                    naturally mitigates.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Rate Limiting?</span>
+                <span class="a"><span class="highlight">Restricts requests</span> per client. Prevents brute‑force and
+                    DoS. Use <code>@nestjs/throttler</code> with Redis.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Password Hashing?</span>
+                <span class="a">Convert passwords to <span class="highlight">one‑way hashes</span>. Use
+                    <strong>bcrypt</strong> (salted, slow). Never store plaintext.</span>
+            </div>
+        </div>
+
+        <!-- ========== ARCHITECTURE ========== -->
+        <h2 id="architecture">🧠 Architecture</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">MVC?</span>
+                <span class="a">Design pattern with <strong>Model</strong> (data/logic), <strong>View</strong> (UI),
+                    <strong>Controller</strong> (input handling). In backend, View is JSON responses.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Layered Architecture?</span>
+                <span class="a">Organizes code into <span class="highlight">horizontal layers</span>: Presentation,
+                    Business Logic, Data Access, Database. Improves maintainability and testability.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Repository Pattern?</span>
+                <span class="a"><span class="highlight">Abstracts data access</span> behind a collection‑like interface.
+                    Easier to switch DBs, mock for tests, centralize queries.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">SOLID?</span>
+                <span class="a"><strong>S</strong>ingle Responsibility, <strong>O</strong>pen/Closed,
+                    <strong>L</strong>iskov Substitution, <strong>I</strong>nterface Segregation,
+                    <strong>D</strong>ependency Inversion. Makes code maintainable and scalable.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Design Patterns used?</span>
+                <span class="a"><strong>Singleton</strong> (PrismaClient), <strong>Factory</strong> (service factories),
+                    <strong>Observer</strong> (events), <strong>Strategy</strong> (payment/auth strategies).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Why Dependency Injection?</span>
+                <span class="a"><span class="highlight">Decouples classes</span> from dependencies. Enables mocking in
+                    tests and swapping implementations without changing the class.</span>
+            </div>
+        </div>
+
+        <!-- ========== SOFT SKILLS ========== -->
+        <section class="soft-section" id="soft">
+            <h2>🧑‍💻 Soft Skills (DevOps Focus)</h2>
+            <div class="qa-grid">
+                <div class="qa-item">
+                    <span class="q">How do you handle a deployment that broke production at 3 AM?</span>
+                    <span class="a">I <span class="highlight">roll back first, investigate later</span>. Then I follow
+                        the incident checklist: confirm impact, communicate in the channel, isolate the change. I write
+                        a blameless post‑mortem the next day and add a canary stage to prevent recurrence.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you convince a team to adopt Docker / CI/CD?</span>
+                    <span class="a">I <span class="highlight">show, don't tell</span>. I containerize one service,
+                        measure "time from commit to prod" before and after, and share the results. I also do a
+                        lunch‑and‑learn where teammates can try it themselves. Adoption follows value, not
+                        mandates.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you handle a developer who keeps pushing broken code?</span>
+                    <span class="a">I <span class="highlight">add guardrails, not blame</span>: pre‑commit hooks,
+                        required CI checks, and PR templates. I also pair with them once to understand their workflow.
+                        Often it's a missing local test setup, not carelessness.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you explain infrastructure cost increases to non‑technical leadership?</span>
+                    <span class="a">I use <span class="highlight">dollars and graphs</span>, not technical terms. "Our
+                        cloud bill went up 30% because traffic doubled and we're running 3 extra database replicas for
+                        reliability. Here are 3 options to reduce cost without hurting uptime."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you mentor a junior DevOps engineer?</span>
+                    <span class="a">I pair on real incidents, let them <span class="highlight">lead the rollback</span>
+                        while I observe, and review their IaC PRs with questions. I also give them ownership of one
+                        service's pipeline end‑to‑end.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you say "no" to a request that would compromise security?</span>
+                    <span class="a">I never say "no" — I say "<span class="highlight">here's the risk and here's a safer
+                            alternative</span>." For example: "Opening that port exposes our DB to the internet.
+                        Instead, let's use a bastion host or VPN — same access, much lower risk."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you stay calm during a multi‑service outage?</span>
+                    <span class="a">I follow a <span class="highlight">triage checklist</span>: which services are
+                        affected? What's the shared dependency? I delegate investigation to teammates, keep one person
+                        on comms, and I focus on the highest‑impact fix first.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you collaborate with developers who don't care about infrastructure?</span>
+                    <span class="a">I <span class="highlight">make the right thing the easy thing</span>: provide a
+                        <code>docker-compose up</code> that just works, a template Dockerfile, and a one‑command local
+                        environment. When infra is frictionless, developers naturally adopt it.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">Tell me about a time you disagreed with a deployment strategy.</span>
+                    <span class="a">A team wanted big‑bang deploys on Fridays. I documented my <span
+                            class="highlight">concerns in writing</span> (no rollback plan, weekend on‑call) but
+                        committed. After one bad Friday deploy, we moved to blue‑green with automated rollback — and I
+                        led the migration without an "I told you so."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you keep the team informed about infrastructure changes?</span>
+                    <span class="a">I write short <span class="highlight">change logs and runbooks</span> for every
+                        infra change, announce in advance in the team channel, and use feature flags for gradual
+                        rollouts. I also run a monthly "infra office hours" for questions.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pager -->
+        <nav class="pager">
+            <a href="backend-qa.html">🟢 Backend</a>
+            <a href="frontend-qa.html">⚛️ Frontend</a>
+            <a href="devops-qa.html" class="active">🐳 DevOps</a>
+        </nav>
+
+        <div class="footnote">
+            ✅ DevOps Q&amp;A · Docker · Git · REST · Security · Architecture · Soft Skills
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            backToTopBtn.classList.toggle("visible", window.scrollY > 300);
+        });
+        backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        document.querySelectorAll(".nav-menu a").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                if (targetId.startsWith("#")) {
+                    e.preventDefault();
+                    const el = document.querySelector(targetId);
+                    if (el) {
+                        const navH = document.querySelector(".nav-menu").offsetHeight;
+                        const pos = el.getBoundingClientRect().top + window.pageYOffset - navH - 10;
+                        window.scrollTo({ top: pos, behavior: "smooth" });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

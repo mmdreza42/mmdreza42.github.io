@@ -1,0 +1,26 @@
+{
+  "name": "MMDREZA21 · Dev Hub",
+  "short_name": "Dev Hub",
+  "description": "Interview Q&A, games, and dev resources — all in one place.",
+  "id": "./landing.html",
+  "start_url": "./landing.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b0f1a",
+  "theme_color": "#3b82f6",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "developer", "productivity"],
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Backend Q&A", "short_name": "Backend", "url": "./backend-qa.html" },
+    { "name": "Frontend Q&A", "short_name": "Frontend", "url": "./frontend-qa.html" },
+    { "name": "DevOps Q&A", "short_name": "DevOps", "url": "./devops-qa.html" },
+    { "name": "Game", "short_name": "Game", "url": "./Game.html" }
+  ]
+}

@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Backend Interview Q&A · Node.js · NestJS · DB · Auth</title>
+    <link rel="stylesheet" href="assets/css/shared.css" />
+</head>
+
+<body>
+    <nav class="nav-menu">
+        <span class="nav-title">📑 Quick Jump</span>
+        <a href="#nodejs">🟢 Node.js</a>
+        <a href="#nestjs">🦁 NestJS</a>
+        <a href="#redis">🔴 Redis</a>
+        <a href="#mongodb">🍃 MongoDB</a>
+        <a href="#postgresql">🐘 PostgreSQL</a>
+        <a href="#prisma">🔧 Prisma</a>
+        <a href="#db">🗄️ DB</a>
+        <a href="#auth">🔐 Auth</a>
+        <a href="#soft">🧑‍💻 Soft Skills</a>
+    </nav>
+
+    <div class="container">
+        <h1>🟢 Backend Interview Q&amp;A <small>Node.js · NestJS · Redis · MongoDB · PostgreSQL · Prisma · Auth</small>
+        </h1>
+
+        <!-- ========== NODE.JS ========== -->
+        <h2 id="nodejs">🟢 Node.js</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is Node.js?</span>
+                <span class="a"><strong>Node.js</strong> is a JavaScript runtime built on Chrome's <span
+                        class="highlight">V8 JavaScript Engine</span>. It allows JavaScript to run outside the browser
+                    and is designed for building fast, scalable, event-driven server-side applications.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the V8 Engine?</span>
+                <span class="a"><strong>V8</strong> is Google's open-source JavaScript engine written in C++. It
+                    compiles JavaScript directly into native machine code using <span class="highlight">Just-In-Time
+                        (JIT) compilation</span>, making JavaScript execution extremely fast.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is libuv?</span>
+                <span class="a"><strong>libuv</strong> is the C library that powers Node.js asynchronous operations. It
+                    provides the <span class="highlight">Event Loop, Thread Pool, and asynchronous I/O</span>, allowing
+                    Node.js to perform non-blocking file system, networking, DNS, and other operations.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Why is Node.js single-threaded?</span>
+                <span class="a">JavaScript execution runs on a <span class="highlight">single main thread</span>.
+                    Instead of creating one thread per request, Node.js delegates I/O operations to <code>libuv</code>
+                    and the operating system, allowing the main thread to continue executing other tasks.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Event-driven architecture?</span>
+                <span class="a">Node.js follows an <span class="highlight">Event-driven architecture</span>, meaning it
+                    responds to events such as HTTP requests, file reads, timers, or socket messages by executing their
+                    registered callbacks.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Non-blocking I/O?</span>
+                <span class="a">Non-blocking I/O means Node.js <span class="highlight">does not wait</span> for I/O
+                    operations (database, file system, network) to finish. Instead, it delegates the operation to
+                    <code>libuv</code> and continues executing other JavaScript code.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the Event Loop?</span>
+                <span class="a">The <strong>Event Loop</strong> is the mechanism that enables Node.js to perform
+                    non-blocking operations. It continuously checks whether the <span class="highlight">Call Stack is
+                        empty</span>. When it is, the Event Loop executes pending callbacks from its phases while also
+                    processing the <code>process.nextTick()</code> queue and the Promise microtask queue.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are the Event Loop phases?</span>
+                <span class="a">The Event Loop consists of six phases: <strong>Timers → Pending Callbacks → Idle/Prepare
+                        → Poll → Check → Close Callbacks</strong>. Between phases, Node.js processes the <span
+                        class="highlight">process.nextTick queue</span> and the <span class="highlight">Promise
+                        microtask queue</span>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the Call Stack?</span>
+                <span class="a">The <strong>Call Stack</strong> is the data structure where JavaScript executes
+                    synchronous function calls. <span class="highlight">Only one function executes at a time</span>. The
+                    Event Loop starts processing asynchronous callbacks only after the Call Stack becomes empty.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a Microtask?</span>
+                <span class="a">A <strong>Microtask</strong> is a high-priority asynchronous callback. Promise callbacks
+                    (<code>.then()</code>, <code>.catch()</code>, <code>.finally()</code>), <code>await</code>, and
+                    <code>queueMicrotask()</code> are executed from the <span class="highlight">Microtask Queue</span>
+                    before the Event Loop proceeds to the next phase.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a Macrotask?</span>
+                <span class="a">Macrotasks are asynchronous callbacks scheduled by APIs such as
+                    <code>setTimeout()</code>, <code>setInterval()</code>, <code>setImmediate()</code>, and I/O
+                    operations. They are executed by the <span class="highlight">Event Loop phases</span> after all
+                    pending microtasks have finished.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>process.nextTick()</code>?</span>
+                <span class="a"><code>process.nextTick()</code> schedules a callback to execute <span
+                        class="highlight">immediately after the current operation finishes</span>, before the Event Loop
+                    continues to the next phase. It has higher priority than Promise microtasks.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>setImmediate()</code>?</span>
+                <span class="a"><code>setImmediate()</code> schedules a callback to execute during the <span
+                        class="highlight">Check phase</span> of the Event Loop. When used inside an I/O callback, it
+                    usually executes before <code>setTimeout(fn, 0)</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Difference between <code>setTimeout()</code> and <code>setImmediate()</code>?</span>
+                <span class="a"><code>setTimeout(fn, 0)</code> executes during the <strong>Timers</strong> phase after
+                    the minimum delay. <code>setImmediate()</code> executes during the <strong>Check</strong> phase.
+                    <span class="highlight">Their execution order is not guaranteed in the main module</span>, but
+                    inside an I/O callback, <code>setImmediate()</code> usually runs first.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Concurrency vs Parallelism?</span>
+                <span class="a"><strong>Concurrency</strong> means handling multiple tasks by switching between them
+                    efficiently. <strong>Parallelism</strong> means executing multiple tasks at the same time using
+                    multiple CPU cores. Node.js is <span class="highlight">concurrent by default</span> and can achieve
+                    parallelism using Worker Threads or Cluster.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">CPU-bound vs I/O-bound tasks?</span>
+                <span class="a"><strong>CPU-bound tasks</strong> spend most of their time performing computations (image
+                    processing, encryption, video encoding). <strong>I/O-bound tasks</strong> spend most of their time
+                    waiting for databases, files, or network operations. Node.js performs best with <span
+                        class="highlight">I/O-bound applications</span>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is asynchronous programming?</span>
+                <span class="a">Asynchronous programming allows a program to <span class="highlight">start a task
+                        without waiting for it to finish</span>. While the task is running (e.g., reading a file or
+                    making an HTTP request), Node.js continues executing other code, improving responsiveness and
+                    scalability.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a callback?</span>
+                <span class="a">A callback is a <span class="highlight">function passed as an argument</span> to another
+                    function that is executed after an asynchronous operation completes.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Callback Hell?</span>
+                <span class="a">Callback Hell occurs when multiple nested callbacks make code difficult to read,
+                    maintain, and debug. It can be avoided by using <span class="highlight">Promises</span> or <span
+                        class="highlight">async/await</span>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a Promise?</span>
+                <span class="a">A Promise is an object representing the <span class="highlight">eventual result of an
+                        asynchronous operation</span>. It has three states: <strong>Pending</strong>,
+                    <strong>Fulfilled</strong>, and <strong>Rejected</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Promise states?</span>
+                <span class="a"><strong>Pending</strong> → operation is still running.<br /><strong>Fulfilled</strong> →
+                    operation completed successfully.<br /><strong>Rejected</strong> → operation failed with an
+                    error.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What does <code>async</code> do?</span>
+                <span class="a">The <code>async</code> keyword makes a function always <span class="highlight">return a
+                        Promise</span>. If the function returns a normal value, JavaScript automatically wraps it in a
+                    resolved Promise.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What does <code>await</code> do?</span>
+                <span class="a"><code>await</code> pauses only the <span class="highlight">current async function</span>
+                    until the awaited Promise settles. It does <strong>not</strong> block the Event Loop or the entire
+                    Node.js process.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>Promise.all()</code>?</span>
+                <span class="a"><code>Promise.all()</code> executes multiple Promises concurrently. It <span
+                        class="highlight">resolves only if all Promises succeed</span>, and rejects immediately if any
+                    Promise rejects.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>Promise.allSettled()</code>?</span>
+                <span class="a"><code>Promise.allSettled()</code> waits until <span class="highlight">every Promise
+                        finishes</span>, regardless of whether they are fulfilled or rejected. It returns the status of
+                    each Promise.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>Promise.race()</code>?</span>
+                <span class="a"><code>Promise.race()</code> settles with the <span class="highlight">first Promise that
+                        completes</span>, whether it resolves or rejects.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>Promise.any()</code>?</span>
+                <span class="a"><code>Promise.any()</code> resolves with the <span class="highlight">first fulfilled
+                        Promise</span>. It rejects only if every Promise rejects.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>queueMicrotask()</code>?</span>
+                <span class="a"><code>queueMicrotask()</code> schedules a callback in the <span
+                        class="highlight">Microtask Queue</span>. It runs after the current synchronous code completes
+                    but before the Event Loop proceeds to the next phase.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is EventEmitter?</span>
+                <span class="a"><strong>EventEmitter</strong> is the core class that enables <span
+                        class="highlight">event-driven programming</span> in Node.js. Objects can emit events using
+                    <code>emit()</code> and listen for them using <code>on()</code> or <code>once()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Difference between <code>on()</code> and <code>once()</code>?</span>
+                <span class="a"><code>on()</code> registers a listener that executes <span class="highlight">every
+                        time</span> the event is emitted. <code>once()</code> registers a listener that executes <span
+                        class="highlight">only once</span> and is automatically removed.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Buffer?</span>
+                <span class="a">A <strong>Buffer</strong> is a global Node.js class used to work with <span
+                        class="highlight">raw binary data</span>. Buffers are commonly used for file systems, streams,
+                    sockets, images, audio, and network communication.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Streams?</span>
+                <span class="a">Streams are objects that process <span class="highlight">data chunk by chunk</span>
+                    instead of loading the entire data into memory. They improve memory efficiency and are ideal for
+                    large files and network communication.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Types of Streams?</span>
+                <span class="a">Node.js provides four types of streams: <strong>Readable</strong>,
+                    <strong>Writable</strong>, <strong>Duplex</strong>, and <strong>Transform</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>pipe()</code>?</span>
+                <span class="a"><code>pipe()</code> connects one stream to another, automatically transferring data
+                    while handling <span class="highlight">backpressure</span>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Backpressure?</span>
+                <span class="a">Backpressure occurs when a <span class="highlight">Readable Stream produces data faster
+                        than a Writable Stream can consume it</span>. Node.js streams automatically manage backpressure
+                    to prevent excessive memory usage.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Module Caching?</span>
+                <span class="a">When a module is loaded using <code>require()</code>, Node.js <span
+                        class="highlight">loads and executes it only once</span>. Subsequent <code>require()</code>
+                    calls return the cached module.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>child_process</code> module?</span>
+                <span class="a">The <code>child_process</code> module allows Node.js to <span class="highlight">create
+                        and communicate with other processes</span>, enabling parallel execution of external commands or
+                    programs.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Worker Threads vs Cluster?</span>
+                <span class="a"><strong>Worker Threads</strong> create multiple threads within the same process and can
+                    share memory. <strong>Cluster</strong> creates multiple independent Node.js processes with separate
+                    memory spaces.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Graceful Shutdown?</span>
+                <span class="a">Graceful Shutdown is the process of <span class="highlight">stopping an application
+                        safely</span> by closing active connections, finishing ongoing requests, releasing resources,
+                    and then exiting the process.</span>
+            </div>
+        </div>
+
+        <!-- ========== NESTJS ========== -->
+        <h2 id="nestjs">🦁 NestJS</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">Why NestJS?</span>
+                <span class="a">NestJS is a progressive Node.js framework that uses <span class="highlight">TypeScript
+                        by default</span> and follows an Angular‑like architecture. It's highly modular, uses Dependency
+                    Injection for decoupling, and supports many transports (HTTP, WebSockets, GraphQL, gRPC). Ideal for
+                    enterprise‑scale applications.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Module?</span>
+                <span class="a">A Module is a class decorated with <code>@Module()</code> that <span
+                        class="highlight">organizes the application</span> into cohesive blocks. It groups providers
+                    (services), controllers, and imports/exports other modules.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Provider?</span>
+                <span class="a">A Provider is any class that can be <span class="highlight">injected as a
+                        dependency</span>. It's marked with <code>@Injectable()</code> and can be a service, repository,
+                    factory, or helper.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Dependency Injection?</span>
+                <span class="a">Dependency Injection is a design pattern where an object's dependencies are <span
+                        class="highlight">provided by an external source</span> rather than created internally. In
+                    NestJS, dependencies are declared in the constructor and injected by the framework.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Controller?</span>
+                <span class="a">A Controller handles <span class="highlight">incoming HTTP requests</span>. Decorated
+                    with <code>@Controller()</code>, it contains route handlers using decorators like
+                    <code>@Get()</code>, <code>@Post()</code>, <code>@Put()</code>, <code>@Delete()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Service?</span>
+                <span class="a">A Service is a class that contains <span class="highlight">business logic and data
+                        access</span>. It's decorated with <code>@Injectable()</code> and injected into controllers or
+                    other services.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Pipe?</span>
+                <span class="a">A Pipe is used to <span class="highlight">transform or validate</span> data.
+                    <code>ValidationPipe</code> uses <code>class-validator</code> to validate DTOs before they reach the
+                    controller.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Guard?</span>
+                <span class="a">A Guard determines whether a request should be <span class="highlight">allowed to
+                        proceed</span> to the route handler. Used for authentication and authorization. Implements the
+                    <code>CanActivate</code> interface.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Interceptor?</span>
+                <span class="a">An Interceptor adds <span class="highlight">additional logic around
+                        request/response</span> processing. It can transform responses, map errors, or log
+                    requests.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Exception Filter?</span>
+                <span class="a">An Exception Filter handles <span class="highlight">global error handling</span>. It
+                    catches exceptions and returns a structured error response consistently across your API.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Request Lifecycle?</span>
+                <span class="a"><strong>1.</strong> Middleware → <strong>2.</strong> Guards → <strong>3.</strong>
+                    Interceptors (before) → <strong>4.</strong> Pipes → <strong>5.</strong> Controller → Service →
+                    <strong>6.</strong> Interceptor (after) → <strong>7.</strong> Exception Filter (if error).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">DTO?</span>
+                <span class="a">A DTO (Data Transfer Object) is a <span class="highlight">TypeScript class that defines
+                        the shape</span> of data being sent over the network. It specifies fields, types, and validation
+                    rules.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">class-validator?</span>
+                <span class="a"><code>class-validator</code> uses <span class="highlight">decorators to validate class
+                        properties</span>. Common decorators: <code>@IsString()</code>, <code>@IsEmail()</code>,
+                    <code>@IsNumber()</code>, <code>@Min()</code>, <code>@Max()</code>,
+                    <code>@IsOptional()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Swagger?</span>
+                <span class="a">Swagger (OpenAPI) auto‑generates <span class="highlight">API documentation</span>. Use
+                    <code>@nestjs/swagger</code> with decorators like <code>@ApiTags()</code>,
+                    <code>@ApiOperation()</code>, and <code>@ApiResponse()</code>. Docs available at
+                    <code>/api</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">WebSocket?</span>
+                <span class="a">WebSocket support in NestJS uses <span class="highlight">Gateways</span> decorated with
+                    <code>@WebSocketGateway()</code>. They handle real‑time events with
+                    <code>@SubscribeMessage()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">SSE?</span>
+                <span class="a">Server‑Sent Events allow the server to <span class="highlight">push events to the
+                        client</span> over a single HTTP connection. Use <code>@Sse()</code> decorator returning an
+                    <code>Observable</code>.</span>
+            </div>
+        </div>
+
+        <!-- ========== REDIS ========== -->
+        <h2 id="redis">🔴 Redis</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is Redis?</span>
+                <span class="a">Redis (Remote Dictionary Server) is an <span class="highlight">in‑memory data structure
+                        store</span> used as a database, cache, message broker, and streaming engine. It supports
+                    various data structures with sub‑millisecond latency.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What data structures does Redis support?</span>
+                <span class="a"><strong>String</strong>, <strong>Hash</strong>, <strong>List</strong>,
+                    <strong>Set</strong>, <strong>Sorted Set</strong>, <strong>Stream</strong>,
+                    <strong>Bitmaps</strong>, <strong>HyperLogLogs</strong>, and <strong>Geospatial</strong>
+                    indexes.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis caching?</span>
+                <span class="a">Redis caching stores frequently accessed data in memory to <span
+                        class="highlight">reduce database load</span> and improve response times. Patterns:
+                    <strong>cache‑aside</strong>, <strong>read‑through</strong>, <strong>write‑through</strong>,
+                    <strong>write‑behind</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis TTL?</span>
+                <span class="a">TTL (Time‑To‑Live) is the <span class="highlight">expiration time</span> of a Redis key.
+                    After TTL expires, the key is automatically deleted. Set using
+                    <code>EXPIRE key seconds</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis persistence?</span>
+                <span class="a">Redis provides persistence to <span class="highlight">save data to disk</span> for
+                    recovery. Two options: <strong>RDB</strong> (snapshots) and <strong>AOF</strong> (Append‑Only File).
+                    RDB is faster for recovery; AOF is more durable.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis Pub/Sub?</span>
+                <span class="a">Redis Pub/Sub is a <span class="highlight">messaging pattern</span> where publishers
+                    send messages to channels and subscribers receive them. Used for real‑time notifications and
+                    event‑driven architectures.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis Sentinel?</span>
+                <span class="a">Redis Sentinel is a <span class="highlight">high‑availability solution</span> for Redis.
+                    It monitors instances, performs automatic failover, and provides discovery for clients.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Redis Cluster?</span>
+                <span class="a">Redis Cluster is a <span class="highlight">distributed Redis implementation</span> that
+                    shards data across multiple nodes using hash slots (16384 slots). Provides high availability and
+                    scalability.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>ioredis</code>?</span>
+                <span class="a"><code>ioredis</code> is a <span class="highlight">high‑performance Redis client</span>
+                    for Node.js. Supports promises/async, cluster mode, Sentinel, streaming, and Lua scripting.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">How to use Redis for rate limiting?</span>
+                <span class="a">Rate limiting uses <span class="highlight">sliding window or token bucket</span>
+                    algorithms. Store a counter per user/IP with TTL, increment on each request, reject if limit
+                    exceeded. Use <code>@nestjs/throttler</code> with Redis store.</span>
+            </div>
+        </div>
+
+        <!-- ========== MONGODB ========== -->
+        <h2 id="mongodb">🍃 MongoDB</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is MongoDB?</span>
+                <span class="a">MongoDB is a <span class="highlight">document‑oriented NoSQL database</span> that stores
+                    data as JSON‑like documents (BSON). It's schema‑flexible, horizontally scalable, and supports rich
+                    querying, indexing, and aggregation.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">MongoDB vs SQL databases?</span>
+                <span class="a"><strong>MongoDB</strong> is schema‑less, scales horizontally via sharding, and is good
+                    for unstructured data. <strong>SQL</strong> databases have rigid schemas, use tables/rows, scale
+                    vertically, and excel at complex joins and ACID transactions.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a collection in MongoDB?</span>
+                <span class="a">A collection is a <span class="highlight">group of documents</span> in MongoDB, similar
+                    to a table in SQL. Collections don't enforce a schema — each document can have different
+                    fields.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a document in MongoDB?</span>
+                <span class="a">A document is a <span class="highlight">record in MongoDB</span>, stored as BSON (binary
+                    JSON). Each document has a unique <code>_id</code> field (ObjectId by default).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is MongoDB indexing?</span>
+                <span class="a">Indexing <span class="highlight">improves query performance</span> using B‑trees. Types:
+                    <strong>single field</strong>, <strong>compound</strong>, <strong>text</strong>,
+                    <strong>geospatial</strong>, and <strong>hashed</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is MongoDB aggregation?</span>
+                <span class="a">The <span class="highlight">aggregation pipeline</span> processes documents through
+                    stages: <code>$match</code>, <code>$group</code>, <code>$project</code>, <code>$sort</code>,
+                    <code>$lookup</code>, <code>$unwind</code>, <code>$addFields</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is MongoDB sharding?</span>
+                <span class="a">Sharding is MongoDB's <span class="highlight">horizontal scaling method</span> that
+                    distributes data across multiple shards based on a <strong>shard key</strong>. Components:
+                    <strong>shards</strong>, <strong>mongos</strong>, and <strong>config servers</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is MongoDB replica set?</span>
+                <span class="a">A replica set is a <span class="highlight">group of MongoDB instances</span> maintaining
+                    the same dataset for high availability. One primary (writes) and multiple secondaries (replicate).
+                    Auto‑failover on primary failure.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>mongoose</code>?</span>
+                <span class="a"><code>mongoose</code> is the <span class="highlight">most popular ODM</span> for MongoDB
+                    in Node.js. Provides schema validation, type casting, middleware (hooks), and query building.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>populate</code> in Mongoose?</span>
+                <span class="a"><code>populate()</code> <span class="highlight">references documents</span> from other
+                    collections. Example: <code>User.find().populate('posts')</code> to fetch a user's posts.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are MongoDB transactions?</span>
+                <span class="a">MongoDB supports <span class="highlight">multi‑document ACID transactions</span> (since
+                    v4.0). Use <code>session.startTransaction()</code> and
+                    <code>session.commitTransaction()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>$lookup</code>?</span>
+                <span class="a"><code>$lookup</code> is an aggregation stage that <span class="highlight">performs a
+                        left outer join</span> with another collection, similar to SQL JOINs.</span>
+            </div>
+        </div>
+
+        <!-- ========== POSTGRESQL ========== -->
+        <h2 id="postgresql">🐘 PostgreSQL</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is PostgreSQL?</span>
+                <span class="a">PostgreSQL is a <span class="highlight">powerful, open‑source object‑relational
+                        database</span> with strong ACID compliance, advanced features, and excellent performance.
+                    Supports JSONB, full‑text search, and extensions.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">PostgreSQL vs MySQL?</span>
+                <span class="a"><strong>PostgreSQL</strong> is more feature‑rich with JSONB, advanced indexing (GIN,
+                    GiST, BRIN), custom operators, and better concurrency. <strong>MySQL</strong> is simpler and often
+                    faster for simple reads.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is JSONB in PostgreSQL?</span>
+                <span class="a">JSONB is a <span class="highlight">binary JSON data type</span> that stores JSON in
+                    decomposed binary format. Faster for indexing and querying. Supports GIN indexing and operators like
+                    <code>-></code>, <code>->></code>, <code>@></code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are PostgreSQL indexes?</span>
+                <span class="a">Types: <strong>B‑tree</strong> (default), <strong>GIN</strong> (full‑text, arrays,
+                    JSONB), <strong>GiST</strong> (spatial), <strong>BRIN</strong> (large tables),
+                    <strong>Hash</strong>, <strong>SP‑GiST</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a PostgreSQL view?</span>
+                <span class="a">A view is a <span class="highlight">virtual table</span> based on a query result.
+                    <strong>Materialized views</strong> are physically stored and can be refreshed.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a PostgreSQL trigger?</span>
+                <span class="a">A trigger is a <span class="highlight">function that automatically executes</span>
+                    before or after events like INSERT, UPDATE, DELETE. Used for auditing, validation, and enforcing
+                    business logic.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is PostgreSQL full‑text search?</span>
+                <span class="a">Uses <span class="highlight"><code>tsvector</code> and <code>tsquery</code></span> for
+                    efficient text searching. Supports ranking, stemming, and multiple languages.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is PostgreSQL isolation level?</span>
+                <span class="a"><strong>Read Uncommitted</strong> (not allowed), <strong>Read Committed</strong>
+                    (default), <strong>Repeatable Read</strong>, and <strong>Serializable</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is MVCC in PostgreSQL?</span>
+                <span class="a">MVCC (Multi‑Version Concurrency Control) allows <span class="highlight">multiple users
+                        to read and write</span> simultaneously without blocking. Readers see a consistent snapshot;
+                    writers create new versions.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>EXPLAIN</code> in PostgreSQL?</span>
+                <span class="a"><code>EXPLAIN</code> shows the <span class="highlight">query execution plan</span>. Use
+                    <code>EXPLAIN ANALYZE</code> to see actual runtime and row counts. Essential for performance
+                    tuning.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are PostgreSQL extensions?</span>
+                <span class="a">Popular extensions: <strong>PostGIS</strong> (geospatial), <strong>pgvector</strong>
+                    (AI/ML vectors), <strong>pgcrypto</strong> (crypto), <strong>UUID‑osp</strong>,
+                    <strong>hstore</strong>.</span>
+            </div>
+        </div>
+
+        <!-- ========== PRISMA ========== -->
+        <h2 id="prisma">🔧 Prisma</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">Why Prisma?</span>
+                <span class="a">Prisma is a <span class="highlight">modern ORM</span> that provides type‑safe database
+                    access, auto‑generated TypeScript types, and a fluent API. Makes migrations easy and supports
+                    relation management.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Migration?</span>
+                <span class="a">A migration is a <span class="highlight">declarative way to evolve your schema</span>.
+                    Modify <code>schema.prisma</code> then run <code>prisma migrate dev</code> to generate and apply SQL
+                    migrations.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Prisma Client?</span>
+                <span class="a">Prisma Client is an <span class="highlight">auto‑generated query builder</span>
+                    providing a fully type‑safe API. Methods: <code>findMany</code>, <code>create</code>,
+                    <code>update</code>, <code>delete</code>, <code>transaction</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Prisma Relation?</span>
+                <span class="a">Relations are defined using <span class="highlight"><code>@relation</code></span>
+                    attributes. Can be one‑to‑one, one‑to‑many, or many‑to‑many. Query with <code>include</code> or
+                    <code>select</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Transaction?</span>
+                <span class="a">Prisma supports transactions via <span
+                        class="highlight"><code>$transaction</code></span> method. Pass an array of queries or a
+                    callback. All operations succeed or all fail.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Prisma Middleware?</span>
+                <span class="a">Middleware functions <span class="highlight">run before or after</span> Prisma Client
+                    operations. Used for logging, validation, soft deletes, and auto‑timestamps.</span>
+            </div>
+        </div>
+
+        <!-- ========== DATABASE ========== -->
+        <h2 id="db">🗄️ Database Concepts</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">SQL vs NoSQL?</span>
+                <span class="a"><strong>SQL</strong> databases are schema‑based, support ACID transactions, and excel at
+                    complex joins. <strong>NoSQL</strong> databases are schema‑less, horizontally scalable, and
+                    optimized for high write throughput and unstructured data.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Normalization?</span>
+                <span class="a">Normalization <span class="highlight">organizes data to reduce redundancy</span> and
+                    improve integrity. Breaks large tables into smaller related tables. Denormalization adds redundancy
+                    for read performance.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Index?</span>
+                <span class="a">An index is a <span class="highlight">data structure</span> that improves SELECT speed
+                    at the cost of slower writes and extra storage. PostgreSQL uses B‑tree by default, plus GIN, GiST,
+                    and hash.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Composite Index?</span>
+                <span class="a">An index on <span class="highlight">multiple columns</span>. Column order matters — most
+                    efficient for queries filtering on the first column(s).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Transaction?</span>
+                <span class="a">A transaction is a <span class="highlight">sequence of operations</span> executed as a
+                    single atomic unit. Either all succeed (commit) or none apply (rollback).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">ACID?</span>
+                <span class="a"><strong>Atomicity</strong>: all‑or‑nothing. <strong>Consistency</strong>: valid state
+                    maintained. <strong>Isolation</strong>: concurrent transactions don't interfere.
+                    <strong>Durability</strong>: committed data persists.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">JOIN?</span>
+                <span class="a">A JOIN combines rows from tables based on a <span class="highlight">related
+                        column</span>. Types: <strong>INNER</strong>, <strong>LEFT</strong>, <strong>RIGHT</strong>,
+                    <strong>FULL OUTER</strong>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Foreign Key?</span>
+                <span class="a">A foreign key <span class="highlight">references the primary key</span> of another
+                    table, enforcing referential integrity and preventing orphaned records.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">N+1 Problem?</span>
+                <span class="a">Occurs when an ORM <span class="highlight">executes 1 query for parents and N for
+                        children</span>. Solve with <code>include</code> in Prisma or batch loading techniques.</span>
+            </div>
+        </div>
+
+        <!-- ========== AUTH ========== -->
+        <h2 id="auth">🔐 Authentication</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">JWT?</span>
+                <span class="a">JWT (JSON Web Token) <span class="highlight">encodes claims</span> as a JSON object.
+                    Consists of header, payload, and signature. Stateless and ideal for distributed systems.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Access Token?</span>
+                <span class="a">A <span class="highlight">short‑lived JWT</span> (15‑30 min) used to authorize API
+                    requests. Sent in the <code>Authorization</code> header as a Bearer token.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Refresh Token?</span>
+                <span class="a">A <span class="highlight">long‑lived token</span> (days/weeks) used to obtain new Access
+                    Tokens without re‑authentication. Stored in HttpOnly cookies and can be revoked server‑side.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Where to store token?</span>
+                <span class="a"><span class="highlight">Best practice</span>: HttpOnly, Secure, SameSite=Strict cookies.
+                    Avoid localStorage/sessionStorage (XSS‑vulnerable).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">CSRF?</span>
+                <span class="a">Cross‑Site Request Forgery <span class="highlight">tricks a user's browser</span> into
+                    making an unwanted request. Mitigations: <code>SameSite</code> cookies, anti‑CSRF tokens.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">XSS?</span>
+                <span class="a">Cross‑Site Scripting injects <span class="highlight">malicious scripts</span> into
+                    trusted sites. Mitigations: input sanitization, output encoding, CSP, HttpOnly cookies.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">OAuth?</span>
+                <span class="a">OAuth is an <span class="highlight">open standard for authorization</span> allowing
+                    third‑party apps limited access without exposing credentials. Used in "Login with Google"
+                    flows.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Google Login?</span>
+                <span class="a">Uses OAuth 2.0. Google returns an <span class="highlight">authorization code</span>;
+                    backend exchanges it for access + ID tokens. ID token contains email/profile.</span>
+            </div>
+        </div>
+
+        <!-- ========== SOFT SKILLS ========== -->
+        <section class="soft-section" id="soft">
+            <h2>🧑‍💻 Soft Skills (Backend Focus)</h2>
+            <div class="qa-grid">
+                <div class="qa-item">
+                    <span class="q">How do you explain a complex backend bug to a non‑technical stakeholder?</span>
+                    <span class="a">I focus on <span class="highlight">impact and timeline</span>, not internals. I say
+                        "Users can't complete checkout for ~30 minutes because of a database lock issue. I've isolated
+                        it, fix is deploying in 15 minutes." I avoid jargon like "transaction isolation" and instead
+                        explain outcomes.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you handle a disagreement about API design with a frontend engineer?</span>
+                    <span class="a">I listen first — they often see data‑shape pain I don't. I <span
+                            class="highlight">propose a small prototype</span> or a shared schema doc. If we still
+                        disagree, I escalate to the tech lead with both options and trade‑offs (payload size, latency,
+                        N+1 risk). The goal is the product, not winning.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you prioritize when 3 services are down at once?</span>
+                    <span class="a">I triage by <span class="highlight">user impact × revenue impact</span>. Auth first
+                        (nobody can log in), then payments, then internal admin. I communicate status in a shared
+                        channel every 5 minutes and delegate secondary incidents to teammates instead of
+                        context‑switching.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you handle receiving critical feedback on your architecture?</span>
+                    <span class="a">I <span class="highlight">separate ego from code</span>. I ask "What would break
+                        first with your approach?" to understand their mental model. Then I write a short ADR
+                        (Architecture Decision Record) with both options and choose based on evidence, not
+                        seniority.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you mentor a junior backend developer?</span>
+                    <span class="a">I pair‑program on real tickets, not toy problems. I <span class="highlight">explain
+                            the "why"</span> behind patterns (e.g., why we use a repository layer), review their PRs
+                        with questions instead of commands, and give them ownership of a small service
+                        end‑to‑end.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you say "no" to a feature request that would harm system stability?</span>
+                    <span class="a">I never say "no" flatly. I say "<span class="highlight">Yes, and here's the
+                            cost</span>: this would add 200ms to every request and require a schema migration. Here are
+                        3 alternatives that achieve the same goal with less risk." Data beats opinion.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you stay calm during a production outage?</span>
+                    <span class="a">I follow a <span class="highlight">checklist</span>: (1) confirm impact, (2) stop
+                        the bleeding (rollback if possible), (3) communicate, (4) find root cause. I mute Slack noise,
+                        focus on one hypothesis at a time, and hand off if I've been on it for over an hour.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you collaborate with DevOps on deployment issues?</span>
+                    <span class="a">I <span class="highlight">bring logs, metrics, and a hypothesis</span>, not just
+                        "it's broken." I ask what changed recently (env vars, secrets, resource limits) and treat them
+                        as partners, not a help desk. I also make sure my app exposes health checks and structured
+                        logs.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">Tell me about a time you disagreed with a technical decision that was already
+                        made.</span>
+                    <span class="a">A team chose MongoDB for a financial ledger. I documented my <span
+                            class="highlight">concerns in writing</span> (ACID, reporting joins, data integrity) but
+                        committed fully once the decision stood. Six months later we migrated to PostgreSQL — and I led
+                        the migration without an "I told you so."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you keep your team informed about backend changes?</span>
+                    <span class="a">I write short <span class="highlight">release notes and API changelogs</span> for
+                        every breaking change, use feature flags for gradual rollouts, and announce schema migrations in
+                        advance. I also run a monthly "backend office hours" where anyone can ask about
+                        architecture.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pager -->
+        <nav class="pager">
+            <a href="backend-qa.html" class="active">🟢 Backend</a>
+            <a href="frontend-qa.html">⚛️ Frontend</a>
+            <a href="devops-qa.html">🐳 DevOps</a>
+        </nav>
+
+        <div class="footnote">
+            ✅ Backend Q&amp;A · Node.js · NestJS · Redis · MongoDB · PostgreSQL · Prisma · Auth · Soft Skills
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            backToTopBtn.classList.toggle("visible", window.scrollY > 300);
+        });
+        backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        document.querySelectorAll(".nav-menu a").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                if (targetId.startsWith("#")) {
+                    e.preventDefault();
+                    const el = document.querySelector(targetId);
+                    if (el) {
+                        const navH = document.querySelector(".nav-menu").offsetHeight;
+                        const pos = el.getBoundingClientRect().top + window.pageYOffset - navH - 10;
+                        window.scrollTo({ top: pos, behavior: "smooth" });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

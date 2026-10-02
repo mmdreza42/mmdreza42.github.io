@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="description" content="Dev Hub: interview Q&A, resumes, and projects by Mohammad Reza Javadi." />
+    <title>MMDREZA21 · Dev Hub</title>
+
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Dev Hub" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/landinPage.css">
+
+</head>
+
+<body>
+    <div class="wrap">
+
+        <header class="hero">
+            <h1>Dev Hub<small>Interview Q&amp;A, my resumes, and my projects. Install it once and it works
+                    offline.</small></h1>
+            <div class="hero-actions">
+                <button class="btn primary" id="installBtn" type="button">Install app</button>
+                <a class="btn" href="./index.html">Full-stack resume</a>
+                <a class="btn" href="./Game.html">Game dev resume</a>
+                <a class="btn" href="./qa.html">Interview Q&amp;A</a>
+            </div>
+        </header>
+
+        <div class="controls">
+            <label class="search">
+                <input type="search" id="q" placeholder="Search pages" autocomplete="off" aria-label="Search pages" />
+                <kbd>/</kbd>
+            </label>
+            <div class="chips" role="group" aria-label="Filter by category">
+                <button class="chip" data-f="all" aria-pressed="true">All</button>
+                <button class="chip" data-f="learn" aria-pressed="false">Interview Q&amp;A</button>
+                <button class="chip" data-f="about" aria-pressed="false">Resumes</button>
+                <button class="chip" data-f="play" aria-pressed="false">Projects &amp; sheets</button>
+            </div>
+        </div>
+
+        <main class="bento" id="grid">
+
+            <h2 class="group-title" data-g="learn">Interview Q&amp;A</h2>
+            <a class="tile feature w3 learn" data-cat="learn" href="./qa.html">
+                <span class="glyph">💬</span>
+                <div>
+                    <h2>All Q&amp;A</h2>
+                    <p>Every interview question across backend, frontend and DevOps in one page.</p>
+                    <div class="file">qa.html</div>
+                </div>
+            </a>
+            <a class="tile backend learn" data-cat="learn" href="./backend-qa.html">
+                <span class="glyph">🟢</span>
+                <div>
+                    <h2>Backend Q&amp;A</h2>
+                    <p>Node.js, NestJS, databases, auth.</p>
+                    <div class="file">backend-qa.html</div>
+                </div>
+            </a>
+            <a class="tile learn" data-cat="learn" href="./frontend-qa.html">
+                <span class="glyph">⚛️</span>
+                <div>
+                    <h2>Frontend Q&amp;A</h2>
+                    <p>JS, TS, Vue, Nuxt, Next, React.</p>
+                    <div class="file">frontend-qa.html</div>
+                </div>
+            </a>
+            <a class="tile devops learn" data-cat="learn" href="./devops-qa.html">
+                <span class="glyph">🐳</span>
+                <div>
+                    <h2>DevOps Q&amp;A</h2>
+                    <p>Docker, Git, REST, security.</p>
+                    <div class="file">devops-qa.html</div>
+                </div>
+            </a>
+
+            <h2 class="group-title" data-g="about">Resumes and profiles</h2>
+            <a class="tile about" data-cat="about" href="./index.html">
+                <span class="glyph">📄</span>
+                <div>
+                    <h2>Full-stack resume</h2>
+                    <p>Vue, Nuxt, React, Node.js, NestJS.</p>
+                    <div class="file">index.html</div>
+                </div>
+            </a>
+            <a class="tile about" data-cat="about" href="./Game.html">
+                <span class="glyph">🎮</span>
+                <div>
+                    <h2>Game developer resume</h2>
+                    <p>My game development experience and projects.</p>
+                    <div class="file">Game.html</div>
+                </div>
+            </a>
+            <a class="tile about" data-cat="about" href="./indexFa.html">
+                <span class="glyph">🇮🇷</span>
+                <div>
+                    <h2>Resume (فارسی)</h2>
+                    <p>رزومه به زبان فارسی</p>
+                    <div class="file">indexFa.html</div>
+                </div>
+            </a>
+            <a class="tile w3 link" data-cat="about" href="https://github.com/mmdreza21" target="_blank" rel="noopener">
+                <span class="glyph">🐙</span>
+                <div>
+                    <h2>GitHub</h2>
+                    <p>Source code and projects.</p>
+                    <div class="file">github.com/mmdreza21</div>
+                </div>
+            </a>
+            <a class="tile w3 link" data-cat="about" href="https://linkedin.com/in/mamadreza1998" target="_blank"
+                rel="noopener">
+                <span class="glyph">💼</span>
+                <div>
+                    <h2>LinkedIn</h2>
+                    <p>Work history and contact.</p>
+                    <div class="file">linkedin.com/in/mamadreza1998</div>
+                </div>
+            </a>
+
+            <h2 class="group-title" data-g="play">Projects and cheat sheets</h2>
+            <a class="tile w3 play" data-cat="play" href="https://mmdreza21.vercel.app/" target="_blank" rel="noopener">
+                <span class="glyph">🚀</span>
+                <div>
+                    <h2>TaskForge</h2>
+                    <p>AI-powered collaboration platform, live demo.</p>
+                    <div class="file">mmdreza21.vercel.app</div>
+                </div>
+            </a>
+            <a class="tile w3 play" data-cat="play" href="./solar_system_dark.html">
+                <span class="glyph">🪐</span>
+                <div>
+                    <h2>Solar System cheat sheet</h2>
+                    <p>A quick-reference sheet in dark mode.</p>
+                    <div class="file">solar_system_dark.html</div>
+                </div>
+            </a>
+        </main>
+
+        <p class="empty" id="empty">No pages match your search. Try a different word or choose All.</p>
+
+        <footer>
+            <span>Made by <a href="https://github.com/mmdreza21" target="_blank" rel="noopener">MMDREZA21</a></span>
+            <span class="status"><span class="dot" id="dot"></span><span id="statusText">Online</span></span>
+        </footer>
+    </div>
+
+    <script>
+        /* Service worker */
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(e => console.warn("SW failed:", e)));
+        }
+
+        /* Install button */
+        let deferred = null;
+        const installBtn = document.getElementById("installBtn");
+        window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferred = e; installBtn.classList.add("show"); });
+        installBtn.addEventListener("click", async () => {
+            if (!deferred) return;
+            deferred.prompt();
+            await deferred.userChoice;
+            deferred = null;
+            installBtn.classList.remove("show");
+        });
+        window.addEventListener("appinstalled", () => { deferred = null; installBtn.classList.remove("show"); });
+
+        /* Online status */
+        const dot = document.getElementById("dot"), st = document.getElementById("statusText");
+        function setStatus() { const on = navigator.onLine; dot.classList.toggle("off", !on); st.textContent = on ? "Online" : "Offline: cached pages available"; }
+        addEventListener("online", setStatus); addEventListener("offline", setStatus); setStatus();
+
+        /* Search + filter */
+        const q = document.getElementById("q");
+        const tiles = [...document.querySelectorAll(".tile")];
+        const titles = [...document.querySelectorAll(".group-title")];
+        const chips = [...document.querySelectorAll(".chip")];
+        const empty = document.getElementById("empty");
+        let filter = "all";
+
+        function apply() {
+            const term = q.value.trim().toLowerCase();
+            const shown = {};
+            let count = 0;
+            tiles.forEach(t => {
+                const group = t.dataset.cat;
+                const okF = filter === "all" || group === filter;
+                const okQ = !term || t.textContent.toLowerCase().includes(term);
+                const ok = okF && okQ;
+                t.style.display = ok ? "" : "none";
+                if (ok) { shown[group] = true; count++; }
+            });
+            titles.forEach(h => h.style.display = shown[h.dataset.g] ? "" : "none");
+            empty.classList.toggle("show", count === 0);
+        }
+        q.addEventListener("input", apply);
+        chips.forEach(c => c.addEventListener("click", () => {
+            filter = c.dataset.f;
+            chips.forEach(x => x.setAttribute("aria-pressed", x === c));
+            apply();
+        }));
+        addEventListener("keydown", e => {
+            if (e.key === "/" && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+            if (e.key === "Escape" && document.activeElement === q) { q.value = ""; q.blur(); apply(); }
+        });
+    </script>
+</body>
+
+</html>

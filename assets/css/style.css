@@ -1,0 +1,636 @@
+:root {
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --primary-dark: #1d4ed8;
+    --secondary: #64748b;
+    --light: #f8fafc;
+    --dark: #0f172a;
+    --accent: #10b981;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+ 
+        header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        header h2 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* =======================
+           PROFILE (ONE ROW)
+        ======================= */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+
+        .profile-picture {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .profile-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .profile-bio {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            max-width: 720px;
+        }
+
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.2rem;
+            justify-content: center;
+            /* margin: 2.5rem 0 3rem; */
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 0.4rem 1rem;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+        }
+
+        .contact-item:hover {
+            color: white;
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .contact-item i {
+            font-size: 1.1rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Grid Layout */
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:last-child {
+            margin-bottom: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--secondary);
+            margin: 0 0 0.8rem 0;
+            line-height: 1.4;
+        }
+
+        .card h4 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .card h4 a:hover {
+            color: var(--primary);
+        }
+
+        .card .time {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            opacity: 0.8;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+
+        .card p {
+            color: var(--secondary);
+            margin: 0.8rem 0 0 0;
+            line-height: 1.7;
+        }
+
+        .card ul {
+            margin: 1rem 0 0 1.2rem;
+            color: var(--secondary);
+        }
+
+        .card ul li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .skill-category {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .skill-category h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-tag {
+            background: var(--primary-light);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .skill-tag.accent {
+            background: var(--accent);
+        }
+
+        .skill-tag.accent:hover {
+            background: #0d9d71;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 0 0.8rem 0;
+            line-height: 1.4;
+        }
+
+        .project-card h3 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .project-card h3 a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .project-card p {
+            color: var(--secondary);
+            margin: 0.8rem 0 0 0;
+            line-height: 1.7;
+        }
+
+        .project-card p a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .project-card p a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .project-card ul {
+            margin: 1rem 0 0 1.2rem;
+            color: var(--secondary);
+        }
+
+        .project-card ul li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            header {
+                padding: 3rem 0 4rem;
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+
+            header h2 {
+                font-size: 1.2rem;
+            }
+
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+                margin-top: -4rem;
+                gap: 1.5rem;
+            }
+
+            .profile-picture {
+                width: 140px;
+                height: 140px;
+                margin-bottom: 0;
+            }
+
+            .profile-info {
+                text-align: center;
+            }
+
+            .profile-title {
+                margin-bottom: 1rem;
+            }
+
+            .grid-2-col {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .contact-info {
+                gap: 1rem;
+            }
+
+            .contact-item {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .section {
+                margin-bottom: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .card,
+            .project-card {
+                padding: 1.5rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section,
+        .profile-section {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .card,
+        .project-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+
+
+        .skill-level {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.skill-level .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.skill-level.pro .dot {
+    background-color: #22c55e;
+}
+
+.skill-level.mid .dot {
+    background-color: #3b82f6;
+}
+
+.skill-level.hobby .dot {
+    background-color: #64748b;
+}
+
+.level-text {
+    font-size: 0.75rem;
+    color: var(--secondary);
+    margin-left: 6px;
+}
+
+.skill-tag {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: inline-block;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Professional */
+.skill-tag.pro {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #047857;
+    border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Mid */
+.skill-tag.mid {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #1d4ed8;
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Hobby */
+.skill-tag.hobby {
+    background-color: rgba(100, 116, 139, 0.15);
+    color: #334155;
+    border-color: rgba(100, 116, 139, 0.4);
+}
+
+/* Hover (subtle) */
+.skill-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* =======================
+   PRINT / PDF EXPORT
+   Strips animations, shadows, and backgrounds
+   so Ctrl+P / Save as PDF produces a clean document.
+======================= */
+.skill-level-legend{
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+@media print {
+    body {
+        background: #ffffff;
+        color: #000000;
+        font-size: 11pt;
+        line-height: 1.4;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    /* Kill decorative effects that waste ink / look broken on paper */
+    .section,
+    .profile-section,
+    .card,
+    .project-card {
+        animation: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        border: 1px solid #d1d5db;
+    }
+
+    .card:hover,
+    .project-card:hover,
+    .skill-tag:hover,
+    .contact-item:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Tighten spacing so more fits per page */
+    .section {
+        margin-bottom: 1.2rem;
+        page-break-inside: avoid;
+    }
+
+    .card,
+    .project-card {
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+        page-break-inside: avoid;
+    }
+
+    .profile-section {
+        padding: 0.5rem 0;
+        margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .section-title::after {
+        background: #000000;
+    }
+
+    /* Flatten skill tag colors to plain, high-contrast, printer-friendly badges */
+    .skill-tag {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #000000 !important;
+        padding: 0.2rem 0.6rem;
+    }
+
+    .contact-item {
+        background: none !important;
+        color: #000000 !important;
+        padding: 0.1rem 0.4rem;
+    }
+
+    /* Show link URLs since clicking isn't possible on paper */
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.75em;
+        color: #555555;
+    }
+
+    /* Don't print raw URLs for javascript/anchor-only links or icon-only social links */
+    .contact-item[href^="mailto"]:after,
+    .contact-item[href^="tel"]:after {
+        content: "";
+    }
+
+    footer {
+        background: none !important;
+        color: #000000;
+        padding: 1rem 0;
+        margin-top: 1.5rem;
+        border-top: 1px solid #d1d5db;
+    }
+
+    /* Avoid orphaned headings at the bottom of a page */
+    h1, h2, h3, h4 {
+        page-break-after: avoid;
+    }
+}

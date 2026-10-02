@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Frontend Interview Q&A · JS/TS · Vue · Nuxt · Next · React</title>
+    <link rel="stylesheet" href="assets/css/shared.css" />
+</head>
+
+<body>
+    <nav class="nav-menu">
+        <span class="nav-title">📑 Quick Jump</span>
+        <a href="#js-ts">📘 JS/TS</a>
+        <a href="#nuxt-vue">🟢 Nuxt/Vue</a>
+        <a href="#vue">🟢 Vue.js</a>
+        <a href="#nextjs">⚡ Next.js</a>
+        <a href="#react">⚛️ React</a>
+        <a href="#soft">🧑‍💻 Soft Skills</a>
+    </nav>
+
+    <div class="container">
+        <h1>⚛️ Frontend Interview Q&amp;A <small>JavaScript · TypeScript · Vue · Nuxt · Next.js · React</small></h1>
+
+        <!-- ========== JS / TS ========== -->
+        <h2 id="js-ts">📘 JavaScript / TypeScript</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">var, let and const?</span>
+                <span class="a"><strong>var</strong> is function‑scoped, hoisted and initialized with
+                    <code>undefined</code>. <strong>let</strong> is block‑scoped, hoisted but in the Temporal Dead Zone
+                    (TDZ) until initialized. <strong>const</strong> is block‑scoped and cannot be reassigned
+                    (objects/arrays can be mutated).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Hoisting?</span>
+                <span class="a">Hoisting moves declarations to the top of their scope. <code>var</code> is hoisted with
+                    <code>undefined</code>. <code>let</code> and <code>const</code> are hoisted but <span
+                        class="highlight">not initialized</span> — accessing them throws <code>ReferenceError</code> due
+                    to the TDZ. Function declarations are hoisted entirely.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Closure?</span>
+                <span class="a">A closure is a function that <span class="highlight">remembers its lexical scope</span>
+                    even when executed outside that scope. Used for data privacy, factory functions, and event
+                    handlers.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Event Loop?</span>
+                <span class="a">The Event Loop checks the <strong>call stack</strong> and <strong>task queues</strong>.
+                    When the stack is empty, it takes microtasks (Promises) first, then macrotasks (setTimeout, I/O).
+                    Enables non‑blocking concurrency in single‑threaded JS.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Promise vs async/await?</span>
+                <span class="a"><strong>Promises</strong> use <code>.then()</code>/<code>.catch()</code>.
+                    <strong>async/await</strong> is syntactic sugar making async code look synchronous. Error handling
+                    with <code>try/catch</code> instead of <code>.catch()</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Call Stack?</span>
+                <span class="a">A LIFO data structure that tracks function calls. Each function is pushed when invoked
+                    and popped when returned. Too many nested calls cause a <code>RangeError</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Why TypeScript?</span>
+                <span class="a">TypeScript adds <span class="highlight">static typing</span>, catching errors at compile
+                    time. Provides better IDE support, improves readability, and makes refactoring safer in large
+                    codebases.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Interface vs Type?</span>
+                <span class="a"><strong>Interface</strong> is best for object shapes and is <span
+                        class="highlight">extendable</span> via declaration merging. <strong>Type</strong> supports
+                    unions, intersections, primitives, and mapped types, but no declaration merging.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Generic?</span>
+                <span class="a">Generics create <span class="highlight">reusable components</span> that work with
+                    various types while maintaining type safety. Example:
+                    <code>function identity&lt;T&gt;(arg: T): T { return arg; }</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">unknown vs any?</span>
+                <span class="a"><strong>any</strong> disables type checking. <strong>unknown</strong> is the <span
+                        class="highlight">type‑safe counterpart</span> — you must narrow it with type guards before
+                    use.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">never?</span>
+                <span class="a"><code>never</code> represents values that <span class="highlight">never occur</span>.
+                    Used for functions that always throw or loop, and for exhaustive type checking.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Utility Types?</span>
+                <span class="a"><strong>Partial</strong>: all optional. <strong>Required</strong>: all required.
+                    <strong>Pick&lt;T,K&gt;</strong>: subset. <strong>Omit&lt;T,K&gt;</strong>: removes.
+                    <strong>Record&lt;K,T&gt;</strong>: key‑value. <strong>Readonly</strong>: read‑only.</span>
+            </div>
+        </div>
+
+        <!-- ========== NUXT & VUE ========== -->
+        <h2 id="nuxt-vue">🟢 Nuxt &amp; Vue</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is Nuxt?</span>
+                <span class="a">Nuxt is a <span class="highlight">Vue.js framework</span> providing SSR, SSG, automatic
+                    routing, and modular architecture. Nuxt 3 is built on Vue 3 with the <strong>Nitro</strong> server
+                    engine.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Nuxt's rendering modes?</span>
+                <span class="a"><strong>SSR</strong> (per request), <strong>SSG</strong> (build time),
+                    <strong>CSR</strong> (browser). Nuxt 3 supports <strong>Hybrid Rendering</strong> via
+                    <code>routeRules</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the Nuxt App Router?</span>
+                <span class="a">File‑based routing in <code>pages/</code>. Supports dynamic routes
+                    (<code>[id].vue</code>), catch‑all (<code>[...slug].vue</code>), layouts, middleware, and
+                    <code>definePageMeta</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Vue 3's Composition API?</span>
+                <span class="a">APIs to <span class="highlight">organize component logic</span> using functions. Uses
+                    <code>setup()</code> or <code>&lt;script setup&gt;</code>. Core: <code>ref</code>,
+                    <code>reactive</code>, <code>computed</code>, <code>watch</code>, <code>onMounted</code>,
+                    <code>provide/inject</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>&lt;script setup&gt;</code>?</span>
+                <span class="a">Syntactic sugar for Composition API in SFCs. Reduces boilerplate, auto‑exposes top‑level
+                    variables to template, and improves performance.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">How does Nuxt handle data fetching?</span>
+                <span class="a">Composables: <strong><code>useAsyncData</code></strong> and
+                    <strong><code>useFetch</code></strong> (wrapper around useAsyncData + $fetch). Auto caching, key
+                    generation, deduplication. Also <code>useLazyFetch</code> / <code>useLazyAsyncData</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a Nuxt module?</span>
+                <span class="a">A <span class="highlight">package that extends Nuxt's functionality</span> (auth, PWA,
+                    analytics, CMS). Installed via npm and added to <code>modules</code> in
+                    <code>nuxt.config.ts</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Difference between <code>ref</code> and <code>reactive</code>?</span>
+                <span class="a"><strong>ref</strong> works with any type, wrapped in <code>.value</code>.
+                    <strong>reactive</strong> works only with objects/arrays, no <code>.value</code>, but cannot be
+                    destructured without <code>toRefs</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>computed</code> in Vue?</span>
+                <span class="a">Creates a <span class="highlight">cached derived state</span> that updates when
+                    dependencies change. Lazily evaluated and cached.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>watch</code> vs <code>watchEffect</code>?</span>
+                <span class="a"><strong>watch</strong>: observes specific sources, gives old/new values, options:
+                    <code>deep</code>, <code>immediate</code>, <code>flush</code>. <strong>watchEffect</strong>:
+                    auto‑tracks dependencies, runs immediately.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">How does Nuxt handle authentication?</span>
+                <span class="a">Via <strong><code>@nuxtjs/auth-next</code></strong> or
+                    <strong><code>@sidebase/nuxt-auth</code></strong>. Provide <code>useSession()</code>,
+                    <code>signIn()</code>, <code>signOut()</code>, and route middleware.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the Nuxt <code>server/</code> directory?</span>
+                <span class="a">Where server‑side logic lives: API routes (<code>server/api/</code>), middleware,
+                    plugins. Enables full‑stack apps with type‑safe <code>useFetch</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Nuxt composables?</span>
+                <span class="a"><span class="highlight">Reusable functions</span> in <code>composables/</code>,
+                    auto‑imported. Examples: <code>useState</code>, <code>useRouter</code>, <code>useRoute</code>,
+                    <code>useHead</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">SSR vs SSG in Nuxt?</span>
+                <span class="a"><strong>SSR</strong>: server renders per request (dynamic). <strong>SSG</strong>:
+                    pre‑rendered at build (static, faster). Nuxt 3 <code>routeRules</code> mixes modes per route.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">How does Nuxt handle SEO?</span>
+                <span class="a"><strong><code>useHead</code></strong> composable for meta tags, titles, links. Supports
+                    Open Graph, JSON‑LD, sitemaps. SSR renders meta on server for crawlers.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Nuxt plugins?</span>
+                <span class="a">Files that <span class="highlight">run before the app is created</span>. Register global
+                    components, add libraries, inject values, run startup logic. Set <code>ssr: false</code> for
+                    client‑only.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the <code>nitro</code> server?</span>
+                <span class="a">Nuxt 3's <span class="highlight">universal server engine</span>. Runs on Node.js, Deno,
+                    Bun, Cloudflare Workers. Supports file‑based API routes, server middleware, caching, and static
+                    output.</span>
+            </div>
+        </div>
+
+        <!-- ========== VUE.JS ========== -->
+        <h2 id="vue">🟢 Vue.js</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">What is Vue.js?</span>
+                <span class="a">A <span class="highlight">progressive JavaScript framework</span> for building UIs.
+                    Reactive data binding, component‑based architecture, virtual DOM. Known for gentle learning
+                    curve.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Vue's key features?</span>
+                <span class="a">Reactivity (Proxies in Vue 3), component‑based architecture, template syntax
+                    (<code>v-if</code>, <code>v-for</code>, <code>v-model</code>), Composition API, SFCs, Vue Router,
+                    Pinia, SSR via Nuxt.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Difference between Vue 2 and Vue 3?</span>
+                <span class="a">Vue 3: <strong>Proxy‑based reactivity</strong>, Composition API, faster rendering,
+                    smaller bundle, TypeScript support, fragments, Teleport, Suspense.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Options API vs Composition API?</span>
+                <span class="a"><strong>Options API</strong>: classic, uses <code>data</code>, <code>methods</code>,
+                    <code>computed</code>. <strong>Composition API</strong>: functions, better <span
+                        class="highlight">logic reuse</span>, cleaner for complex components, better TS
+                    inference.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is a Single‑File Component (SFC)?</span>
+                <span class="a">A <code>.vue</code> file with <code>&lt;template&gt;</code>,
+                    <code>&lt;script&gt;</code>, and <code>&lt;style&gt;</code>. Self‑contained, scoped CSS,
+                    maintainable.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Vue directives?</span>
+                <span class="a">Special attributes with <code>v-</code> prefix: <code>v-if</code>, <code>v-for</code>,
+                    <code>v-model</code>, <code>v-bind</code> (<code>:</code>), <code>v-on</code> (<code>@</code>),
+                    <code>v-show</code>, <code>v-html</code>, <code>v-cloak</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">How does Vue 3's reactivity work?</span>
+                <span class="a">Built on <span class="highlight">JavaScript Proxies</span>. Intercepts
+                    <code>get</code>/<code>set</code> to track dependencies and schedule updates. More efficient than
+                    Vue 2's <code>Object.defineProperty</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the <code>ref</code> function?</span>
+                <span class="a">Creates a <span class="highlight">reactive reference</span> to a value, wrapped in
+                    <code>.value</code>. Works with any type. Auto‑unwrapped in templates.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is the <code>reactive</code> function?</span>
+                <span class="a">Creates a <span class="highlight">deeply reactive object</span> using a Proxy.
+                    Objects/arrays only. Cannot destructure without <code>toRefs</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Difference between <code>ref</code> and <code>reactive</code>?</span>
+                <span class="a"><strong>ref</strong>: any type, <code>.value</code> wrapper, more flexible.
+                    <strong>reactive</strong>: objects/arrays only, no <code>.value</code>, no destructuring without
+                    <code>toRefs</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Vue slots?</span>
+                <span class="a">Content distribution mechanism. <strong>Default</strong>, <strong>named</strong>
+                    (<code>&lt;slot name="header" /&gt;</code>), and <strong>scoped</strong> slots. Enable flexible
+                    reusable components.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are <code>provide</code> and <code>inject</code>?</span>
+                <span class="a"><span class="highlight">Dependency injection</span> allowing parent components to pass
+                    data to any descendant without props. Useful for theme, auth, config.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Pinia?</span>
+                <span class="a"><span class="highlight">Official state management</span> for Vue, replacing Vuex.
+                    Simpler, type‑safe, Composition API friendly. Uses <code>defineStore()</code> with state, getters,
+                    actions.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Vuex vs Pinia?</span>
+                <span class="a"><strong>Vuex</strong>: older, mutations, actions, modules, more boilerplate.
+                    <strong>Pinia</strong>: no mutations, better TS, simpler API, modular, recommended.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Vue Router?</span>
+                <span class="a"><span class="highlight">Official routing library</span> for SPAs. Features: nested
+                    routes, dynamic matching, named routes, params, query, navigation guards, lazy loading.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are navigation guards?</span>
+                <span class="a"><span class="highlight">Middleware functions</span> controlling navigation: global
+                    (<code>beforeEach</code>, <code>afterEach</code>), per‑route (<code>beforeEnter</code>),
+                    in‑component (<code>beforeRouteEnter</code>, etc.).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is lazy loading in Vue?</span>
+                <span class="a">Loading <span class="highlight">JS chunks only when needed</span> via dynamic imports:
+                    <code>() =&gt; import('@/views/Home.vue')</code> or <code>defineAsyncComponent()</code>. Reduces
+                    initial bundle.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Vue's <code>Teleport</code>?</span>
+                <span class="a">Renders content <span class="highlight">outside the current component's DOM</span> —
+                    useful for modals, tooltips. <code>&lt;Teleport to="body"&gt;</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is Vue's <code>Suspense</code>?</span>
+                <span class="a">Manages <span class="highlight">async dependencies</span> in the component tree. Shows
+                    fallback while nested async components resolve. Works with SSR.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What are Vue composables?</span>
+                <span class="a"><span class="highlight">Reusable functions</span> encapsulating reactive logic. Naming:
+                    <code>useXxx()</code>. Can use reactivity functions and compose together.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>v-model</code> and two‑way binding?</span>
+                <span class="a">Creates <span class="highlight">two‑way binding</span> between inputs and reactive data.
+                    Sugar for <code>:value</code> + <code>@input</code>. Custom components use <code>modelValue</code> /
+                    <code>update:modelValue</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q"><code>v-if</code> vs <code>v-show</code>?</span>
+                <span class="a"><strong>v-if</strong>: destroys/re‑creates elements. Better for stable conditions.
+                    <strong>v-show</strong>: toggles CSS <code>display</code>. Better for frequent toggling.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">What is <code>&lt;KeepAlive&gt;</code>?</span>
+                <span class="a">Caches <span class="highlight">inactive component instances</span> instead of destroying
+                    them. Uses <code>activated</code> and <code>deactivated</code> hooks. Configurable with
+                    <code>include</code>/<code>exclude</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Vue vs React?</span>
+                <span class="a"><strong>Vue</strong>: HTML templates, directives, Proxy reactivity, gentler curve,
+                    official Nuxt. <strong>React</strong>: JSX, more flexible, hooks, manual dep tracking, official
+                    Next.js.</span>
+            </div>
+        </div>
+
+        <!-- ========== NEXT.JS ========== -->
+        <h2 id="nextjs">⚡ Next.js</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">App Router?</span>
+                <span class="a">New file‑based routing in <code>app/</code> (Next 13+). Supports nested layouts, server
+                    components, loading/error boundaries, and parallel/intercepting routes. Replaces Pages
+                    Router.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Server Component?</span>
+                <span class="a">Rendered on the server, never sent to client. Can be <code>async</code>, access DBs
+                    directly. Cannot use hooks or browser APIs. Ideal for data fetching and static content.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Client Component?</span>
+                <span class="a">Hydrated on client, provides interactivity. Marked with <code>"use client"</code>. Can
+                    use hooks, event listeners, browser APIs.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Server vs Client Component?</span>
+                <span class="a">Server components reduce client bundle and access backend. Client components provide
+                    interactivity. Server can import Client, but Client cannot import Server directly.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">When to use <code>"use client"</code>?</span>
+                <span class="a">When needing <span class="highlight">hooks</span>, <span class="highlight">browser
+                        APIs</span>, or <span class="highlight">client‑side libraries</span>. Also for event handlers
+                    and interactive UI.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">SSR / SSG / ISR / CSR?</span>
+                <span class="a"><strong>SSR</strong>: per request. <strong>SSG</strong>: build time.
+                    <strong>ISR</strong>: SSG with revalidation. <strong>CSR</strong>: browser after initial
+                    load.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Metadata API?</span>
+                <span class="a">Define <code>&lt;head&gt;</code> via <code>metadata</code> export or
+                    <code>generateMetadata</code> in <code>layout.tsx</code>/<code>page.tsx</code>. Supports static and
+                    dynamic metadata.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Route Handler?</span>
+                <span class="a">API endpoints in <code>route.ts</code> files inside <code>app/</code>. Export
+                    <code>GET</code>, <code>POST</code>, etc. Equivalent of Pages Router API routes.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Middleware?</span>
+                <span class="a">Runs <span class="highlight">before requests complete</span>. Used for auth, redirects,
+                    rewrites, headers, logging. Runs on Edge runtime. Configurable <code>matcher</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Authentication in Next?</span>
+                <span class="a">Used <strong>NextAuth.js</strong> (Auth.js) with built‑in providers and session
+                    management. Alternative: custom JWT with <code>iron-session</code> and middleware route
+                    protection.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Why NextAuth?</span>
+                <span class="a">Built‑in <span class="highlight">OAuth providers</span>, session handling, CSRF
+                    protection, JWT + DB sessions, Server Components support, token rotation.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Dynamic Routing?</span>
+                <span class="a">Square brackets in folder names: <code>app/blog/[slug]/page.tsx</code>. Access via
+                    <code>params</code>. Catch‑all: <code>[...slug]</code>, optional: <code>[[...slug]]</code>.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Loading.tsx / Error.tsx?</span>
+                <span class="a"><strong>Loading.tsx</strong>: fallback UI wrapped in Suspense.
+                    <strong>Error.tsx</strong>: catches errors and displays custom error UI. Both per‑route or
+                    global.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Suspense / Streaming?</span>
+                <span class="a"><strong>Suspense</strong>: shows fallback while children load.
+                    <strong>Streaming</strong>: sends HTML chunks as ready, improving TTFB and perceived
+                    performance.</span>
+            </div>
+        </div>
+
+        <!-- ========== REACT ========== -->
+        <h2 id="react">⚛️ React</h2>
+        <div class="qa-grid">
+            <div class="qa-item">
+                <span class="q">Why Virtual DOM?</span>
+                <span class="a">A <span class="highlight">lightweight in‑memory representation</span> of the DOM. React
+                    diffs the new tree against the old and updates only changed nodes, batching expensive DOM
+                    operations.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">useMemo / useCallback / React.memo?</span>
+                <span class="a"><strong>useMemo</strong>: caches computed values. <strong>useCallback</strong>: caches
+                    function references. <strong>React.memo</strong>: prevents re‑render if props haven't changed
+                    (shallow comparison).</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Context API?</span>
+                <span class="a">Passes data through the tree without prop drilling. Good for global state (theme, auth,
+                    language). Can cause <span class="highlight">unnecessary re‑renders</span> when context value
+                    changes.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Zustand?</span>
+                <span class="a"><span class="highlight">Lightweight state management</span> with minimal boilerplate.
+                    Creates stores, selectively re‑renders only components using updated state. More scalable than
+                    Context for complex state.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">TanStack Query (React Query)?</span>
+                <span class="a"><span class="highlight">Server‑state management</span> library. Handles fetching,
+                    caching, syncing, updating. Features: background refetch, pagination, infinite queries, optimistic
+                    updates.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Why React Query?</span>
+                <span class="a">Manages the <span class="highlight">entire lifecycle</span> of server state: caching,
+                    background updates, retries, stale‑while‑revalidate. Reduces network requests and
+                    boilerplate.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">Cache in React Query?</span>
+                <span class="a">Stores fetched data with metadata: <code>staleTime</code> (how long fresh) and
+                    <code>cacheTime</code> (how long in cache after unused). Auto‑updates in background.</span>
+            </div>
+            <div class="qa-item">
+                <span class="q">invalidateQueries?</span>
+                <span class="a">Marks cached queries as <span class="highlight">stale</span>, triggering background
+                    refetch. Used after mutations to sync UI with latest server state.</span>
+            </div>
+        </div>
+
+        <!-- ========== SOFT SKILLS ========== -->
+        <section class="soft-section" id="soft">
+            <h2>🧑‍💻 Soft Skills (Frontend Focus)</h2>
+            <div class="qa-grid">
+                <div class="qa-item">
+                    <span class="q">How do you handle a designer's request that would hurt accessibility?</span>
+                    <span class="a">I <span class="highlight">educate, don't dictate</span>. I show them how screen
+                        readers announce their design and propose an alternative that keeps the visual intent but fixes
+                        contrast/focus order. I frame it as "here's how more users can enjoy your design."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you push back on a PM who wants a feature that will slow down the app?</span>
+                    <span class="a">I bring <span class="highlight">data</span>: Lighthouse scores, bundle size delta,
+                        or a quick prototype benchmark. I offer alternatives (lazy load, feature flag, smaller scope)
+                        and let them decide with full information. I never just say "it's slow."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you explain a rendering performance issue to a backend engineer?</span>
+                    <span class="a">I show the <span class="highlight">waterfall chart</span> and point to the specific
+                        slow API. I say "this endpoint takes 1.2s and blocks our initial render." I avoid React jargon
+                        and focus on the shared goal: fast user experience.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you handle a disagreement about state management (Redux vs Context vs
+                        Zustand)?</span>
+                    <span class="a">I ask about the <span class="highlight">actual pain</span>: is it re‑renders,
+                        boilerplate, or debugging? I propose a small experiment: migrate one feature and measure bundle
+                        size + dev velocity. Let the evidence decide.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you mentor a junior frontend developer?</span>
+                    <span class="a">I pair on real UI tickets, explain <span class="highlight">why</span> we use certain
+                        patterns (e.g., why <code>useCallback</code> here), review PRs with questions, and give them
+                        ownership of a small component or page end‑to‑end.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you handle a UI bug that only happens on Safari?</span>
+                    <span class="a">I <span class="highlight">reproduce first</span>, then isolate: is it CSS, JS, or
+                        polyfill? I check caniuse.com, test a minimal case in Safari, and document the fix with a
+                        comment so nobody removes it later. I never guess.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you stay calm when a critical UI bug hits production?</span>
+                    <span class="a">I follow a <span class="highlight">checklist</span>: (1) confirm scope (all users or
+                        a subset?), (2) roll back if possible, (3) communicate in the incident channel, (4) fix forward.
+                        I mute Slack noise and focus on one hypothesis at a time.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you collaborate with backend engineers on API changes?</span>
+                    <span class="a">I <span class="highlight">share the frontend contract early</span>: "I need
+                        <code>user.avatarUrl</code> as a string, not null." I use TypeScript types, mock servers, and
+                        OpenAPI specs. I treat the API as a shared product, not a black box.</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">Tell me about a time you disagreed with a UI/UX decision.</span>
+                    <span class="a">A PM wanted infinite scroll on a settings page. I documented my <span
+                            class="highlight">concerns in writing</span> (discoverability, back button, accessibility)
+                        but committed once the decision was made. Later we A/B tested and switched to pagination — and I
+                        led the change without an "I told you so."</span>
+                </div>
+                <div class="qa-item">
+                    <span class="q">How do you keep your team informed about frontend changes?</span>
+                    <span class="a">I write short <span class="highlight">changelogs and design notes</span> for every
+                        breaking UI change, use feature flags for gradual rollouts, and share before/after screenshots.
+                        I also run a monthly "frontend guild" where anyone can ask about patterns.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pager -->
+        <nav class="pager">
+            <a href="backend-qa.html">🟢 Backend</a>
+            <a href="frontend-qa.html" class="active">⚛️ Frontend</a>
+            <a href="devops-qa.html">🐳 DevOps</a>
+        </nav>
+
+        <div class="footnote">
+            ✅ Frontend Q&amp;A · JavaScript · TypeScript · Vue · Nuxt · Next.js · React · Soft Skills
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            backToTopBtn.classList.toggle("visible", window.scrollY > 300);
+        });
+        backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        document.querySelectorAll(".nav-menu a").forEach((link) => {
+            link.addEventListener("click", function (e) {
+                const targetId = this.getAttribute("href");
+                if (targetId.startsWith("#")) {
+                    e.preventDefault();
+                    const el = document.querySelector(targetId);
+                    if (el) {
+                        const navH = document.querySelector(".nav-menu").offsetHeight;
+                        const pos = el.getBoundingClientRect().top + window.pageYOffset - navH - 10;
+                        window.scrollTo({ top: pos, behavior: "smooth" });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

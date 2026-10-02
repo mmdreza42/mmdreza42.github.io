@@ -1,0 +1,3860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Interview Q&A · Backend & Full-Stack</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0f1a;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      padding: clamp(0.75rem, 4vw, 2rem) clamp(0.5rem, 3vw, 1rem);
+      color: #e5edf5;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===== STICKY NAVIGATION (responsive) ===== */
+    .nav-menu {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #0f1622;
+      border-bottom: 2px solid #2b3648;
+      padding: 0.5rem clamp(0.6rem, 2vw, 1.5rem);
+      margin-bottom: 1.2rem;
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem 0.6rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      transition: border-radius 0.2s;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .nav-menu .nav-title {
+      font-weight: 700;
+      color: #5f9eff;
+      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+      margin-right: 0.3rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .nav-menu a {
+      color: #a0bada;
+      text-decoration: none;
+      font-size: clamp(0.6rem, 2.2vw, 0.78rem);
+      font-weight: 500;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      line-height: 1.3;
+    }
+
+    .nav-menu a:hover {
+      background: #1e2a3a;
+      color: #d6e6ff;
+      border-color: #2f405a;
+    }
+
+    .nav-menu .nav-emoji {
+      margin-right: 0.2rem;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #141a26;
+      border-radius: clamp(1rem, 5vw, 2rem);
+      padding: clamp(1rem, 4vw, 2.5rem);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      border: 1px solid #2b3648;
+    }
+
+    /* ===== HEADINGS ===== */
+    h1 {
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      font-weight: 600;
+      border-bottom: 4px solid #2b3a4e;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      color: #f0f7ff;
+      line-height: 1.3;
+    }
+
+    h1 small {
+      font-size: clamp(0.7rem, 3vw, 1rem);
+      font-weight: 400;
+      color: #9bb5d4;
+      margin-left: 0.3rem;
+      line-height: 1.4;
+    }
+
+    h2 {
+      font-size: clamp(1.25rem, 4.5vw, 1.6rem);
+      font-weight: 600;
+      margin-top: clamp(1.5rem, 5vw, 2.2rem);
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px dashed #2f4057;
+      color: #d6e6ff;
+      scroll-margin-top: 80px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: clamp(1rem, 3.8vw, 1.2rem);
+      font-weight: 600;
+      margin-top: 1.6rem;
+      margin-bottom: 0.3rem;
+      color: #c4d9f5;
+      background: #1e2a3a;
+      padding: 0.15rem 1rem 0.15rem 0.8rem;
+      border-radius: 0 20px 20px 0;
+      border-left: 5px solid #3b82f6;
+      display: inline-block;
+      scroll-margin-top: 80px;
+      line-height: 1.4;
+      max-width: 100%;
+      word-break: break-word;
+    }
+
+    /* ===== Q&A GRID ===== */
+    .qa-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.6rem 0;
+      margin: 0.8rem 0 1.2rem 0;
+    }
+
+    .qa-item {
+      display: grid;
+      grid-template-columns: 1fr 2.5fr;
+      gap: 0.5rem 1.5rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 12px;
+      background: #101723;
+      border-left: 3px solid #2a3f5a;
+      align-items: start;
+      transition: background 0.2s;
+      word-break: break-word;
+    }
+
+    .qa-item:hover {
+      background: #1a2536;
+      border-left-color: #3b82f6;
+    }
+
+    .qa-item .q {
+      font-weight: 600;
+      color: #b6d0f0;
+      font-size: clamp(0.85rem, 2.8vw, 0.98rem);
+      padding-top: 0.1rem;
+      line-height: 1.4;
+    }
+
+    .qa-item .q::before {
+      content: "Q: ";
+      color: #5f9eff;
+      font-weight: 700;
+    }
+
+    .qa-item .a {
+      color: #d6e5f5;
+      font-size: clamp(0.83rem, 2.8vw, 0.97rem);
+      line-height: 1.6;
+    }
+
+    .qa-item .a::before {
+      content: "A: ";
+      color: #5cc4a0;
+      font-weight: 600;
+    }
+
+    .qa-item .a code,
+    .inline-code {
+      background: #1f2b3d;
+      padding: 0.05rem 0.4rem;
+      border-radius: 12px;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      color: #d6e5ff;
+      border: 1px solid #2f405a;
+      word-break: break-word;
+      display: inline;
+      line-height: 1.4;
+    }
+
+    .qa-item .a .highlight {
+      background: #2b3a4f;
+      padding: 0.05rem 0.3rem;
+      border-radius: 4px;
+      color: #ffd966;
+      font-weight: 500;
+    }
+
+    .qa-item .a pre {
+      background: #0b0f1a;
+      color: #d4d4d4;
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      border: 1px solid #2b3648;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      margin: 0.5rem 0;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-width: 100%;
+    }
+
+    .qa-item .a pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    /* ===== FOOTNOTE ===== */
+    .footnote {
+      margin-top: 2.5rem;
+      background: #1a2332;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      text-align: center;
+      color: #a0bada;
+      border: 1px solid #2d3f56;
+      font-size: clamp(0.75rem, 2.6vw, 0.95rem);
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    /* ===== BACK TO TOP BUTTON ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: clamp(0.75rem, 3vw, 2rem);
+      right: clamp(0.75rem, 3vw, 2rem);
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: clamp(40px, 8vw, 48px);
+      height: clamp(40px, 8vw, 48px);
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+      transition: all 0.3s;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+
+    /* ===== RESPONSIVE BREAKPOINTS ===== */
+
+    /* Tablet & below: stack Q&A columns */
+    @media (max-width: 720px) {
+      .container {
+        padding: 1.2rem;
+      }
+
+      .qa-item {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+        padding: 0.6rem 0.7rem;
+      }
+
+      .qa-item .q {
+        font-size: 0.95rem;
+      }
+
+      .qa-item .a {
+        font-size: 0.9rem;
+      }
+
+      .nav-menu {
+        padding: 0.4rem 0.8rem;
+        gap: 0.3rem 0.5rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .nav-menu a {
+        font-size: 0.68rem;
+        padding: 0.1rem 0.4rem;
+      }
+
+      .nav-menu .nav-title {
+        font-size: 0.72rem;
+        width: 100%;
+        margin-bottom: 0.15rem;
+        text-align: center;
+      }
+
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Small phones (≤480px) */
+    @media (max-width: 480px) {
+      body {
+        padding: 0.5rem 0.3rem;
+      }
+
+      .container {
+        padding: 0.9rem;
+        border-radius: 1rem;
+      }
+
+      h1 {
+        font-size: 1.2rem;
+        gap: 0.2rem;
+        border-bottom-width: 3px;
+      }
+
+      h1 small {
+        font-size: 0.65rem;
+        display: block;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.2rem;
+      }
+
+      h2 {
+        font-size: 1.15rem;
+        margin-top: 1.2rem;
+        padding-bottom: 0.2rem;
+      }
+
+      h3 {
+        font-size: 0.95rem;
+        padding: 0.1rem 0.7rem 0.1rem 0.6rem;
+        border-left-width: 4px;
+      }
+
+      .qa-item {
+        padding: 0.5rem 0.6rem;
+        border-left-width: 2px;
+        border-radius: 8px;
+      }
+
+      .qa-item .q {
+        font-size: 0.87rem;
+      }
+
+      .qa-item .a {
+        font-size: 0.84rem;
+      }
+
+      .qa-item .a code,
+      .inline-code {
+        font-size: 0.68rem;
+        padding: 0.05rem 0.3rem;
+      }
+
+      .nav-menu {
+        padding: 0.35rem 0.5rem;
+        gap: 0.2rem 0.35rem;
+        border-radius: 6px;
+      }
+
+      .nav-menu a {
+        font-size: 0.6rem;
+        padding: 0.1rem 0.35rem;
+      }
+
+      .nav-menu .nav-emoji {
+        margin-right: 0.1rem;
+      }
+
+      .footnote {
+        font-size: 0.7rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 20px;
+        margin-top: 1.5rem;
+      }
+
+      .back-to-top {
+        bottom: 0.6rem;
+        right: 0.6rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Very small phones (≤360px) */
+    @media (max-width: 360px) {
+      .qa-item .q {
+        font-size: 0.8rem;
+      }
+
+      .qa-item .a {
+        font-size: 0.78rem;
+      }
+
+      .qa-item .a code {
+        font-size: 0.62rem;
+      }
+
+      .nav-menu a {
+        font-size: 0.55rem;
+        padding: 0.05rem 0.25rem;
+      }
+
+      h2 {
+        font-size: 1.05rem;
+      }
+
+      h3 {
+        font-size: 0.88rem;
+      }
+    }
+
+    /* Large screens: keep grid Q&A side-by-side but adjust ratio for better readability */
+    @media (min-width: 1000px) {
+      .qa-item {
+        grid-template-columns: 1fr 2.8fr;
+        gap: 0.5rem 2rem;
+      }
+    }
+
+    /* Touch-friendly adjustments */
+    @media (hover: none) {
+      .qa-item:hover {
+        background: #101723;
+        border-left-color: #2a3f5a;
+      }
+
+      .nav-menu a:hover {
+        background: transparent;
+        color: #a0bada;
+        border-color: transparent;
+      }
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+
+      .back-to-top {
+        transition: opacity 0.1s, visibility 0.1s;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+        padding: 0.5in;
+      }
+
+      .container {
+        box-shadow: none;
+        border: none;
+        background: white;
+        padding: 0;
+      }
+
+      .nav-menu,
+      .back-to-top {
+        display: none;
+      }
+
+      .qa-item {
+        background: none;
+        border-left: 2px solid #ccc;
+        break-inside: avoid;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: black;
+      }
+
+      .qa-item .q {
+        color: #333;
+      }
+
+      .qa-item .a {
+        color: #222;
+      }
+
+      .qa-item .a code {
+        background: #f0f0f0;
+        border-color: #ccc;
+        color: #111;
+      }
+
+      .qa-item .a .highlight {
+        background: #eee;
+        color: #333;
+      }
+
+      .qa-item .a pre {
+        background: #f5f5f5;
+        border-color: #ccc;
+        color: #111;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== STICKY NAVIGATION MENU ===== -->
+  <nav class="nav-menu" id="topNav">
+    <span class="nav-title">📑 Quick Jump</span>
+    <a href="#js-ts"><span class="nav-emoji">📘</span>JS/TS</a>
+    <a href="#nodejs"><span class="nav-emoji">🟢</span>Node.js</a>
+    <a href="#redis"><span class="nav-emoji">🔴</span>Redis</a>
+    <a href="#mongodb"><span class="nav-emoji">🍃</span>MongoDB</a>
+    <a href="#postgresql"><span class="nav-emoji">🐘</span>PostgreSQL</a>
+    <a href="#nuxt-vue"><span class="nav-emoji">🟢</span>Nuxt/Vue</a>
+    <a href="#vue"><span class="nav-emoji">🟢</span>Vue.js</a>
+    <a href="#nextjs"><span class="nav-emoji">⚡</span>Next.js</a>
+    <a href="#react"><span class="nav-emoji">⚛️</span>React</a>
+    <a href="#nestjs"><span class="nav-emoji">🦁</span>NestJS</a>
+    <a href="#rest"><span class="nav-emoji">🌐</span>REST</a>
+    <a href="#db"><span class="nav-emoji">🗄️</span>DB</a>
+    <a href="#auth"><span class="nav-emoji">🔐</span>Auth</a>
+    <a href="#docker"><span class="nav-emoji">🐳</span>Docker</a>
+    <a href="#git"><span class="nav-emoji">📦</span>Git</a>
+    <a href="#security"><span class="nav-emoji">🛡️</span>Security</a>
+    <a href="#architecture"><span class="nav-emoji">🧠</span>Architecture</a>
+    <a href="#behavioral"><span class="nav-emoji">🧑‍💻</span>Behavioral</a>
+  </nav>
+
+  <div class="container">
+    <h1>
+      ⚡ Interview Q&amp;A · Full‑Stack
+      <small>TypeScript · Nuxt.js · Vue.js · Next.js · React · NestJS · DB ·
+        Security</small>
+    </h1>
+
+    <!-- ========== JS / TS ========== -->
+    <h2 id="js-ts">📘 JavaScript / TypeScript</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">var, let and const?</span>
+        <span class="a"><strong>var</strong> is function‑scoped, hoisted and initialized
+          with <code>undefined</code>. It can be redeclared and updated, which
+          can lead to bugs. <strong>let</strong> is block‑scoped, hoisted but
+          in the Temporal Dead Zone (TDZ) until initialized; it can be updated
+          but not redeclared in the same scope. <strong>const</strong> is
+          block‑scoped, hoisted, and cannot be reassigned (though
+          objects/arrays can be mutated). Always prefer <code>const</code> by
+          default, and <code>let</code> when you need to reassign.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Hoisting?</span>
+        <span class="a">Hoisting is JavaScript's default behavior of moving declarations to
+          the top of their containing scope during compilation.
+          <code>var</code> declarations are hoisted with
+          <code>undefined</code>, so you can access them before declaration
+          (but get <code>undefined</code>). <code>let</code> and
+          <code>const</code> are hoisted but
+          <span class="highlight">not initialized</span> — accessing them
+          before declaration throws a <code>ReferenceError</code> due to the
+          TDZ. Function declarations are hoisted entirely, so they can be
+          called before defined.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Closure?</span>
+        <span class="a">A closure is a function that
+          <span class="highlight">remembers its lexical scope</span> even when
+          the function is executed outside that scope. For example, an inner
+          function that accesses variables from an outer function after the
+          outer function has returned. Closures are used for data privacy,
+          factory functions, and in event handlers/callbacks.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Event Loop?</span>
+        <span class="a">The Event Loop is the mechanism that enables asynchronous
+          operations in JavaScript. It continuously checks the
+          <strong>call stack</strong> and the <strong>task queues</strong>.
+          When the call stack is empty, it takes tasks from the microtask
+          queue (Promises, <code>queueMicrotask</code>) first, then from the
+          macrotask queue (setTimeout, I/O). This non‑blocking model allows
+          JavaScript to handle concurrency despite being
+          single‑threaded.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Promise vs async/await?</span>
+        <span class="a"><strong>Promises</strong> are objects representing eventual
+          completion or failure; they use <code>.then()</code> and
+          <code>.catch()</code> for chaining. <strong>async/await</strong> is
+          syntactic sugar over Promises, making asynchronous code look
+          synchronous — easier to read and debug. Under the hood,
+          <code>async</code> functions return a Promise, and
+          <code>await</code> pauses execution until the Promise resolves.
+          Error handling is done with <code>try/catch</code> instead of
+          <code>.catch()</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Call Stack?</span>
+        <span class="a">The Call Stack is a LIFO (Last‑In‑First‑Out) data structure that
+          tracks function calls. Each time a function is invoked, it is pushed
+          onto the stack; when it returns, it is popped. It records exactly
+          where we are in the program. If the stack grows too large (e.g.,
+          infinite recursion), a <code>RangeError</code> is thrown.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why TypeScript?</span>
+        <span class="a">TypeScript adds <span class="highlight">static typing</span> to
+          JavaScript, catching errors at compile time rather than at runtime.
+          It provides better IDE support (autocomplete, refactoring,
+          navigation), improves code readability and maintainability in large
+          codebases, and enables modern JavaScript features (ES6+) with
+          backward compatibility. It also makes refactoring safer and reduces
+          the need for extensive unit tests for type‑related bugs.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Interface vs Type?</span>
+        <span class="a"><strong>Interface</strong> is best for defining object shapes and
+          is <span class="highlight">extendable</span> via declaration merging
+          (you can define the same interface multiple times and they combine).
+          <strong>Type</strong> is more flexible — it can define unions,
+          intersections, primitives, tuples, and mapped types, but it cannot
+          be extended after declaration (no declaration merging). Use
+          <code>interface</code> for public APIs and object definitions; use
+          <code>type</code> for complex types or union/intersection
+          scenarios.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Generic?</span>
+        <span class="a">Generics allow you to create
+          <span class="highlight">reusable components</span> that work with a
+          variety of types while maintaining type safety. For example,
+          <code>function identity&lt;T&gt;(arg: T): T { return arg; }</code>
+          preserves the type of the argument. Generics are widely used in
+          React components, Promise types, Array methods, and utility
+          functions. They enable abstraction without losing type
+          information.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">unknown vs any?</span>
+        <span class="a"><strong>any</strong> disables all type checking — the compiler
+          allows any operation on it, which defeats the purpose of TypeScript.
+          <strong>unknown</strong> is a
+          <span class="highlight">type‑safe counterpart</span> to
+          <code>any</code>: you cannot perform operations on an
+          <code>unknown</code> value until you've narrowed it using type
+          guards (<code>typeof</code>, <code>instanceof</code>, or custom
+          checks). This forces you to handle the type properly, making your
+          code safer.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">never?</span>
+        <span class="a"><code>never</code> represents values that
+          <span class="highlight">never occur</span>. It is the return type of
+          functions that always throw an error or have infinite loops. It is
+          also used in exhaustive type checking — ensuring all possible cases
+          are handled in a union type. <code>never</code> is a subtype of
+          every type, but no type is a subtype of <code>never</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Utility Types?</span>
+        <span class="a">
+          <strong>Partial</strong>: makes all properties optional.
+          <strong>Required</strong>: makes all properties required.
+          <strong>Pick&lt;T, K&gt;</strong>: selects a subset of properties.
+          <strong>Omit&lt;T, K&gt;</strong>: removes properties.
+          <strong>Record&lt;K, T&gt;</strong>: defines a key‑value pair type.
+          <strong>Readonly</strong>: makes all properties read‑only. These are
+          built‑in mapped types that help transform existing types without
+          duplication. <br /><br />
+          <strong>Examples:</strong><br />
+          <code style="font-size: 0.75em">Partial&lt;{ name: string; age: number }&gt; // { name?: string;
+              age?: number }</code><br />
+          <code style="font-size: 0.75em">Required&lt;{ name?: string; age?: number }&gt; // { name:
+              string; age: number }</code><br />
+          <code style="font-size: 0.7em">Pick&lt;{ name: string; age: number; email: string }, 'name' |
+              'age'&gt; // { name: string; age: number }</code><br />
+          <code style="font-size: 0.75em">Omit&lt;{ name: string; age: number; email: string }, 'email'&gt;
+              // { name: string; age: number }</code><br />
+          <code style="font-size: 0.75em">Record&lt;'id' | 'name', string&gt; // { id: string; name: string
+              }</code><br />
+          <code style="font-size: 0.75em">Readonly&lt;{ name: string; age: number }&gt; // { readonly name:
+              string; readonly age: number }</code>
+        </span>
+      </div>
+    </div>
+
+    <!-- ========== NODE.JS ========== -->
+    <h2 id="nodejs">🟢 Node.js</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is Node.js?</span>
+        <span class="a">
+          <strong>Node.js</strong> is a JavaScript runtime built on Chrome's
+          <span class="highlight">V8 JavaScript Engine</span>. It allows
+          JavaScript to run outside the browser and is designed for building
+          fast, scalable, event-driven server-side applications.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the V8 Engine?</span>
+        <span class="a">
+          <strong>V8</strong> is Google's open-source JavaScript engine
+          written in C++. It compiles JavaScript directly into native machine
+          code using
+          <span class="highlight">Just-In-Time (JIT) compilation</span>,
+          making JavaScript execution extremely fast.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is libuv?</span>
+        <span class="a">
+          <strong>libuv</strong> is the C library that powers Node.js
+          asynchronous operations. It provides the
+          <span class="highlight">Event Loop, Thread Pool, and asynchronous I/O</span>, allowing Node.js to perform
+          non-blocking file system, networking,
+          DNS, and other operations.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Why is Node.js single-threaded?</span>
+        <span class="a">
+          JavaScript execution runs on a
+          <span class="highlight">single main thread</span>. Instead of
+          creating one thread per request, Node.js delegates I/O operations to
+          <code>libuv</code> and the operating system, allowing the main
+          thread to continue executing other tasks.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Event-driven architecture?</span>
+        <span class="a">
+          Node.js follows an
+          <span class="highlight">Event-driven architecture</span>, meaning it
+          responds to events such as HTTP requests, file reads, timers, or
+          socket messages by executing their registered callbacks.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Non-blocking I/O?</span>
+        <span class="a">
+          Non-blocking I/O means Node.js
+          <span class="highlight">does not wait</span>
+          for I/O operations (database, file system, network) to finish.
+          Instead, it delegates the operation to <code>libuv</code> and
+          continues executing other JavaScript code.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the Event Loop?</span>
+        <span class="a">
+          The <strong>Event Loop</strong> is the mechanism that enables
+          Node.js to perform non-blocking operations. It continuously checks
+          whether the <span class="highlight">Call Stack is empty</span>. When
+          it is, the Event Loop executes pending callbacks from its phases
+          while also processing the <code>process.nextTick()</code> queue and
+          the Promise microtask queue.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What are the Event Loop phases?</span>
+        <span class="a">
+          The Event Loop consists of six phases:
+          <strong>Timers → Pending Callbacks → Idle/Prepare → Poll → Check → Close
+            Callbacks</strong>. Between phases, Node.js processes the
+          <span class="highlight">process.nextTick queue</span>
+          and the
+          <span class="highlight">Promise microtask queue</span>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the Call Stack?</span>
+        <span class="a">
+          The <strong>Call Stack</strong> is the data structure where
+          JavaScript executes synchronous function calls.
+          <span class="highlight">Only one function executes at a time</span>.
+          The Event Loop starts processing asynchronous callbacks only after
+          the Call Stack becomes empty.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Microtask?</span>
+        <span class="a">
+          A <strong>Microtask</strong> is a high-priority asynchronous
+          callback. Promise callbacks (<code>.then()</code>,
+          <code>.catch()</code>, <code>.finally()</code>), <code>await</code>,
+          and <code>queueMicrotask()</code> are executed from the
+          <span class="highlight">Microtask Queue</span> before the Event Loop
+          proceeds to the next phase.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Macrotask?</span>
+        <span class="a">
+          Macrotasks are asynchronous callbacks scheduled by APIs such as
+          <code>setTimeout()</code>, <code>setInterval()</code>,
+          <code>setImmediate()</code>, and I/O operations. They are executed
+          by the
+          <span class="highlight">Event Loop phases</span>
+          after all pending microtasks have finished.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>process.nextTick()</code>?</span>
+        <span class="a">
+          <code>process.nextTick()</code> schedules a callback to execute
+          <span class="highlight">immediately after the current operation finishes</span>, before the Event Loop
+          continues to the next phase. It has higher
+          priority than Promise microtasks.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>setImmediate()</code>?</span>
+        <span class="a">
+          <code>setImmediate()</code> schedules a callback to execute during
+          the <span class="highlight">Check phase</span> of the Event Loop.
+          When used inside an I/O callback, it usually executes before
+          <code>setTimeout(fn, 0)</code>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the difference between <code>setTimeout()</code> and
+          <code>setImmediate()</code>?</span>
+        <span class="a">
+          <code>setTimeout(fn, 0)</code> executes during the
+          <strong>Timers</strong> phase after the minimum delay.
+          <code>setImmediate()</code> executes during the
+          <strong>Check</strong> phase.
+          <span class="highlight">Their execution order is not guaranteed in the main module</span>, but inside an I/O
+          callback, <code>setImmediate()</code> usually
+          runs first.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Concurrency vs Parallelism?</span>
+        <span class="a">
+          <strong>Concurrency</strong> means handling multiple tasks by
+          switching between them efficiently.
+          <strong>Parallelism</strong> means executing multiple tasks at the
+          same time using multiple CPU cores. Node.js is
+          <span class="highlight">concurrent by default</span>
+          and can achieve parallelism using Worker Threads or Cluster.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">CPU-bound vs I/O-bound tasks?</span>
+        <span class="a">
+          <strong>CPU-bound tasks</strong> spend most of their time performing
+          computations (image processing, encryption, video encoding).
+          <strong>I/O-bound tasks</strong> spend most of their time waiting
+          for databases, files, or network operations. Node.js performs best
+          with <span class="highlight">I/O-bound applications</span>.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is asynchronous programming?</span>
+        <span class="a">
+          Asynchronous programming allows a program to
+          <span class="highlight">start a task without waiting for it to finish</span>. While the task is running (e.g.,
+          reading a file or making an HTTP
+          request), Node.js continues executing other code, improving
+          responsiveness and scalability.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a callback?</span>
+        <span class="a">
+          A callback is a
+          <span class="highlight">function passed as an argument</span>
+          to another function that is executed after an asynchronous operation
+          completes.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Callback Hell?</span>
+        <span class="a">
+          Callback Hell occurs when multiple nested callbacks make code
+          difficult to read, maintain, and debug. It can be avoided by using
+          <span class="highlight">Promises</span> or
+          <span class="highlight">async/await</span>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Promise?</span>
+        <span class="a">
+          A Promise is an object representing the
+          <span class="highlight">eventual result of an asynchronous operation</span>. It has three states:
+          <strong>Pending</strong>,
+          <strong>Fulfilled</strong>, and <strong>Rejected</strong>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Promise states?</span>
+        <span class="a">
+          <strong>Pending</strong> → operation is still running.<br />
+          <strong>Fulfilled</strong> → operation completed successfully.<br />
+          <strong>Rejected</strong> → operation failed with an error.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What does <code>async</code> do?</span>
+        <span class="a">
+          The <code>async</code> keyword makes a function always
+          <span class="highlight">return a Promise</span>. If the function
+          returns a normal value, JavaScript automatically wraps it in a
+          resolved Promise.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What does <code>await</code> do?</span>
+        <span class="a">
+          <code>await</code> pauses only the
+          <span class="highlight">current async function</span>
+          until the awaited Promise settles. It does
+          <strong>not</strong> block the Event Loop or the entire Node.js
+          process.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Promise vs async/await?</span>
+        <span class="a">
+          Both use Promises internally.
+          <code>async/await</code> is simply
+          <span class="highlight">syntactic sugar</span>
+          that makes asynchronous code look like synchronous code, improving
+          readability.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>Promise.all()</code>?</span>
+        <span class="a">
+          <code>Promise.all()</code> executes multiple Promises concurrently.
+          It
+          <span class="highlight">resolves only if all Promises succeed</span>, and rejects immediately if any Promise
+          rejects.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>Promise.allSettled()</code>?</span>
+        <span class="a">
+          <code>Promise.allSettled()</code> waits until
+          <span class="highlight">every Promise finishes</span>, regardless of
+          whether they are fulfilled or rejected. It returns the status of
+          each Promise.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>Promise.race()</code>?</span>
+        <span class="a">
+          <code>Promise.race()</code> settles with the
+          <span class="highlight">first Promise that completes</span>, whether
+          it resolves or rejects.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>Promise.any()</code>?</span>
+        <span class="a">
+          <code>Promise.any()</code> resolves with the
+          <span class="highlight">first fulfilled Promise</span>. It rejects
+          only if every Promise rejects.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">How do you handle errors with async/await?</span>
+        <span class="a">
+          Errors should be handled using
+          <span class="highlight">try...catch</span>. Any rejected Promise
+          inside an <code>await</code> expression throws an exception.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>queueMicrotask()</code>?</span>
+        <span class="a">
+          <code>queueMicrotask()</code> schedules a callback in the
+          <span class="highlight">Microtask Queue</span>. It runs after the
+          current synchronous code completes but before the Event Loop
+          proceeds to the next phase.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Execution order in Node.js?</span>
+        <span class="a">
+          <pre>
+console.log(1);
+
+process.nextTick(() => console.log(2));
+
+Promise.resolve().then(() => console.log(3));
+
+setImmediate(() => console.log(4));
+
+setTimeout(() => console.log(5), 0);
+
+console.log(6);
+</pre>
+
+          Output:
+
+          <pre>
+1
+6
+2
+3
+4 or 5*
+</pre>
+
+          <small>
+            * In the main module, the order of
+            <code>setImmediate()</code> and
+            <code>setTimeout(0)</code>
+            is not guaranteed.
+          </small>
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Execution priority in Node.js?</span>
+        <span class="a">
+          <pre>
+1. Synchronous code (Call Stack)
+
+2. process.nextTick()
+
+3. Promise / await / queueMicrotask()
+
+4. Event Loop phases
+   ├── Timers
+   ├── Pending Callbacks
+   ├── Poll
+   ├── Check
+   └── Close Callbacks
+</pre>
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Can async/await improve performance?</span>
+        <span class="a">
+          No.
+          <span class="highlight">async/await improves readability</span>, not
+          performance. Performance depends on how asynchronous tasks are
+          scheduled, for example using <code>Promise.all()</code> when tasks
+          are independent.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">When should you use <code>Promise.all()</code>?</span>
+        <span class="a">
+          Use <code>Promise.all()</code> when multiple asynchronous operations
+          are <span class="highlight">independent of each other</span>.
+          Running them concurrently is faster than awaiting each one
+          sequentially.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Sequential vs Concurrent execution?</span>
+        <span class="a">
+          Sequential execution waits for one task to finish before starting
+          the next. Concurrent execution starts multiple tasks together. For
+          independent asynchronous operations,
+          <span class="highlight">concurrent execution is usually faster</span>.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is EventEmitter?</span>
+        <span class="a">
+          <strong>EventEmitter</strong> is the core class that enables
+          <span class="highlight">event-driven programming</span> in Node.js.
+          Objects can emit events using <code>emit()</code> and listen for them using
+          <code>on()</code> or <code>once()</code>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the difference between <code>on()</code> and <code>once()</code>?</span>
+        <span class="a">
+          <code>on()</code> registers a listener that executes
+          <span class="highlight">every time</span> the event is emitted.
+          <code>once()</code> registers a listener that executes
+          <span class="highlight">only once</span> and is automatically removed.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Buffer?</span>
+        <span class="a">
+          A <strong>Buffer</strong> is a global Node.js class used to work with
+          <span class="highlight">raw binary data</span>.
+          Buffers are commonly used for file systems, streams, sockets,
+          images, audio, and network communication.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Why do we need Buffers?</span>
+        <span class="a">
+          JavaScript strings work with text, but files and network data are often
+          binary.
+          <span class="highlight">Buffers allow Node.js to efficiently store and manipulate binary data.</span>
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Streams?</span>
+        <span class="a">
+          Streams are objects that process
+          <span class="highlight">data chunk by chunk</span>
+          instead of loading the entire data into memory.
+          They improve memory efficiency and are ideal for large files and network communication.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Types of Streams?</span>
+        <span class="a">
+          Node.js provides four types of streams:
+          <strong>Readable</strong>,
+          <strong>Writable</strong>,
+          <strong>Duplex</strong>,
+          and
+          <strong>Transform</strong>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Readable Stream?</span>
+        <span class="a">
+          A Readable Stream is used to
+          <span class="highlight">read data</span>
+          from a source, such as files, HTTP requests, or sockets.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Writable Stream?</span>
+        <span class="a">
+          A Writable Stream is used to
+          <span class="highlight">write data</span>
+          to a destination such as files, HTTP responses, or sockets.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Duplex Stream?</span>
+        <span class="a">
+          A Duplex Stream supports
+          <span class="highlight">both reading and writing</span>.
+          Examples include TCP sockets.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is a Transform Stream?</span>
+        <span class="a">
+          A Transform Stream is a special Duplex Stream that
+          <span class="highlight">modifies data while it is being read and written</span>,
+          such as compression or encryption.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is <code>pipe()</code>?</span>
+        <span class="a">
+          <code>pipe()</code> connects one stream to another,
+          automatically transferring data while handling
+          <span class="highlight">backpressure</span>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Backpressure?</span>
+        <span class="a">
+          Backpressure occurs when a
+          <span class="highlight">Readable Stream produces data faster than a Writable Stream can consume it</span>.
+          Node.js streams automatically manage backpressure to prevent excessive memory usage.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Module Caching?</span>
+        <span class="a">
+          When a module is loaded using <code>require()</code>,
+          Node.js
+          <span class="highlight">loads and executes it only once</span>.
+          Subsequent <code>require()</code> calls return the cached module.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is the difference between <code>exports</code> and <code>module.exports</code>?</span>
+        <span class="a">
+          <code>exports</code> is a reference to
+          <code>module.exports</code>.
+          Reassigning <code>module.exports</code> changes the exported object,
+          while reassigning <code>exports</code> does not.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Dynamic Import?</span>
+        <span class="a">
+          Dynamic import uses
+          <code>import()</code>
+          to load modules
+          <span class="highlight">at runtime</span>.
+          It returns a Promise and is useful for lazy loading.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is package.json?</span>
+        <span class="a">
+          <code>package.json</code> is the project's manifest file.
+          It contains metadata, dependencies, scripts,
+          version information, and project configuration.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is package-lock.json?</span>
+        <span class="a">
+          <code>package-lock.json</code> locks the exact versions of installed
+          dependencies, ensuring
+          <span class="highlight">consistent installations across environments</span>.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">npm vs npx?</span>
+        <span class="a">
+          <strong>npm</strong> installs and manages packages.
+          <strong>npx</strong> executes packages without requiring a global installation.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Dependencies vs DevDependencies?</span>
+        <span class="a">
+          <strong>dependencies</strong> are required in production.
+          <strong>devDependencies</strong> are needed only during development,
+          such as testing tools, linters, and build tools.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What are Peer Dependencies?</span>
+        <span class="a">
+          Peer dependencies specify that the
+          <span class="highlight">consumer of the package</span>
+          must install a compatible version of another package.
+          They are commonly used by libraries and plugins.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Semantic Versioning (SemVer)?</span>
+        <span class="a">
+          Semantic Versioning follows the format
+          <strong>MAJOR.MINOR.PATCH</strong>.
+          <br><br>
+          <code>1.2.3</code><br>
+          MAJOR → Breaking changes<br>
+          MINOR → New backward-compatible features<br>
+          PATCH → Backward-compatible bug fixes
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>process</code> object?</span>
+        <span class="a">
+          The global <code>process</code> object provides information about the
+          current Node.js process, including command-line arguments,
+          environment variables, memory usage, and process lifecycle events.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Common <code>process</code> properties?</span>
+        <span class="a">
+          <code>process.argv</code> → Command-line arguments<br>
+          <code>process.env</code> → Environment variables<br>
+          <code>process.cwd()</code> → Current working directory<br>
+          <code>process.exit()</code> → Exit the process
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>child_process</code> module?</span>
+        <span class="a">
+          The <code>child_process</code> module allows Node.js to
+          <span class="highlight">create and communicate with other processes</span>,
+          enabling parallel execution of external commands or programs.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Difference between <code>spawn()</code>, <code>exec()</code>, <code>execFile()</code>, and
+          <code>fork()</code>?</span>
+        <span class="a">
+          <strong>spawn()</strong> → Starts a process and streams output (best for large output).<br>
+          <strong>exec()</strong> → Runs a shell command and buffers the output.<br>
+          <strong>execFile()</strong> → Executes a file directly without a shell.<br>
+          <strong>fork()</strong> → Starts another Node.js process with built-in IPC.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Worker Threads?</span>
+        <span class="a">
+          Worker Threads enable
+          <span class="highlight">parallel execution of JavaScript code</span>
+          using multiple threads.
+          They are ideal for CPU-intensive tasks that would otherwise block the Event Loop.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">What is Cluster?</span>
+        <span class="a">
+          The Cluster module creates multiple
+          <span class="highlight">Node.js processes</span>
+          that share the same server port.
+          A primary process distributes incoming requests among worker processes,
+          allowing better utilization of multi-core CPUs.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Worker Threads vs Cluster?</span>
+        <span class="a">
+          <strong>Worker Threads</strong> create multiple threads within the same process and can share memory.<br>
+          <strong>Cluster</strong> creates multiple independent Node.js processes with separate memory spaces.
+        </span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Graceful Shutdown?</span>
+        <span class="a">
+          Graceful Shutdown is the process of
+          <span class="highlight">stopping an application safely</span>
+          by closing active connections, finishing ongoing requests, releasing resources,
+          and then exiting the process.
+        </span>
+      </div>
+
+      <div class="qa-item">
+        <span class="q">Common shutdown signals?</span>
+        <span class="a">
+          <strong>SIGINT</strong> → Sent when pressing Ctrl+C.<br>
+          <strong>SIGTERM</strong> → Sent when the operating system or container requests termination.
+        </span>
+      </div>
+    </div>
+
+    <!-- ========== REDIS ========== -->
+    <h2 id="redis">🔴 Redis</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is Redis?</span>
+        <span class="a">Redis (Remote Dictionary Server) is an
+          <span class="highlight">in‑memory data structure store</span> used
+          as a database, cache, message broker, and streaming engine. It
+          supports various data structures (strings, hashes, lists, sets,
+          sorted sets, streams) with sub‑millisecond latency. Used for
+          caching, session management, rate limiting, and real‑time
+          analytics.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What data structures does Redis support?</span>
+        <span class="a">Redis supports: <strong>String</strong> (key‑value),
+          <strong>Hash</strong> (field‑value pairs),
+          <strong>List</strong> (ordered), <strong>Set</strong> (unique,
+          unordered), <strong>Sorted Set</strong> (unique with scores),
+          <strong>Stream</strong> (log‑like), <strong>Bitmaps</strong>,
+          <strong>HyperLogLogs</strong>, and
+          <strong>Geospatial</strong> indexes.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis caching?</span>
+        <span class="a">Redis caching stores frequently accessed data in memory to
+          <span class="highlight">reduce database load</span> and improve
+          response times. Common patterns: <strong>cache‑aside</strong> (check
+          cache first, fallback to DB), <strong>read‑through</strong>,
+          <strong>write‑through</strong>, and
+          <strong>write‑behind</strong>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis TTL?</span>
+        <span class="a">TTL (Time‑To‑Live) is the
+          <span class="highlight">expiration time</span> of a Redis key. After
+          TTL expires, the key is automatically deleted. Essential for caching
+          to prevent stale data. Set TTL using
+          <code>EXPIRE key seconds</code> or
+          <code>SET key value EX seconds</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis persistence?</span>
+        <span class="a">Redis provides persistence to
+          <span class="highlight">save data to disk</span> for recovery. Two
+          options: <strong>RDB</strong> (point‑in‑time snapshots) and
+          <strong>AOF</strong> (Append‑Only File, logs every write). RDB is
+          faster for recovery but may lose recent data; AOF is more durable
+          with higher overhead.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis Pub/Sub?</span>
+        <span class="a">Redis Pub/Sub (Publish‑Subscribe) is a
+          <span class="highlight">messaging pattern</span> where publishers
+          send messages to channels and subscribers receive them. Used for
+          real‑time notifications, chat, and event‑driven architectures.
+          Messages are not stored if no subscriber is listening
+          (fire‑and‑forget).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis Sentinel?</span>
+        <span class="a">Redis Sentinel is a
+          <span class="highlight">high‑availability solution</span> for Redis.
+          It monitors Redis instances, performs automatic failover when the
+          master fails, and provides discovery for clients. Sentinel acts as a
+          configuration provider for clients to find the current master.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis Cluster?</span>
+        <span class="a">Redis Cluster is a
+          <span class="highlight">distributed Redis implementation</span> that
+          automatically shards data across multiple nodes. Uses hash slots
+          (16384 slots) to determine which node holds a key. Provides high
+          availability and scalability with automatic failover.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>ioredis</code>?</span>
+        <span class="a"><code>ioredis</code> is a
+          <span class="highlight">high‑performance Redis client</span> for
+          Node.js. Supports: promises/async, cluster mode, Sentinel,
+          streaming, and Lua scripting. Widely used in NestJS and Node.js
+          applications. Example:
+          <code>const redis = new Redis({ host: 'localhost', port: 6379 });</code></span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How to use Redis for session management?</span>
+        <span class="a">Redis is ideal for sessions because it's fast, supports TTL, and
+          can be shared across server instances. In Express, use
+          <code>connect‑redis</code> with <code>express‑session</code>. In
+          NestJS, use <code>@nestjs/session</code> with Redis store. Enables
+          stateless, scalable session handling in distributed systems.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How to use Redis for rate limiting?</span>
+        <span class="a">Rate limiting with Redis uses
+          <span class="highlight">sliding window or token bucket</span>
+          algorithms. Store a counter per user/IP with TTL, increment on each
+          request, reject if limit exceeded. Redis atomic operations (<code>INCR</code>
+          and <code>EXPIRE</code>) ensure accuracy. Use
+          <code>@nestjs/throttler</code> with Redis store.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Redis Lua scripting?</span>
+        <span class="a">Redis Lua scripting allows
+          <span class="highlight">complex operations atomically</span> on the
+          server side. Lua scripts combine multiple Redis commands into a
+          single atomic unit, reducing network round trips and ensuring
+          consistency. Useful for implementing custom algorithms and
+          transactions.</span>
+      </div>
+    </div>
+
+    <!-- ========== MONGODB ========== -->
+    <h2 id="mongodb">🍃 MongoDB</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is MongoDB?</span>
+        <span class="a">MongoDB is a
+          <span class="highlight">document‑oriented NoSQL database</span> that
+          stores data as JSON‑like documents (BSON). It's schema‑flexible,
+          horizontally scalable, and supports rich querying, indexing, and
+          aggregation. Used for unstructured data, rapid prototyping, and
+          high‑write applications.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">MongoDB vs SQL databases?</span>
+        <span class="a"><strong>MongoDB</strong> is schema‑less, stores data as documents,
+          scales horizontally via sharding, and is good for unstructured data.
+          <strong>SQL</strong> databases have rigid schemas, use tables/rows,
+          scale vertically, and excel at complex joins and ACID transactions.
+          Choose MongoDB for flexibility and scale, SQL for relational data
+          and strict consistency.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a collection in MongoDB?</span>
+        <span class="a">A collection is a
+          <span class="highlight">group of documents</span> in MongoDB,
+          similar to a table in SQL databases. Unlike SQL, collections don't
+          enforce a schema — each document can have different fields and
+          structures. This provides flexibility for evolving data
+          models.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a document in MongoDB?</span>
+        <span class="a">A document is a <span class="highlight">record in MongoDB</span>,
+          stored as BSON (binary JSON). It's a set of key‑value pairs, similar
+          to JSON objects. Documents can contain nested objects, arrays, and
+          complex data types. Each document has a unique
+          <code>_id</code> field (ObjectId by default).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is MongoDB indexing?</span>
+        <span class="a">Indexing in MongoDB
+          <span class="highlight">improves query performance</span> by
+          creating data structures (B‑trees) for frequently queried fields.
+          Types: <strong>single field</strong>,
+          <strong>compound</strong> (multiple fields),
+          <strong>text</strong> (full‑text search),
+          <strong>geospatial</strong>, and <strong>hashed</strong>. Indexes
+          have trade‑offs — they speed up reads but slow down writes and use
+          storage.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is MongoDB aggregation?</span>
+        <span class="a">The <span class="highlight">aggregation pipeline</span> is
+          MongoDB's powerful data processing framework. It processes documents
+          through stages: <code>$match</code> (filter),
+          <code>$group</code> (group by), <code>$project</code> (select
+          fields), <code>$sort</code>, <code>$lookup</code> (join with other
+          collections), <code>$unwind</code>, and <code>$addFields</code>.
+          It's used for analytics, reporting, and complex
+          transformations.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is MongoDB sharding?</span>
+        <span class="a">Sharding is MongoDB's
+          <span class="highlight">horizontal scaling method</span> that
+          distributes data across multiple servers (shards). Each shard holds
+          a subset of data based on a <strong>shard key</strong>. It enables
+          handling large datasets and high throughput. Components:
+          <strong>shards</strong> (data), <strong>mongos</strong> (query
+          router), and <strong>config servers</strong> (metadata).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is MongoDB replica set?</span>
+        <span class="a">A replica set in MongoDB is a
+          <span class="highlight">group of MongoDB instances</span> that
+          maintain the same dataset for high availability and redundancy. One
+          primary node (accepts writes) and multiple secondary nodes
+          (replicate data). If the primary fails, a secondary is automatically
+          elected as the new primary.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>mongoose</code>?</span>
+        <span class="a"><code>mongoose</code> is the
+          <span class="highlight">most popular ODM (Object Document Mapper)</span>
+          for MongoDB in Node.js. It provides schema validation, type casting,
+          middleware (hooks), and query building. Example:
+          <code>const User = mongoose.model('User', new Schema({ name: String,
+              email: String }));</code></span>
+      </div>
+      <div class="qa-item">
+        <span class="q">MongoDB vs Mongoose?</span>
+        <span class="a"><strong>MongoDB</strong> is the database itself.
+          <strong>Mongoose</strong> is a Node.js ODM library that provides
+          schema validation, middleware, and a higher‑level API for
+          interacting with MongoDB. Mongoose adds structure and validation on
+          top of the flexible MongoDB documents.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>populate</code> in Mongoose?</span>
+        <span class="a"><code>populate()</code> in Mongoose is used for
+          <span class="highlight">referencing documents</span> from other
+          collections. It automatically replaces a document's path with the
+          actual document(s) from the referenced collection. Example:
+          <code>User.find().populate('posts')</code> to populate user's posts
+          array with full post documents.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are MongoDB transactions?</span>
+        <span class="a">MongoDB supports
+          <span class="highlight">multi‑document ACID transactions</span>
+          (since version 4.0). They allow operations across multiple
+          documents, collections, and databases to be atomic. Useful for
+          financial applications where data consistency is critical. Use with
+          <code>session.startTransaction()</code> and
+          <code>session.commitTransaction()</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>$lookup</code>?</span>
+        <span class="a"><code>$lookup</code> is an aggregation stage that
+          <span class="highlight">performs a left outer join</span> with
+          another collection. It's similar to SQL JOINs. Example:
+          <code>{ $lookup: { from: 'orders', localField: 'userId', foreignField:
+              '_id', as: 'orders' } }</code>
+          to fetch a user's orders.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">MongoDB vs PostgreSQL?</span>
+        <span class="a"><strong>MongoDB</strong> for: flexible schemas, rapid iteration,
+          large volumes of unstructured data, horizontal scaling, and high
+          write throughput. <strong>PostgreSQL</strong> for: strict schemas,
+          complex relationships, ACID transactions, advanced querying, and
+          when data integrity is critical. Choose based on data model and
+          requirements.</span>
+      </div>
+    </div>
+
+    <!-- ========== POSTGRESQL ========== -->
+    <h2 id="postgresql">🐘 PostgreSQL</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is PostgreSQL?</span>
+        <span class="a">PostgreSQL is a
+          <span class="highlight">powerful, open‑source object‑relational database</span>
+          with strong ACID compliance, advanced features, and excellent
+          performance. It supports JSONB, full‑text search, custom types,
+          extensions (PostGIS, pgvector), and complex queries. It's my default
+          choice for transactional, relational data.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">PostgreSQL vs MySQL?</span>
+        <span class="a"><strong>PostgreSQL</strong> is more feature‑rich with JSONB
+          support, advanced indexing (GIN, GiST, BRIN), custom operators, and
+          better concurrency handling. <strong>MySQL</strong> is simpler,
+          often faster for simple reads, and has wider hosting support.
+          PostgreSQL is preferred for complex queries, data integrity, and
+          modern applications.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is JSONB in PostgreSQL?</span>
+        <span class="a">JSONB is a <span class="highlight">binary JSON data type</span> in
+          PostgreSQL that stores JSON data in a decomposed binary format. It's
+          faster for indexing and querying than plain JSON. Supports indexing
+          (GIN), partial updates, and querying with <code>-></code>,
+          <code>->></code>, and <code>@></code> operators. Allows combining
+          relational and document data.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are PostgreSQL indexes?</span>
+        <span class="a">PostgreSQL supports multiple index types:
+          <strong>B‑tree</strong> (default), <strong>GIN</strong> (full‑text,
+          arrays, JSONB), <strong>GiST</strong> (spatial, range types),
+          <strong>BRIN</strong> (large tables), <strong>Hash</strong>, and
+          <strong>SP‑GiST</strong>. Indexes improve query performance but add
+          write overhead. Use <code>CREATE INDEX</code> and analyze query
+          plans with <code>EXPLAIN</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a PostgreSQL view?</span>
+        <span class="a">A view is a <span class="highlight">virtual table</span> based on a
+          query result. It simplifies complex queries, provides security
+          (restrict columns), and abstracts underlying schema.
+          <strong>Materialized views</strong> are physically stored and can be
+          refreshed, providing faster access for expensive queries.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a PostgreSQL trigger?</span>
+        <span class="a">A trigger is a
+          <span class="highlight">function that automatically executes</span>
+          before or after events like INSERT, UPDATE, DELETE. Used for
+          auditing, data validation, updating timestamps, and enforcing
+          business logic. Defined using <code>CREATE TRIGGER</code> and a
+          PL/pgSQL function.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a PostgreSQL function/procedure?</span>
+        <span class="a"><strong>Functions</strong> return a value and can be used in
+          queries (like <code>SELECT my_function()</code>). They can be
+          written in PL/pgSQL, Python, etc.
+          <strong>Procedures</strong> (PostgreSQL 11+) don't return values but
+          can start/commit transactions. Used for complex business logic, data
+          transformations, and automation.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is PostgreSQL full‑text search?</span>
+        <span class="a">Full‑text search in PostgreSQL uses
+          <span class="highlight"><code>tsvector</code> and <code>tsquery</code></span>
+          for efficient text searching. Supports ranking, stemming, and
+          multiple languages. Example:
+          <code>SELECT * FROM articles WHERE to_tsvector('english', content) @@
+              to_tsquery('english', 'search & terms');</code></span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is PostgreSQL isolation level?</span>
+        <span class="a">PostgreSQL supports four isolation levels:
+          <strong>Read Uncommitted</strong> (not allowed),
+          <strong>Read Committed</strong> (default),
+          <strong>Repeatable Read</strong>, and <strong>Serializable</strong>.
+          Higher levels provide stronger consistency but may reduce
+          concurrency. Choose based on your application's consistency
+          requirements.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is MVCC in PostgreSQL?</span>
+        <span class="a">MVCC (Multi‑Version Concurrency Control) allows
+          <span class="highlight">multiple users to read and write</span>
+          simultaneously without blocking. PostgreSQL keeps multiple versions
+          of rows. Readers see a consistent snapshot, writers create new
+          versions. This eliminates read‑write conflicts and enables high
+          concurrency.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>EXPLAIN</code> in PostgreSQL?</span>
+        <span class="a"><code>EXPLAIN</code> shows the
+          <span class="highlight">query execution plan</span> — how PostgreSQL
+          plans to run a query. Use <code>EXPLAIN ANALYZE</code> to see actual
+          runtime and row counts. Essential for performance tuning,
+          identifying slow joins, missing indexes, and inefficient
+          scans.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are PostgreSQL extensions?</span>
+        <span class="a">Extensions add extra functionality to PostgreSQL. Popular ones:
+          <strong>PostGIS</strong> (geospatial data),
+          <strong>pgvector</strong> (vector similarity for AI/ML),
+          <strong>pgcrypto</strong> (cryptographic functions),
+          <strong>UUID‑osp</strong> (UUID generation), and
+          <strong>hstore</strong> (key‑value storage). Use
+          <code>CREATE EXTENSION</code> to add them.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How to optimize PostgreSQL performance?</span>
+        <span class="a">Performance optimization: use <strong>indexes</strong> on queried
+          columns, <strong>analyze</strong> and
+          <strong>vacuum</strong> regularly, tune
+          <strong>configuration parameters</strong> (shared_buffers,
+          work_mem), use <strong>connection pooling</strong> (PgBouncer),
+          partition large tables, write efficient queries, and monitor with
+          pg_stat_statements.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>pgAdmin</code>?</span>
+        <span class="a"><code>pgAdmin</code> is the
+          <span class="highlight">most popular administration tool</span> for
+          PostgreSQL. It provides a graphical interface for managing
+          databases, running queries, viewing schemas, monitoring performance,
+          and backup/restore. Essential for database administration and
+          debugging.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are connection pools in PostgreSQL?</span>
+        <span class="a">Connection pools maintain a
+          <span class="highlight">cache of database connections</span> to
+          reuse, reducing the overhead of establishing new connections. Tools:
+          <strong>PgBouncer</strong> (lightweight),
+          <strong>pgpool‑II</strong> (with load balancing). In Node.js, use
+          <code>pg.Pool</code> from the <code>pg</code> package for built‑in
+          pooling.</span>
+      </div>
+    </div>
+
+    <!-- ========== NUXT & VUE ========== -->
+    <h2 id="nuxt-vue">🟢 Nuxt & Vue</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is Nuxt?</span>
+        <span class="a">Nuxt is a <span class="highlight">Vue.js framework</span> that
+          provides server‑side rendering (SSR), static site generation (SSG),
+          automatic routing, and a modular architecture. It's similar to
+          Next.js but for Vue. Nuxt 3 is built on Vue 3 and supports the
+          Composition API, TypeScript, and the <strong>Nitro</strong> server
+          engine, which is cross‑platform (Node.js, Deno, Cloudflare Workers,
+          etc.).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Nuxt's rendering modes?</span>
+        <span class="a">Nuxt supports three main rendering modes:
+          <strong>SSR</strong> (Server‑Side Rendering) — pages are rendered on
+          the server per request; <strong>SSG</strong> (Static Site
+          Generation) — pages are pre‑rendered at build time; and
+          <strong>CSR</strong> (Client‑Side Rendering) — pages are rendered in
+          the browser. Nuxt 3 also introduces
+          <strong>Hybrid Rendering</strong> where you can mix modes per route
+          using the <code>routeRules</code> in
+          <code>nuxt.config.ts</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the Nuxt App Router?</span>
+        <span class="a">Nuxt uses a
+          <span class="highlight">file‑based routing</span> system inside the
+          <code>pages/</code> directory. Each <code>.vue</code> file becomes a
+          route. Nuxt 3 supports dynamic routes (<code>[id].vue</code>),
+          catch‑all routes (<code>[...slug].vue</code>), and nested routes
+          using directories. It also supports
+          <strong>layouts</strong> (<code>layouts/</code>),
+          <strong>middleware</strong> for route guards, and
+          <strong>pages</strong> with <code>definePageMeta</code> for per‑page
+          configuration.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the difference between Nuxt and Next?</span>
+        <span class="a"><strong>Nuxt</strong> is built on <strong>Vue.js</strong> and
+          <strong>Next</strong> is built on <strong>React</strong>. Both offer
+          SSR, SSG, file‑based routing, and API routes. Nuxt uses the
+          <strong>Nitro</strong> server engine (which is more universal),
+          while Next uses the Node.js runtime and the new App Router. Nuxt 3's
+          reactivity is based on Vue's Proxy system, while Next uses React
+          Server Components. The choice often comes down to preference between
+          Vue and React.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Vue 3's Composition API?</span>
+        <span class="a">The Composition API is a set of APIs introduced in Vue 3 that allow
+          you to <span class="highlight">organize component logic</span> using
+          functions rather than options (<code>data</code>,
+          <code>methods</code>, <code>computed</code>, etc.). It uses
+          <code>setup()</code> or the
+          <code>&lt;script setup&gt;</code> syntax, and core functions include
+          <code>ref</code> (reactive values), <code>reactive</code> (reactive
+          objects), <code>computed</code>, <code>watch</code>,
+          <code>onMounted</code>, and <code>provide/inject</code>. It enables
+          better code reuse and organization.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>&lt;script setup&gt;</code> in Vue?</span>
+        <span class="a"><code>&lt;script setup&gt;</code> is a
+          <span class="highlight">syntactic sugar</span> for using the
+          Composition API in Vue Single‑File Components (SFCs). It reduces
+          boilerplate — you don't need to export <code>setup()</code>, and
+          top‑level variables are automatically exposed to the template. It
+          also provides better performance by avoiding the overhead of the
+          <code>setup()</code> function wrapper. It's the recommended way to
+          write Vue components in Nuxt 3.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Nuxt handle data fetching?</span>
+        <span class="a">Nuxt provides composables for data fetching:
+          <strong><code>useAsyncData</code></strong> and
+          <strong><code>useFetch</code></strong>. <code>useFetch</code> is a wrapper around
+          <code>useAsyncData</code> and <code>$fetch</code> (from
+          <code>ofetch</code>) that provides automatic caching, key
+          generation, and error handling. These composables work on both
+          server and client, and they automatically deduplicate requests. Nuxt
+          3 also supports <strong><code>useLazyFetch</code></strong> and
+          <strong><code>useLazyAsyncData</code></strong> for client‑only
+          loading with <code>pending</code> state.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a Nuxt module?</span>
+        <span class="a">A Nuxt module is a
+          <span class="highlight">package that extends Nuxt's functionality</span>
+          by adding features like authentication (Nuxt Auth), PWA support,
+          analytics, CMS integration, etc. Modules are installed via npm and
+          added to the <code>modules</code> array in
+          <code>nuxt.config.ts</code>. They can hook into Nuxt's lifecycle and
+          modify the build process, add server routes, or inject
+          composables.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the difference between <code>ref</code> and
+          <code>reactive</code> in Vue?</span>
+        <span class="a"><strong><code>ref</code></strong> is used for
+          <span class="highlight">primitive values</span> and objects, and it
+          wraps the value in an object with a <code>.value</code> property.
+          <strong><code>reactive</code></strong> is used for
+          <span class="highlight">objects and arrays only</span> and returns a
+          reactive proxy directly. <code>ref</code> is more flexible because
+          it works with any type, and it's required for primitives.
+          <code>reactive</code> doesn't need <code>.value</code>, but it
+          cannot be destructured without losing reactivity (use
+          <code>toRefs</code>).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>computed</code> function in Vue?</span>
+        <span class="a"><code>computed</code> creates a
+          <span class="highlight">reactive derived state</span> that is cached
+          based on its dependencies. It only re‑evaluates when its
+          dependencies change, making it efficient for expensive calculations.
+          In the Options API, it's defined inside the
+          <code>computed</code> object; in the Composition API, it's used as a
+          function:
+          <code>const double = computed(() => count.value * 2)</code>. It's
+          read‑only by default unless you pass an object with
+          <code>get</code> and <code>set</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>watch</code> function in Vue?</span>
+        <span class="a"><code>watch</code> is used to
+          <span class="highlight">react to changes</span> in reactive data. It
+          takes a source (a ref, reactive object, or getter function) and a
+          callback that runs when the source changes. Options include
+          <code>deep</code> (for deep objects), <code>immediate</code> (run
+          immediately), and <code>flush</code> (timing).
+          <code>watchEffect</code> is a simpler version that automatically
+          tracks dependencies and runs immediately.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Nuxt handle authentication?</span>
+        <span class="a">Nuxt commonly uses
+          <strong><code>@nuxtjs/auth-next</code></strong> module or the newer
+          <strong><code>@sidebase/nuxt-auth</code></strong> for
+          authentication. These integrate with OAuth providers, JWT, and
+          session‑based auth. They provide composables like
+          <code>useSession()</code>, <code>signIn()</code>,
+          <code>signOut()</code>, and middleware for protecting routes. In
+          Nuxt 3, you can also implement custom authentication using Nitro
+          server routes with JWT and cookies.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the Nuxt <code>server/</code> directory?</span>
+        <span class="a">The <code>server/</code> directory in Nuxt 3 is where you define
+          <span class="highlight">server‑side logic</span>. It includes
+          <strong>API routes</strong> (<code>server/api/</code>),
+          <strong>server middleware</strong>
+          (<code>server/middleware/</code>), and
+          <strong>server plugins</strong> (<code>server/plugins/</code>). This
+          allows you to build a full‑stack application with a single codebase,
+          with type‑safe communication between client and server using
+          <code>useFetch</code> and <code>$fetch</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Nuxt composables?</span>
+        <span class="a">Nuxt composables are
+          <span class="highlight">reusable functions</span> that encapsulate
+          reactive logic. They are stored in the
+          <code>composables/</code> directory and are auto‑imported. Examples
+          include <code>useState</code> (reactive shared state),
+          <code>useRouter</code> (navigation), <code>useRoute</code> (route
+          info), <code>useHead</code> (SEO), and the data‑fetching
+          composables. They leverage Vue's Composition API and Nuxt's SSR
+          capabilities.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is SSR vs. SSG in Nuxt?</span>
+        <span class="a"><strong>SSR</strong> (Server‑Side Rendering) renders pages on the
+          server for each request — good for dynamic, personalized content.
+          <strong>SSG</strong> (Static Site Generation) pre‑renders pages at
+          build time — faster and cheaper for static content. Nuxt allows you
+          to use both with the <code>ssr</code> and
+          <code>target</code> options. Nuxt 3's <code>routeRules</code> lets
+          you define different rendering modes per route:
+          <code>ssr: false</code> for CSR, <code>static: true</code> for
+          SSG.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Nuxt handle SEO?</span>
+        <span class="a">Nuxt provides built‑in SEO features:
+          <strong><code>useHead</code></strong> composable for setting meta
+          tags, titles, and link tags. You can define it per page, in layouts,
+          or globally in <code>nuxt.config.ts</code>. Nuxt also supports
+          <strong>Open Graph</strong>, <strong>JSON‑LD</strong> (structured
+          data), and <strong>sitemaps</strong>. For SSR, the meta tags are
+          rendered on the server, ensuring search engines see the complete
+          content.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Nuxt plugins?</span>
+        <span class="a">Nuxt plugins are
+          <span class="highlight">files that run before your application</span>
+          is created. They are stored in the <code>plugins/</code> directory
+          and are auto‑imported. They can be used to: register Vue components
+          globally, add third‑party libraries (e.g., Vue Toast), inject values
+          into the app (<code>provide</code>), or run logic that should happen
+          once on startup. You can set <code>ssr: false</code> to run them
+          only on the client side.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>nitro</code> server?</span>
+        <span class="a"><strong>Nitro</strong> is the
+          <span class="highlight">server engine</span> used by Nuxt 3. It's a
+          universal server that can run on Node.js, Deno, Bun, Cloudflare
+          Workers, and more. It supports file‑based API routes, server
+          middleware, caching, and event‑driven architecture. Nitro also
+          provides built‑in support for <strong>server pre‑rendering</strong>,
+          <strong>serverless deployments</strong>, and
+          <strong>static hosting</strong> (via <code>output/</code>).</span>
+      </div>
+    </div>
+
+    <!-- ========== VUE.JS ========== -->
+    <h2 id="vue">🟢 Vue.js</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">What is Vue.js?</span>
+        <span class="a">Vue.js is a
+          <span class="highlight">progressive JavaScript framework</span> for
+          building user interfaces. It is designed to be incrementally
+          adoptable — you can use it as a library for specific features or as
+          a full‑framework for building entire applications. Vue focuses on
+          the view layer and provides reactive data binding, a component‑based
+          architecture, and a virtual DOM for performance. It's known for its
+          gentle learning curve, clear documentation, and versatility.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue's key features?</span>
+        <span class="a">Vue's core features include:
+          <strong>Reactivity system</strong> (using Proxies in Vue 3),
+          <strong>component‑based architecture</strong> (reusable, isolated
+          components), <strong>template syntax</strong> (HTML‑based with
+          directives like <code>v-if</code>, <code>v-for</code>,
+          <code>v-model</code>), <strong>Composition API</strong> (for better
+          code organization), <strong>single‑file components</strong> (<code>.vue</code>
+          files), <strong>routing</strong> (via Vue Router),
+          <strong>state management</strong> (via Pinia),
+          <strong>transitions & animations</strong>, and
+          <strong>server‑side rendering</strong> (via Nuxt or Vue SSR).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the difference between Vue 2 and Vue 3?</span>
+        <span class="a"><strong>Vue 3</strong> introduced several major changes:
+          <strong>Proxy‑based reactivity</strong> (replacing
+          <code>Object.defineProperty</code>), which supports dynamic property
+          addition and better performance. It introduced the
+          <strong>Composition API</strong> for better logic reuse and
+          organization. Vue 3 has <strong>faster rendering</strong> (optimized
+          virtual DOM), <strong>smaller bundle size</strong> (tree‑shaking
+          support), <strong>TypeScript support</strong> (written in TS),
+          <strong>fragments</strong> (multiple root nodes),
+          <strong>Teleport</strong> (render components outside the DOM
+          hierarchy), <strong>Suspense</strong> (async components), and
+          improved <strong>custom renderer API</strong>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Options API vs Composition API?</span>
+        <span class="a"><strong>Options API</strong> is the classic way to define
+          components using options like <code>data</code>,
+          <code>methods</code>, <code>computed</code>, <code>watch</code>, and
+          lifecycle hooks. It's simple and intuitive for small to medium
+          components. <strong>Composition API</strong> uses functions (<code>setup()</code>
+          or <code>&lt;script setup&gt;</code>) and allows better
+          <span class="highlight">logic reuse</span>, cleaner code
+          organization for complex components, and improved TypeScript
+          inference. It also enables reusable composables (custom hooks). Both
+          APIs can be used together.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is a Single‑File Component (SFC)?</span>
+        <span class="a">A Single‑File Component (<code>.vue</code> file) is a
+          <span class="highlight">self‑contained component</span> that
+          encapsulates the template, script, and styles in one file. It uses
+          <code>&lt;template&gt;</code> for HTML,
+          <code>&lt;script&gt;</code> for JavaScript/TypeScript logic, and
+          <code>&lt;style&gt;</code> for CSS (scoped automatically with
+          <code>scoped</code> attribute). SFCs make components easier to
+          maintain, test, and reuse. They are the recommended way to build Vue
+          applications using build tools like Vite or Webpack.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue directives?</span>
+        <span class="a">Directives are
+          <span class="highlight">special attributes</span> with the
+          <code>v-</code> prefix that apply reactive behavior to the DOM.
+          Common built‑in directives:
+          <strong><code>v-if</code></strong> (conditional rendering),
+          <strong><code>v-for</code></strong> (list rendering),
+          <strong><code>v-model</code></strong> (two‑way binding),
+          <strong><code>v-bind</code></strong> (attribute binding, shorthand
+          <code>:</code>), <strong><code>v-on</code></strong> (event handling,
+          shorthand <code>@</code>),
+          <strong><code>v-show</code></strong> (toggle visibility via CSS),
+          <strong><code>v-html</code></strong> (render raw HTML, careful with
+          XSS), and <strong><code>v-cloak</code></strong> (hide un‑compiled
+          templates). You can also create custom directives.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Vue's reactivity system work in Vue 3?</span>
+        <span class="a">Vue 3's reactivity is built on
+          <span class="highlight">JavaScript Proxies</span>. When you create a
+          reactive object with <code>reactive()</code> or <code>ref()</code>,
+          Vue wraps it in a Proxy that intercepts <code>get</code> and
+          <code>set</code> operations. During component rendering, Vue tracks
+          which reactive properties are accessed (via the
+          <code>get</code> trap) and collects dependencies. When a property
+          changes (via the <code>set</code> trap), Vue schedules updates for
+          all dependent components. This system is more efficient and handles
+          dynamic properties and arrays better than Vue 2's
+          <code>Object.defineProperty</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>ref</code> function in Vue?</span>
+        <span class="a"><code>ref</code> is a function that creates a
+          <span class="highlight">reactive reference</span> to a value. It
+          wraps the value in an object with a <code>.value</code> property.
+          <code>ref</code> works with any type — primitives, objects, arrays.
+          In the template, <code>ref</code> values are automatically
+          unwrapped, so you don't need <code>.value</code>. For example:
+          <code>const count = ref(0)</code>, then in template:
+          <code>{{ count }}</code>. In script, you access it with
+          <code>count.value</code>. <code>ref</code> is the recommended way to
+          create reactive state in Vue 3.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>reactive</code> function in Vue?</span>
+        <span class="a"><code>reactive</code> creates a
+          <span class="highlight">deeply reactive object</span> using a Proxy.
+          It only works for objects and arrays (not primitives). Unlike
+          <code>ref</code>, it doesn't require <code>.value</code> — you
+          access properties directly. Example:
+          <code>const state = reactive({ count: 0 })</code>. However,
+          <code>reactive</code> cannot be destructured without losing
+          reactivity — use <code>toRefs()</code> to convert each property to a
+          ref. <code>reactive</code> is useful for complex objects, but
+          <code>ref</code> is more versatile and recommended for most
+          cases.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the difference between <code>ref</code> and
+          <code>reactive</code>?</span>
+        <span class="a"><strong><code>ref</code></strong> works with any type, including
+          primitives, and wraps the value in a <code>.value</code> object.
+          It's more flexible and can be passed around easily.
+          <strong><code>reactive</code></strong> only works with
+          objects/arrays, doesn't need <code>.value</code>, but cannot be
+          destructured without losing reactivity. <code>ref</code> is
+          preferred for consistency, and you can use <code>reactive</code> for
+          complex objects when you don't want to access via
+          <code>.value</code>. Vue 3 also provides <code>shallowRef</code> and
+          <code>shallowReactive</code> for performance optimization.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is <code>computed</code> in Vue?</span>
+        <span class="a"><code>computed</code> creates a
+          <span class="highlight">cached derived state</span> that
+          automatically updates when its dependencies change. It's used for
+          values that are derived from other reactive data. Example:
+          <code>const double = computed(() => count.value * 2)</code>.
+          Computed properties are lazily evaluated (only when accessed) and
+          cached until dependencies change. They can also be writable by
+          providing an object with <code>get</code> and
+          <code>set</code> functions. In the Options API, they are defined in
+          the <code>computed</code> object.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are <code>watch</code> and <code>watchEffect</code>?</span>
+        <span class="a"><strong><code>watch</code></strong> observes a specific reactive
+          source and runs a callback when it changes. It gives you access to
+          the old and new values. Options include <code>deep</code>,
+          <code>immediate</code>, and <code>flush</code>.
+          <strong><code>watchEffect</code></strong> runs a function
+          immediately and
+          <span class="highlight">automatically tracks all reactive dependencies</span>
+          used inside it. It runs whenever any of those dependencies change.
+          <code>watchEffect</code> is simpler but less precise. Both return a
+          stop function to cancel the watcher.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the lifecycle of a Vue component?</span>
+        <span class="a">Vue components have a lifecycle with hooks you can use:
+          <strong>Creation</strong> (<code>setup()</code>,
+          <code>beforeCreate</code>, <code>created</code>),
+          <strong>Mounting</strong> (<code>beforeMount</code>,
+          <code>mounted</code>),
+          <strong>Updating</strong> (<code>beforeUpdate</code>,
+          <code>updated</code>),
+          <strong>Unmounting</strong> (<code>beforeUnmount</code>,
+          <code>unmounted</code>). In the Composition API, these are
+          accessible as <code>onMounted()</code>, <code>onUpdated()</code>,
+          <code>onBeforeUnmount()</code>, etc. <code>setup()</code> runs
+          before <code>beforeCreate</code> — this is where reactive state is
+          initialized.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue slots?</span>
+        <span class="a">Slots are a mechanism for
+          <span class="highlight">content distribution</span> in Vue. They
+          allow a parent component to pass content (templates or markup) into
+          a child component's template. There are
+          <strong>default slots</strong>, <strong>named slots</strong> (<code>&lt;slot name="header" /&gt;</code>), and
+          <strong>scoped slots</strong> (where the child component
+          passes data back to the parent). Slots enable flexible, reusable
+          components like cards, modals, or data tables.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue's <code>provide</code> and <code>inject</code>?</span>
+        <span class="a"><code>provide</code> and <code>inject</code> are used for
+          <span class="highlight">dependency injection</span> — they allow a
+          parent component to pass data to any descendant component,
+          regardless of how deep it is, without using props. This is useful
+          for global data like theme, user authentication, or configuration.
+          In Vue 3, they are used with <code>provide()</code> in the parent's
+          <code>setup()</code> and <code>inject()</code> in the child's
+          <code>setup()</code>. The data is reactive if you provide a
+          <code>ref</code> or <code>reactive</code> object.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Pinia?</span>
+        <span class="a">Pinia is the
+          <span class="highlight">official state management library</span> for
+          Vue, replacing Vuex. It's simpler, more type‑safe (built with
+          TypeScript), and supports the Composition API. Pinia stores are
+          defined with <code>defineStore()</code> and can contain
+          <code>state</code>, <code>getters</code>, and <code>actions</code>.
+          It supports devtools, hot module replacement, and works with both
+          Vue 2 and Vue 3. Pinia is the recommended state management solution
+          for new Vue projects.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the difference between Vuex and Pinia?</span>
+        <span class="a"><strong>Vuex</strong> is the older state management library with
+          mutations, actions, and modules. It has more boilerplate and limited
+          TypeScript support. <strong>Pinia</strong> is the newer, official
+          alternative that
+          <span class="highlight">removes mutations</span> (directly mutate
+          state), has
+          <span class="highlight">better TypeScript</span> inference, supports
+          multiple stores, and has a simpler API. Pinia also supports the
+          Composition API and is more modular. Pinia is now the recommended
+          choice for Vue 3 projects, and Vuex is in maintenance mode.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Vue Router?</span>
+        <span class="a">Vue Router is the
+          <span class="highlight">official routing library</span> for Vue. It
+          enables navigation between different components (pages) in a
+          Single‑Page Application (SPA). Features include:
+          <strong>nested routes</strong>,
+          <strong>dynamic route matching</strong>,
+          <strong>named routes</strong>, <strong>route parameters</strong>,
+          <strong>query parameters</strong>,
+          <strong>navigation guards</strong>,
+          <strong>scroll behavior</strong>, and
+          <strong>lazy loading</strong> of routes. In Vue 3, Vue Router 4 is
+          used with the Composition API.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are navigation guards in Vue Router?</span>
+        <span class="a">Navigation guards are
+          <span class="highlight">middleware functions</span> that control
+          navigation. They can be:
+          <strong>global guards</strong> (<code>beforeEach</code>,
+          <code>beforeResolve</code>, <code>afterEach</code>),
+          <strong>per‑route guards</strong> (<code>beforeEnter</code>), or
+          <strong>in‑component guards</strong> (<code>beforeRouteEnter</code>,
+          <code>beforeRouteUpdate</code>, <code>beforeRouteLeave</code>). They
+          are used for authentication checks, logging, redirects, or loading
+          data before entering a route.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is lazy loading in Vue?</span>
+        <span class="a">Lazy loading (or code splitting) is a technique where
+          <span class="highlight">JavaScript chunks are loaded only when needed</span>, reducing the initial bundle
+          size. In Vue, you can lazy load route
+          components using dynamic imports:
+          <code>component: () =&gt; import('@/views/Home.vue')</code>. In the
+          Composition API, you can lazy load components with
+          <code>defineAsyncComponent()</code>. Lazy loading improves
+          performance by loading only the code required for the current
+          view.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Vue's <code>Teleport</code>?</span>
+        <span class="a"><code>Teleport</code> is a built‑in component in Vue 3 that
+          <span class="highlight">renders content outside the current component's DOM
+            hierarchy</span>. It's useful for modals, tooltips, or any UI that needs to be
+          rendered at the top level of the DOM (e.g., for styling or
+          accessibility reasons). You specify the target container with
+          <code>to</code> prop:
+          <code>&lt;Teleport to="body"&gt;...&lt;/Teleport&gt;</code>. It
+          keeps the component's logic and data in the original context while
+          rendering elsewhere.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is Vue's <code>Suspense</code>?</span>
+        <span class="a"><code>Suspense</code> is a built‑in component in Vue 3 that
+          <span class="highlight">manages async dependencies</span> in the
+          component tree. It shows a fallback (loading state) while nested
+          async components (like those using <code>setup()</code> with
+          <code>await</code>) are being resolved. <code>Suspense</code> is
+          useful for data fetching, lazy loading, and code splitting. It works
+          on both server and client, making SSR hydration smoother.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Vue handle performance optimization?</span>
+        <span class="a">Vue provides several performance optimizations:
+          <strong>virtual DOM</strong> with diffing and batching updates,
+          <strong>reactive system</strong> with fine‑grained dependencies,
+          <strong>computed caching</strong>,
+          <strong>lazy loading</strong> (code splitting),
+          <strong>component caching</strong> (with
+          <code>&lt;KeepAlive&gt;</code>),
+          <strong>shallow reactivity</strong> (<code>shallowRef</code>,
+          <code>shallowReactive</code>), <strong>tree‑shaking</strong> (only
+          import what you use), <strong>static hoisting</strong> in templates,
+          and <strong>runtime compilation</strong> vs. build‑time compilation.
+          Use <code>v-once</code> for static content, <code>v-memo</code> for
+          memoized sub‑trees, and the <strong>Vue Devtools</strong> to profile
+          performance.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue composables (custom hooks)?</span>
+        <span class="a">Composables are
+          <span class="highlight">reusable functions that encapsulate reactive logic</span>
+          using the Composition API. They allow you to extract and share logic
+          across components. For example, a <code>useFetch()</code> composable
+          that handles data fetching, loading states, and errors. Composables
+          follow a naming convention: <code>useXxx()</code>. They can use
+          Vue's reactivity functions (<code>ref</code>, <code>reactive</code>,
+          <code>watch</code>, <code>onMounted</code>, etc.) and can be
+          composed together.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue's <code>v-model</code> and two‑way binding?</span>
+        <span class="a"><code>v-model</code> is a directive that creates a
+          <span class="highlight">two‑way binding</span> between form inputs
+          and reactive data. It's syntactic sugar for binding the
+          <code>value</code> attribute and listening to the
+          <code>input</code> (or <code>change</code>) event. In Vue 3,
+          <code>v-model</code> can be used on custom components with a defined
+          prop and event (default: <code>modelValue</code> and
+          <code>update:modelValue</code>). You can also have multiple
+          <code>v-model</code> bindings on a component by specifying
+          arguments, e.g., <code>v-model:title="pageTitle"</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue's <code>v-if</code> vs. <code>v-show</code>?</span>
+        <span class="a"><strong><code>v-if</code></strong> is a
+          <span class="highlight">conditional directive</span>
+          that destroys and re‑creates elements based on the condition. It's
+          better for initial rendering performance when the condition is
+          unlikely to change, but it has a higher toggle cost.
+          <strong><code>v-show</code></strong> toggles the
+          <code>display</code> CSS property, keeping the element in the DOM.
+          It's better for frequent toggling because the element is always
+          rendered. <code>v-if</code> can also be used with
+          <code>v-else-if</code> and <code>v-else</code> for more complex
+          condition chains.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you handle events in Vue?</span>
+        <span class="a">You handle events using the <code>v-on</code> directive or its
+          shorthand <code>@</code>. For example:
+          <code>&lt;button @click="handleClick"&gt;Click&lt;/button&gt;</code>. In the component, you define the handler
+          as a method (Options
+          API) or a function (Composition API). Event modifiers like
+          <code>.stop</code>, <code>.prevent</code>, <code>.self</code>,
+          <code>.once</code>, and <code>.capture</code> can be chained (e.g.,
+          <code>@click.stop.prevent</code>). You can also pass arguments:
+          <code>@click="handleClick(id, $event)"</code>. Key modifiers like
+          <code>@keyup.enter</code> are also supported.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are Vue's <code>v-for</code> and key attribute?</span>
+        <span class="a"><code>v-for</code> is used for
+          <span class="highlight">list rendering</span>:
+          <code>&lt;li v-for="item in items" :key="item.id"&gt;{{ item.name
+              }}&lt;/li&gt;</code>. The <code>key</code> attribute is
+          <span class="highlight">required</span> for Vue to track each node's
+          identity for efficient re‑rendering (optimizing updates). Without a
+          unique key, Vue might reuse DOM elements incorrectly, causing bugs.
+          <code>key</code> should be a unique identifier (like an ID). In Vue
+          3, you can also use <code>v-for</code> with
+          <code>&lt;template&gt;</code> for loops without wrapping
+          elements.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What is the <code>&lt;KeepAlive&gt;</code> component?</span>
+        <span class="a"><code>&lt;KeepAlive&gt;</code> is a built‑in component that
+          <span class="highlight">caches inactive component instances</span>
+          instead of destroying them. It's useful for preserving state when
+          navigating between views (like tabs or dynamic components).
+          Components wrapped in <code>&lt;KeepAlive&gt;</code> will have their
+          <code>activated</code> and <code>deactivated</code> lifecycle hooks
+          triggered. You can configure it with <code>include</code> and
+          <code>exclude</code> props to control which components are
+          cached.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How does Vue handle error boundaries?</span>
+        <span class="a">Vue doesn't have a built‑in error boundary component like React,
+          but you can handle errors using
+          <span class="highlight"><code>errorCaptured</code></span> lifecycle
+          hook or the
+          <strong>global <code>app.config.errorHandler</code></strong>. <code>errorCaptured</code> is called when an
+          error is thrown in a
+          descendant component. It allows you to log the error, display a
+          fallback UI, or stop propagation. For async errors, use
+          <code>try/catch</code> in <code>setup()</code> or
+          <code>async</code> functions, or handle them in the
+          <code>catch</code> block.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What are the differences between Vue and React?</span>
+        <span class="a"><strong>Vue</strong> uses HTML‑based templates with directives
+          (<code>v-if</code>, <code>v-for</code>) and a less steep learning
+          curve. <strong>React</strong> uses JSX (JavaScript XML) and is more
+          flexible but requires more boilerplate. Vue's reactivity is
+          Proxy‑based and more automated; React uses <code>useState</code> and
+          <code>useEffect</code> with manual dependency tracking. Vue's
+          <code>ref</code> and <code>reactive</code> are simpler than React's
+          hooks. Vue has an official framework (Nuxt) similar to Next for
+          React. Vue's ecosystem is smaller but growing. Performance is
+          comparable, but Vue often has smaller bundle sizes.</span>
+      </div>
+    </div>
+
+    <!-- ========== NEXT.JS ========== -->
+    <h2 id="nextjs">⚡ Next.js</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">App Router?</span>
+        <span class="a">The App Router is the new file‑based routing system introduced in
+          Next.js 13, located inside the <code>app/</code> directory. It
+          supports <span class="highlight">nested layouts</span>, server
+          components, loading and error boundaries, and parallel/intercepting
+          routes. It replaces the older Pages Router and enables React Server
+          Components by default, leading to better performance and smaller
+          bundle sizes.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Server Component?</span>
+        <span class="a">Server Components are
+          <span class="highlight">rendered on the server</span> and never sent
+          to the client. They can be <code>async</code>, access databases
+          directly, and import server‑only packages without increasing the
+          client bundle. They cannot use hooks (<code>useState</code>,
+          <code>useEffect</code>) or browser APIs. They are ideal for fetching
+          data, heavy computations, and static content.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Client Component?</span>
+        <span class="a">Client Components are
+          <span class="highlight">hydrated on the client</span> and provide
+          interactivity. They can use React hooks, event listeners, browser
+          APIs (localStorage, window), and state management. They are marked
+          with the <code>"use client"</code> directive at the top of the file.
+          They are essential for interactive UI elements like forms, modals,
+          and dynamic updates.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Difference?</span>
+        <span class="a">Server Components reduce the client‑side JavaScript bundle and can
+          directly access backend resources. Client Components provide
+          interactivity and browser‑specific features. The two can be nested
+          freely — a Server Component can import a Client Component, but a
+          Client Component cannot import a Server Component directly (they are
+          passed as children or props).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">When to use <code>use client</code>?</span>
+        <span class="a">Use <code>"use client"</code> when the component needs
+          <span class="highlight">hooks</span> (<code>useState</code>,
+          <code>useEffect</code>, <code>useContext</code>),
+          <span class="highlight">browser APIs</span> (localStorage, window,
+          document), or
+          <span class="highlight">third‑party libraries</span> that rely on
+          client‑side execution. It is also needed for event handlers
+          (<code>onClick</code>, etc.) and any interactive UI that needs to
+          respond to user input.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">SSR / SSG / ISR / CSR?</span>
+        <span class="a"><strong>SSR</strong> (Server‑Side Rendering): rendered on the
+          server per request — good for dynamic, personalized content.
+          <strong>SSG</strong> (Static Site Generation): built at build time —
+          fastest, ideal for static content. <strong>ISR</strong> (Incremental
+          Static Regeneration): SSG with revalidation — updates static pages
+          without full rebuild. <strong>CSR</strong> (Client‑Side Rendering):
+          rendered in the browser after initial load — good for highly
+          interactive apps but worse for SEO and performance.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Metadata API?</span>
+        <span class="a">The Metadata API allows you to define
+          <code>&lt;head&gt;</code> elements (title, description, Open Graph,
+          etc.) by exporting a <code>metadata</code> object or using the
+          <code>generateMetadata</code> function from
+          <code>layout.tsx</code> or <code>page.tsx</code>. It supports both
+          static and dynamic metadata, improving SEO and social sharing
+          without needing a separate <code>next/head</code> component.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Route Handler?</span>
+        <span class="a">Route Handlers are API endpoints in the App Router, defined in
+          <code>route.ts</code> files inside the <code>app/</code> directory.
+          You export <code>GET</code>, <code>POST</code>, <code>PUT</code>,
+          etc. functions that handle HTTP requests. They are the equivalent of
+          API routes in the Pages Router (<code>pages/api/</code>) but with
+          better integration with Server Components.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Middleware?</span>
+        <span class="a">Middleware in Next.js runs
+          <span class="highlight">before</span> requests are completed. It can
+          be used for authentication checks, redirects, rewrites, adding
+          headers, or logging. Middleware runs on the Edge runtime (fast,
+          lightweight) and can conditionally match specific paths using the
+          <code>matcher</code> configuration in
+          <code>middleware.ts</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Authentication in Next?</span>
+        <span class="a">I used <strong>NextAuth.js</strong> (now Auth.js) which provides
+          built‑in providers (Google, GitHub, credentials) and session
+          management. It integrates seamlessly with both Server and Client
+          Components. If I weren't using NextAuth, I would implement a custom
+          JWT solution with <code>iron-session</code> or a cookie‑based
+          approach, managing access and refresh tokens manually with
+          middleware for route protection.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why NextAuth?</span>
+        <span class="a">NextAuth simplifies authentication with
+          <span class="highlight">built‑in OAuth providers</span>, session
+          handling, and CSRF protection. It works with both JWT and database
+          sessions, has a simple configuration, and supports Server Components
+          out‑of‑the‑box. It also handles refresh tokens and token rotation
+          for OAuth providers.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">If no NextAuth?</span>
+        <span class="a">I'd implement a custom solution using <code>iron-session</code> for
+          encrypted, stateless sessions, or use <code>jsonwebtoken</code> with
+          HTTP‑only cookies for JWT. I'd also need to manually handle refresh
+          token rotation, logout, and route protection via middleware. This
+          gives more control but requires more boilerplate.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Dynamic Routing?</span>
+        <span class="a">Dynamic routing is achieved using
+          <span class="highlight">square brackets</span> in folder names,
+          e.g., <code>app/blog/[slug]/page.tsx</code>. The dynamic segment
+          (<code>slug</code>) is accessible via <code>params</code> in the
+          page component. You can also use catch‑all routes
+          (<code>[...slug]</code>) and optional catch‑all
+          (<code>[[...slug]]</code>) for more complex patterns.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Loading.tsx / Error.tsx?</span>
+        <span class="a"><strong>Loading.tsx</strong> shows a fallback UI (e.g., a spinner)
+          while the page is loading, automatically wrapped in
+          <code>Suspense</code>. <strong>Error.tsx</strong> catches errors in
+          a route (including in Server Components) and displays a custom error
+          UI. Both can be defined per route or globally in the root
+          <code>app/</code> directory.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Suspense / Streaming?</span>
+        <span class="a"><strong>Suspense</strong> is a React component that shows a
+          fallback while its children are loading. In Next.js, it works with
+          <code>loading.tsx</code> and <code>async</code> components.
+          <strong>Streaming</strong> sends HTML chunks to the client as soon
+          as they are ready, rather than waiting for the entire page to
+          render. This improves Time‑To‑First‑Byte (TTFB) and perceived
+          performance, especially for slow data fetches.</span>
+      </div>
+    </div>
+
+    <!-- ========== REACT ========== -->
+    <h2 id="react">⚛️ React</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Why Virtual DOM?</span>
+        <span class="a">The Virtual DOM is a
+          <span class="highlight">lightweight in‑memory representation</span>
+          of the real DOM. When state changes, React creates a new Virtual DOM
+          tree, compares it with the previous one (diffing), and then updates
+          only the changed nodes in the real DOM. This batching approach
+          avoids expensive direct DOM manipulations, improving performance and
+          developer experience.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">useMemo / useCallback / React.memo?</span>
+        <span class="a"><strong>useMemo</strong> caches the result of a computation and
+          recomputes only when dependencies change — useful for expensive
+          calculations. <strong>useCallback</strong> caches a function
+          reference and returns the same function instance across renders
+          unless dependencies change — helps prevent unnecessary re‑renders of
+          child components. <strong>React.memo</strong> is a higher‑order
+          component that prevents a component from re‑rendering if its props
+          haven't changed (shallow comparison).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Context API?</span>
+        <span class="a">Context provides a way to pass data through the component tree
+          without prop drilling (passing props down multiple levels). It's
+          good for global state like theme, user authentication, or language
+          preferences. However, it can cause
+          <span class="highlight">unnecessary re‑renders</span> because any
+          component consuming a context will re‑render whenever the context
+          value changes, even if only part of the data changed.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Zustand?</span>
+        <span class="a">Zustand is a
+          <span class="highlight">lightweight state management library</span>
+          that uses a simple API with minimal boilerplate. It creates stores
+          that can be accessed from any component, and it selectively
+          re‑renders only components that use the updated state. It's more
+          scalable than Context API for complex state and doesn't suffer from
+          the same re‑rendering issues.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">TanStack Query (React Query)?</span>
+        <span class="a">TanStack Query is a powerful
+          <span class="highlight">server‑state management</span> library. It
+          handles fetching, caching, synchronizing, and updating server data.
+          It provides features like background refetching, pagination,
+          infinite queries, optimistic updates, and automatic garbage
+          collection. It abstracts away loading/error states and reduces
+          boilerplate in data‑fetching components.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why React Query?</span>
+        <span class="a">React Query simplifies data fetching by managing the
+          <span class="highlight">entire lifecycle</span> of server‑state:
+          caching, background updates, retries, and stale‑while‑revalidate. It
+          reduces network requests, keeps data fresh, and improves user
+          experience. It also handles complex scenarios like pagination and
+          infinite scrolling with built‑in hooks
+          (<code>useInfiniteQuery</code>).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Cache?</span>
+        <span class="a">In React Query, the cache stores fetched data. Each query has a
+          unique key, and the data is stored with metadata like
+          <code>staleTime</code> (how long data is considered fresh) and
+          <code>cacheTime</code> (how long data stays in cache after being
+          unused). The cache automatically updates in the background to keep
+          data fresh without blocking the UI.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">invalidateQueries?</span>
+        <span class="a"><code>invalidateQueries</code> is a method that
+          <span class="highlight">marks cached queries as stale</span>,
+          triggering a background refetch when they are next used. It's
+          typically called after a mutation (e.g., after adding or updating
+          data) to ensure the UI reflects the latest server state. You can
+          invalidate specific queries by key or use a partial match to
+          invalidate multiple related queries.</span>
+      </div>
+    </div>
+
+    <!-- ========== NESTJS ========== -->
+    <h2 id="nestjs">🦁 NestJS</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Why NestJS?</span>
+        <span class="a">NestJS is a progressive Node.js framework that uses
+          <span class="highlight">TypeScript by default</span> and follows an
+          Angular‑like architecture. It's highly modular, uses Dependency
+          Injection for decoupling, and supports many transports (HTTP,
+          WebSockets, GraphQL, gRPC). It's opinionated but flexible, making it
+          ideal for enterprise‑scale applications. It also has great support
+          for microservices and testing.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Module?</span>
+        <span class="a">A Module is a class decorated with <code>@Module()</code> that
+          <span class="highlight">organizes the application</span> into
+          cohesive blocks. It groups providers (services), controllers, and
+          imports/exports other modules. Modules help structure the codebase,
+          manage dependencies, and enable lazy loading and feature
+          encapsulation.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Provider?</span>
+        <span class="a">A Provider is any class that can be
+          <span class="highlight">injected as a dependency</span>. It's marked
+          with <code>@Injectable()</code> and can be a service, repository,
+          factory, or helper. Providers are registered in a module and can be
+          injected into controllers or other providers via the
+          constructor.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Dependency Injection?</span>
+        <span class="a">Dependency Injection is a design pattern where an object's
+          dependencies are
+          <span class="highlight">provided by an external source</span> (the
+          IoC container) rather than created internally. In NestJS, you simply
+          declare dependencies in the constructor with type annotations, and
+          the framework injects the correct instances. This promotes loose
+          coupling, testability, and easier maintenance.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Controller?</span>
+        <span class="a">A Controller handles
+          <span class="highlight">incoming HTTP requests</span>. It's
+          decorated with <code>@Controller()</code> and contains route
+          handlers using decorators like <code>@Get()</code>,
+          <code>@Post()</code>, <code>@Put()</code>, <code>@Delete()</code>.
+          Controllers receive requests, validate input, delegate to services,
+          and return responses. They should be thin — business logic belongs
+          in services.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Service?</span>
+        <span class="a">A Service is a class that contains
+          <span class="highlight">business logic and data access</span>. It's
+          decorated with <code>@Injectable()</code> and injected into
+          controllers or other services. Services are reusable, testable, and
+          separate concerns — making the codebase more maintainable. They
+          often use repositories or ORMs to interact with the database.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Pipe?</span>
+        <span class="a">A Pipe is used to
+          <span class="highlight">transform or validate</span> data. It
+          operates on the arguments passed to route handlers, either globally
+          or for specific routes. <code>ValidationPipe</code> is a built‑in
+          pipe that uses <code>class-validator</code> to validate DTOs. Pipes
+          can also transform input (e.g., string to integer) before it reaches
+          the controller.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Guard?</span>
+        <span class="a">A Guard determines whether a request should be
+          <span class="highlight">allowed to proceed</span>
+          to the route handler. It's typically used for authentication and
+          authorization. Guards implement the
+          <code>CanActivate</code> interface and return a boolean. They run
+          before the route handler and can be applied globally, per
+          controller, or per route.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Interceptor?</span>
+        <span class="a">An Interceptor adds
+          <span class="highlight">additional logic around request/response</span>
+          processing. It can bind extra logic before and after route
+          execution, transform the response, map errors, or log requests.
+          Interceptors implement the <code>NestInterceptor</code> interface
+          and are useful for caching, logging, and response formatting.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Middleware?</span>
+        <span class="a">Middleware in NestJS is
+          <span class="highlight">similar to Express middleware</span>. It
+          runs before the route handler and has access to the request and
+          response objects. Middleware can modify the request/response, end
+          the request, or call the next middleware. It's useful for logging,
+          CORS, and basic auth checks.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Exception Filter?</span>
+        <span class="a">An Exception Filter handles
+          <span class="highlight">global error handling</span>. It catches
+          exceptions thrown in the application and returns a structured error
+          response. Filters can be applied globally, per controller, or per
+          route. They allow you to define consistent error formats (e.g.,
+          <code>{ statusCode, message, timestamp }</code>) across your
+          API.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Lifecycle?</span>
+        <span class="a">The request lifecycle in NestJS follows this order: <br /><strong>1.</strong>
+          Middleware (runs first) → <strong>2.</strong> Guards (auth) →
+          <strong>3.</strong> Interceptors (before route) →
+          <strong>4.</strong> Pipes (validation/transform) →
+          <strong>5.</strong> Controller → Service (business logic) →
+          <strong>6.</strong> Interceptor (after route) →
+          <strong>7.</strong> Exception Filter (if any error occurred).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">ValidationPipe?</span>
+        <span class="a"><code>ValidationPipe</code> is a built‑in pipe that
+          <span class="highlight">automatically validates incoming payloads</span>
+          against a DTO (Data Transfer Object) using
+          <code>class-validator</code> decorators. If validation fails, it
+          throws a <code>BadRequestException</code> with detailed error
+          messages. It can be used globally or per route, and it also supports
+          transformation (e.g., stripping extra properties).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">DTO?</span>
+        <span class="a">A DTO (Data Transfer Object) is a
+          <span class="highlight">TypeScript class that defines the shape</span>
+          of data being sent over the network. It specifies which fields are
+          expected, their types, and validation rules (using
+          <code>class-validator</code> decorators). DTOs help enforce type
+          safety, validate input, and document the API.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">class-validator?</span>
+        <span class="a"><code>class-validator</code> is a library that uses
+          <span class="highlight">decorators to validate class properties</span>. Common decorators include
+          <code>@IsString()</code>,
+          <code>@IsEmail()</code>, <code>@IsNumber()</code>,
+          <code>@Min()</code>, <code>@Max()</code>, <code>@Length()</code>,
+          and <code>@IsOptional()</code>. It works seamlessly with NestJS's
+          <code>ValidationPipe</code> to auto‑validate incoming
+          requests.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Swagger?</span>
+        <span class="a">Swagger (OpenAPI) is a tool for
+          <span class="highlight">auto‑generating API documentation</span>. In
+          NestJS, you use <code>@nestjs/swagger</code> with decorators like
+          <code>@ApiTags()</code>, <code>@ApiOperation()</code>, and
+          <code>@ApiResponse()</code>. The documentation is available at
+          <code>/api</code> and provides an interactive UI for testing
+          endpoints, reducing the need for manual documentation.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">WebSocket?</span>
+        <span class="a">WebSocket support in NestJS is provided via
+          <span class="highlight">Gateways</span> decorated with
+          <code>@WebSocketGateway()</code>. Gateways handle real‑time events,
+          broadcasting messages to connected clients. They can use
+          <code>@SubscribeMessage()</code> to listen for client events and
+          integrate with the same DI system as the rest of the
+          application.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">SSE?</span>
+        <span class="a">Server‑Sent Events (SSE) allow the server to
+          <span class="highlight">push events to the client</span> over a
+          single HTTP connection. In NestJS, you can implement SSE using
+          <code>@Sse()</code> decorator that returns an
+          <code>Observable</code> or an async iterable. It's useful for
+          streaming real‑time updates like notifications, AI responses, or
+          live data feeds.</span>
+      </div>
+    </div>
+
+    <!-- ========== REST ========== -->
+    <h2 id="rest">🌐 REST API</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">REST?</span>
+        <span class="a">REST (Representational State Transfer) is an
+          <span class="highlight">architectural style</span> for designing
+          networked applications. It uses stateless, cacheable HTTP
+          communication where resources are identified by URLs and manipulated
+          using standard methods (GET, POST, PUT, PATCH, DELETE). It
+          emphasizes scalability, simplicity, and a uniform interface.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">PUT vs PATCH?</span>
+        <span class="a"><strong>PUT</strong> is used to
+          <span class="highlight">replace an entire resource</span>. The
+          client must send the complete resource representation, and any
+          missing fields will be set to default or null.
+          <strong>PATCH</strong> is used for
+          <span class="highlight">partial updates</span> — it applies a set of
+          changes to the resource, allowing you to update only specific fields
+          without affecting the rest. PUT is idempotent; PATCH is not
+          necessarily idempotent.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">POST vs PUT?</span>
+        <span class="a"><strong>POST</strong> is used to
+          <span class="highlight">create a new resource</span>. It is not
+          idempotent — multiple identical POST requests will create multiple
+          resources. <strong>PUT</strong> is used to
+          <span class="highlight">update or replace</span> a resource at a
+          specific URI. It is idempotent — multiple identical PUT requests
+          have the same effect as a single one.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Status Codes?</span>
+        <span class="a"><strong>200</strong> OK, <strong>201</strong> Created,
+          <strong>204</strong> No Content, <strong>400</strong> Bad Request,
+          <strong>401</strong> Unauthorized, <strong>403</strong> Forbidden,
+          <strong>404</strong> Not Found, <strong>409</strong> Conflict,
+          <strong>422</strong> Unprocessable Entity,
+          <strong>500</strong> Internal Server Error. Each indicates the
+          outcome of the request — 2xx for success, 4xx for client errors, 5xx
+          for server errors.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Pagination?</span>
+        <span class="a">Pagination splits large datasets into smaller chunks.
+          <strong>Offset‑based</strong> uses <code>?page=2&limit=20</code> —
+          simple but suffers from performance issues with large offsets.
+          <strong>Cursor‑based</strong> uses a pointer (e.g.,
+          <code>?cursor=abc123&limit=20</code>) — more scalable and
+          consistent, ideal for real‑time feeds. I use offset for simple cases
+          and cursor for large or frequently updated data.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Filtering?</span>
+        <span class="a">Filtering allows clients to request a subset of resources. Common
+          patterns include <code>?status=active</code> for exact match,
+          <code>?price[gte]=100</code> for range queries, or
+          <code>?q=searchTerm</code> for text search. I implement filtering
+          using query parameters and Prisma's <code>where</code> clause to
+          build dynamic filters safely.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Sorting?</span>
+        <span class="a">Sorting orders the returned resources. I use the
+          <code>sort</code> parameter with format
+          <code>?sort=field:direction</code> (e.g.,
+          <code>?sort=createdAt:desc</code>). Multiple fields can be supported
+          using comma separation, e.g.,
+          <code>?sort=createdAt:desc,name:asc</code>. This maps directly to
+          Prisma's <code>orderBy</code> clause.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Versioning API?</span>
+        <span class="a">API versioning handles breaking changes without disrupting existing
+          clients. Common strategies:
+          <strong>URL versioning</strong> (<code>/api/v1/users</code>) — most
+          visible and easy to implement;
+          <strong>header versioning</strong> (e.g.,
+          <code>Accept-Version: v1</code>) — cleaner URLs but less
+          discoverable;
+          <strong>query parameter versioning</strong>
+          (<code>?version=1</code>). I prefer URL versioning for its clarity
+          and simplicity.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Rate Limiting?</span>
+        <span class="a">Rate limiting
+          <span class="highlight">controls the number of requests</span> a
+          client can make within a time window, preventing abuse, brute‑force
+          attacks, and server overload. In NestJS, I use
+          <code>@nestjs/throttler</code> to apply rate limits globally or per
+          endpoint. I also track limits by IP or user ID, returning
+          <code>429 Too Many Requests</code> when exceeded.</span>
+      </div>
+    </div>
+
+    <!-- ========== DATABASE ========== -->
+    <h2 id="db">🗄️ Database</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">SQL vs NoSQL?</span>
+        <span class="a"><strong>SQL</strong> databases (PostgreSQL, MySQL) are
+          schema‑based, support ACID transactions, and excel at complex joins
+          and relational data. <strong>NoSQL</strong> databases (MongoDB,
+          Cassandra) are schema‑less, horizontally scalable, and optimized for
+          high write throughput, logs, and unstructured data. Choose SQL for
+          financial/transactional apps, NoSQL for rapid prototyping or
+          large‑scale analytics.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why PostgreSQL?</span>
+        <span class="a">PostgreSQL is an
+          <span class="highlight">object‑relational database</span> with
+          strong ACID compliance, advanced features like JSONB and full‑text
+          search, and excellent performance for complex queries. It's
+          reliable, has a mature ecosystem, and supports extensions (PostGIS,
+          pgvector). It's my default choice for transactional, relational
+          data.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why MongoDB?</span>
+        <span class="a">MongoDB is a
+          <span class="highlight">document‑oriented NoSQL</span> database that
+          stores data as JSON‑like documents. It's schema‑flexible, easy to
+          scale horizontally, and supports high write loads. I use it for
+          logging, analytics, and when the data structure is not fixed or
+          requires rapid iteration.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">When is MongoDB better?</span>
+        <span class="a">MongoDB is better when the schema is
+          <span class="highlight">unpredictable or frequently changing</span>,
+          when you need high write throughput, when you're storing
+          unstructured data (logs, social media posts), or when you need to
+          scale horizontally across multiple nodes. It's also easier for
+          developers to get started with because there's no rigid
+          schema.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Normalization?</span>
+        <span class="a">Normalization is the process of
+          <span class="highlight">organizing data to reduce redundancy</span>
+          and improve data integrity. It breaks large tables into smaller,
+          related tables and defines relationships (one‑to‑many,
+          many‑to‑many). Normalization reduces duplication but can increase
+          query complexity due to joins. Denormalization (adding redundancy)
+          is sometimes used for read performance.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Index?</span>
+        <span class="a">An index is a <span class="highlight">data structure</span> that
+          improves the speed of data retrieval operations (SELECT queries) at
+          the cost of additional storage and slower writes. PostgreSQL uses
+          B‑tree indexes by default, but also supports GIN, GiST, and hash
+          indexes. Indexes should be created on columns used in
+          <code>WHERE</code>, <code>JOIN</code>, and
+          <code>ORDER BY</code> clauses.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Composite Index?</span>
+        <span class="a">A composite index is an index on
+          <span class="highlight">multiple columns</span>. The order of
+          columns matters — the index is most efficient for queries that
+          filter on the first column(s). For example, an index on
+          <code>(created_at, status)</code> is good for queries filtering by
+          <code>created_at</code> and optionally <code>status</code>, but less
+          efficient for queries filtering only by <code>status</code>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Transaction?</span>
+        <span class="a">A transaction is a
+          <span class="highlight">sequence of operations</span> that are
+          executed as a single atomic unit. Either all operations succeed and
+          are committed, or none are applied and the transaction is rolled
+          back. Transactions are essential for maintaining data consistency in
+          operations like transferring money, updating multiple tables, or any
+          multi‑step process where partial failure is unacceptable.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">ACID?</span>
+        <span class="a"><strong>Atomicity:</strong> transactions are all‑or‑nothing.
+          <strong>Consistency:</strong> transactions maintain valid state.
+          <strong>Isolation:</strong> concurrent transactions don't interfere
+          with each other (controlled by isolation levels like Read Committed,
+          Repeatable Read). <strong>Durability:</strong> committed data
+          persists even after system failure. ACID guarantees reliable,
+          predictable database behavior.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">JOIN?</span>
+        <span class="a">A JOIN combines rows from two or more tables based on a
+          <span class="highlight">related column</span> (typically a foreign
+          key). Common types: <strong>INNER JOIN</strong> (only matching
+          rows), <strong>LEFT JOIN</strong> (all left rows + matching right),
+          <strong>RIGHT JOIN</strong>, and <strong>FULL OUTER JOIN</strong>.
+          JOINs are used to normalize data and retrieve related information
+          from multiple tables in a single query.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Foreign Key?</span>
+        <span class="a">A foreign key is a column that
+          <span class="highlight">references the primary key</span> of another
+          table. It establishes a relationship between tables and enforces
+          referential integrity — ensuring that values in the foreign key
+          column exist in the referenced table. Foreign keys help maintain
+          data consistency and prevent orphaned records.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">N+1 Problem?</span>
+        <span class="a">The N+1 problem occurs when an ORM
+          <span class="highlight">executes 1 query to fetch a list</span> of
+          parent records, and then N additional queries to fetch the children
+          for each parent. This leads to poor performance. In Prisma, I solve
+          it using <code>include</code> to eager‑load relations in a single
+          query, or using <code>select</code> with nested fields. For more
+          control, I use raw SQL or batch loading techniques.</span>
+      </div>
+    </div>
+
+    <!-- ========== PRISMA ========== -->
+    <h3>🔧 Prisma</h3>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Why Prisma?</span>
+        <span class="a">Prisma is a <span class="highlight">modern ORM</span> that provides
+          type‑safe database access, auto‑generated TypeScript types, and a
+          fluent API. It makes migrations easy, supports relation management,
+          and works with both SQL and NoSQL databases. It's more intuitive
+          than traditional ORMs (like Sequelize) and reduces boilerplate while
+          maintaining performance.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Migration?</span>
+        <span class="a">A migration in Prisma is a
+          <span class="highlight">declarative way to evolve your database schema</span>. You modify the
+          <code>schema.prisma</code> file, then run
+          <code>prisma migrate dev</code> to generate and apply SQL
+          migrations. Prisma tracks migration history, making it easy to
+          rollback or apply changes in different environments.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Prisma Client?</span>
+        <span class="a">Prisma Client is an
+          <span class="highlight">auto‑generated query builder</span> that
+          provides a fully type‑safe API for reading and writing data. It's
+          generated based on your schema and offers methods like
+          <code>findMany</code>, <code>create</code>, <code>update</code>,
+          <code>delete</code>, and <code>transaction</code>. It includes
+          autocomplete and type checking, catching errors at compile
+          time.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Prisma Relation?</span>
+        <span class="a">Relations in Prisma are defined in the schema using
+          <span class="highlight"><code>@relation</code></span> attributes.
+          They can be one‑to‑one, one‑to‑many, or many‑to‑many. Prisma manages
+          foreign keys and join tables automatically. You can query relations
+          using <code>include</code> or <code>select</code>, and the client
+          keeps relations type‑safe.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Transaction?</span>
+        <span class="a">Prisma supports transactions via
+          <span class="highlight"><code>$transaction</code></span> method,
+          which runs multiple operations atomically. You can pass an array of
+          queries or a callback that returns a Promise. All operations succeed
+          or all fail, ensuring data consistency. Transactions also support
+          isolation levels and can be nested.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Prisma Middleware?</span>
+        <span class="a">Prisma Middleware are functions that
+          <span class="highlight">run before or after</span> Prisma Client
+          operations. They can be used for logging, input validation, soft
+          deletes, or adding timestamps automatically. For example, I use
+          middleware to automatically set <code>createdAt</code> and
+          <code>updatedAt</code> fields, or to filter out soft‑deleted records
+          globally.</span>
+      </div>
+    </div>
+
+    <!-- ========== AUTH ========== -->
+    <h2 id="auth">🔐 Authentication</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">JWT?</span>
+        <span class="a">JWT (JSON Web Token) is a compact, URL‑safe token that
+          <span class="highlight">encodes claims</span> (user ID, roles, etc.)
+          as a JSON object. It consists of three parts: header (algorithm),
+          payload (data), and signature (verifies integrity). The signature
+          ensures the token hasn't been tampered with. JWT is stateless,
+          making it ideal for distributed systems.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Access Token?</span>
+        <span class="a">An Access Token is a
+          <span class="highlight">short‑lived JWT</span> (typically 15‑30
+          minutes) used to authorize API requests. It's included in the
+          <code>Authorization</code> header as a Bearer token. Because it
+          expires quickly, the risk of misuse is limited if it's compromised.
+          Access tokens are stateless and don't require database lookups for
+          verification.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Refresh Token?</span>
+        <span class="a">A Refresh Token is a
+          <span class="highlight">long‑lived token</span> (days or weeks) used
+          to obtain new Access Tokens without re‑authentication. It's stored
+          securely (HttpOnly cookie or server‑side) and is often stored in the
+          database (hashed) to allow revocation. When the Access Token
+          expires, the client sends the Refresh Token to get a new pair,
+          enhancing user experience (no need to re‑login frequently).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why Refresh Token?</span>
+        <span class="a">Refresh Tokens
+          <span class="highlight">balance security and usability</span>. If an
+          Access Token is stolen, it expires quickly, limiting damage. Refresh
+          Tokens are more secure because they're stored in HttpOnly cookies
+          and can be revoked server‑side. They also support "remember me"
+          sessions without exposing user credentials.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Where to store token?</span>
+        <span class="a"><span class="highlight">Best practice</span> is to store tokens in
+          <strong>HttpOnly, Secure, SameSite=Strict cookies</strong>. This
+          protects against XSS and CSRF. If you must use client‑side storage,
+          use <strong>memory</strong> (not localStorage/sessionStorage)
+          because they are vulnerable to XSS. For Refresh Tokens, always use
+          HttpOnly cookies.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Cookie vs LocalStorage?</span>
+        <span class="a"><strong>Cookies</strong> with <code>HttpOnly</code> flag are
+          <span class="highlight">not accessible via JavaScript</span>,
+          protecting against XSS. <strong>LocalStorage</strong> is accessible
+          via JavaScript, making it vulnerable to XSS attacks. Cookies also
+          have built‑in expiration and send automatically with requests, while
+          localStorage requires manual injection. For sensitive tokens, always
+          prefer HttpOnly cookies.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">HttpOnly?</span>
+        <span class="a"><code>HttpOnly</code> is a cookie flag that
+          <span class="highlight">prevents JavaScript from accessing</span>
+          the cookie. This is a critical security measure against Cross‑Site
+          Scripting (XSS) attacks, as malicious scripts cannot steal the
+          token. The cookie is only sent to the server via HTTP/HTTPS
+          requests, not via client‑side code.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">SameSite?</span>
+        <span class="a"><code>SameSite</code> is a cookie attribute that controls whether
+          the cookie is sent with cross‑site requests.
+          <strong>SameSite=Strict</strong> only sends the cookie for same‑site
+          requests. <strong>SameSite=Lax</strong> sends it for top‑level
+          navigation (e.g., following a link).
+          <strong>SameSite=None</strong> allows cross‑site requests but
+          requires <code>Secure</code> flag. It's a strong defense against
+          CSRF attacks.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">CSRF?</span>
+        <span class="a">CSRF (Cross‑Site Request Forgery) is an attack where a malicious
+          website <span class="highlight">tricks a user's browser</span> into
+          making an unwanted request to a site where they're authenticated.
+          Mitigations include <code>SameSite</code> cookies, anti‑CSRF tokens
+          (sent in forms/headers), and requiring confirmation for sensitive
+          actions. In APIs with JWT, CSRF is less of an issue if tokens are
+          sent in headers.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">XSS?</span>
+        <span class="a">XSS (Cross‑Site Scripting) is an attack where
+          <span class="highlight">malicious scripts are injected</span> into a
+          trusted website, executing in the user's browser. It can steal
+          tokens, session data, or perform actions on behalf of the user.
+          Mitigations include input sanitization, output encoding, Content
+          Security Policy (CSP), and using <code>HttpOnly</code> cookies to
+          protect tokens.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">OAuth?</span>
+        <span class="a">OAuth is an
+          <span class="highlight">open standard for authorization</span> that
+          allows users to grant third‑party applications limited access to
+          their resources without exposing credentials. It works via token
+          issuance and is used in "Login with Google" flows. OAuth 2.0 is the
+          most common version, using flows like Authorization Code (for
+          server‑side apps) and Implicit (for client‑side).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Google Login?</span>
+        <span class="a">Google Login uses OAuth 2.0. The user is redirected to Google,
+          authenticates, and grants permissions. Google returns an
+          <span class="highlight">authorization code</span> to the callback
+          URL. The backend exchanges this code for an access token and ID
+          token. The ID token contains the user's email and profile, which the
+          backend uses to create or retrieve a user account, then issues its
+          own JWT session.</span>
+      </div>
+    </div>
+
+    <!-- ========== DOCKER ========== -->
+    <h2 id="docker">🐳 Docker</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Docker?</span>
+        <span class="a">Docker is a
+          <span class="highlight">containerization platform</span> that
+          packages applications and their dependencies into lightweight,
+          portable containers. Containers run consistently across any
+          environment, solving the "works on my machine" problem. Docker
+          enables easy deployment, scaling, and isolation of
+          microservices.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Image?</span>
+        <span class="a">A Docker image is a
+          <span class="highlight">read‑only template</span> that contains the
+          application code, runtime, libraries, and dependencies needed to run
+          the container. Images are built from a <code>Dockerfile</code> and
+          are stored in registries (e.g., Docker Hub). They are the blueprint
+          for creating containers.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Container?</span>
+        <span class="a">A container is a
+          <span class="highlight">runnable instance</span> of a Docker image.
+          It's isolated from the host system but shares the host kernel,
+          making it lightweight compared to virtual machines. Containers have
+          their own filesystem, network interface, and process space, and can
+          be started, stopped, or removed as needed.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Dockerfile?</span>
+        <span class="a">A Dockerfile is a
+          <span class="highlight">text file with instructions</span> for
+          building a Docker image. Common instructions:
+          <code>FROM</code> (base image), <code>WORKDIR</code> (working
+          directory), <code>COPY</code> (copy files),
+          <code>RUN</code> (execute commands), <code>EXPOSE</code> (declare
+          ports), and <code>CMD</code> (default command). It defines the
+          entire build process.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">docker compose?</span>
+        <span class="a">Docker Compose is a tool for
+          <span class="highlight">defining and running multi‑container</span>
+          Docker applications. It uses a <code>docker-compose.yml</code> file
+          to configure services, networks, and volumes. For example, you can
+          define your app, PostgreSQL, Redis, and Nginx together, and start
+          them all with a single <code>docker-compose up</code> command.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Multi‑stage Build?</span>
+        <span class="a">Multi‑stage builds
+          <span class="highlight">reduce final image size</span> by using
+          multiple <code>FROM</code> statements in a single Dockerfile. Each
+          stage is independent, and you can copy artifacts from earlier
+          stages. For example, a stage to build the app (with full toolchain)
+          and a smaller stage to run it (only production dependencies). This
+          keeps the production image lean.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Volume?</span>
+        <span class="a">A volume is a
+          <span class="highlight">persistent storage mechanism</span> in
+          Docker that survives container restarts. It's used to store data
+          that needs to be preserved (e.g., database files, user uploads).
+          Volumes can be mounted to specific paths in the container and can be
+          managed independently from the container lifecycle.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Port Mapping?</span>
+        <span class="a">Port mapping (or port publishing)
+          <span class="highlight">maps a container port to a host port</span>
+          using the <code>-p</code> flag, e.g., <code>-p 3000:3000</code>.
+          This allows external traffic to reach services inside the container.
+          Without port mapping, services are only accessible from within the
+          container network.</span>
+      </div>
+    </div>
+
+    <!-- ========== GIT ========== -->
+    <h2 id="git">📦 Git</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Git Flow?</span>
+        <span class="a">Git Flow is a <span class="highlight">branching model</span> for
+          managing releases and features. It defines a
+          <code>main</code> branch (production), a <code>develop</code> branch
+          (integration), <code>feature</code> branches (new features),
+          <code>release</code> branches (preparing releases), and
+          <code>hotfix</code> branches (emergency fixes). It provides
+          structure but can be complex for smaller teams.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">merge?</span>
+        <span class="a">Merging combines two branches by creating a
+          <span class="highlight">new commit</span> that has both branches as
+          parents. It preserves the complete history and is a safe,
+          non‑destructive operation. Merge commits can make history cluttered,
+          but they clearly show where branches converged and are easier to
+          reverse.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">rebase?</span>
+        <span class="a">Rebasing <span class="highlight">rewrites commit history</span> by
+          moving or combining commits to a new base. It creates a linear,
+          clean history by reapplying commits one by one. It's often used
+          before merging to avoid merge commits. However, rebasing is
+          <span class="highlight">destructive</span> — you should never rebase
+          commits that have been pushed to a shared branch, as it can cause
+          conflicts for other developers.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">cherry‑pick?</span>
+        <span class="a">Cherry‑picking allows you to
+          <span class="highlight">apply a specific commit</span> from one
+          branch to another without merging the entire branch. It's useful for
+          hotfixes or selectively porting changes. However, it can create
+          duplicate commits and conflicts if used improperly.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">stash?</span>
+        <span class="a">Stashing temporarily
+          <span class="highlight">saves uncommitted changes</span> in a safe
+          place, reverting the working directory to the last commit. It allows
+          you to switch branches or pull updates without committing incomplete
+          work. Later, you can reapply the stash (<code>git stash pop</code>
+          or <code>git stash apply</code>).</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">conflict?</span>
+        <span class="a">A conflict occurs when
+          <span class="highlight">two branches have made changes</span> to the
+          same part of the same file, and Git cannot automatically resolve the
+          discrepancy. Conflicts must be
+          <span class="highlight">resolved manually</span> by editing the file
+          to choose which changes to keep. After resolving, you mark it as
+          resolved (<code>git add</code>) and complete the merge/rebase.</span>
+      </div>
+    </div>
+
+    <!-- ========== SECURITY ========== -->
+    <h2 id="security">🛡️ Security (OWASP)</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">OWASP Top 10?</span>
+        <span class="a">The OWASP Top 10 is a
+          <span class="highlight">list of the most critical security risks</span>
+          to web applications, updated periodically. Key risks include:
+          <strong>Broken Access Control</strong>,
+          <strong>Cryptographic Failures</strong>,
+          <strong>Injection</strong> (SQL, XSS),
+          <strong>Insecure Design</strong>,
+          <strong>Security Misconfiguration</strong>,
+          <strong>Vulnerable Components</strong>,
+          <strong>Identification Failures</strong>,
+          <strong>Data Integrity Failures</strong>,
+          <strong>Logging/Monitoring Failures</strong>, and
+          <strong>Server‑Side Request Forgery</strong>.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">XSS?</span>
+        <span class="a">Cross‑Site Scripting (XSS) is an attack where
+          <span class="highlight">malicious scripts are injected</span> into
+          web pages viewed by other users. It can steal cookies, session
+          tokens, or perform actions on behalf of the user. Mitigations:
+          <strong>input sanitization</strong> (escape special characters),
+          <strong>output encoding</strong> (HTML‑encode dynamic content),
+          <strong>Content Security Policy (CSP)</strong>, and using
+          <code>HttpOnly</code> cookies for sensitive tokens.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">SQL Injection?</span>
+        <span class="a">SQL Injection occurs when
+          <span class="highlight">user input is improperly concatenated</span>
+          into SQL queries, allowing attackers to execute arbitrary SQL
+          commands. Prevention: use
+          <strong>parameterized queries</strong> (Prisma does this
+          automatically), use an ORM that escapes input, and
+          validate/whitelist input. Never concatenate user input directly into
+          SQL strings.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">CSRF?</span>
+        <span class="a">Cross‑Site Request Forgery (CSRF) tricks the user's browser into
+          <span class="highlight">making an unwanted request</span> to a site
+          where they're authenticated. Prevention:
+          <strong>SameSite cookies</strong> (Strict/Lax),
+          <strong>anti‑CSRF tokens</strong> (random values sent in
+          forms/headers), and <strong>double‑submit cookies</strong>. For APIs
+          using JWT in headers, CSRF is naturally mitigated because tokens are
+          not automatically sent with cross‑site requests.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Rate Limiting?</span>
+        <span class="a">Rate limiting
+          <span class="highlight">restricts the number of requests</span> a
+          client can make within a time period. It prevents brute‑force
+          attacks (password guessing), DoS (Denial of Service), and API abuse.
+          I implement it using <code>@nestjs/throttler</code>, storing counts
+          in Redis for distributed systems. I return
+          <code>429 Too Many Requests</code> when limits are exceeded.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Password Hashing?</span>
+        <span class="a">Password hashing converts passwords into
+          <span class="highlight">one‑way hashes</span> for secure storage. I
+          use <strong>bcrypt</strong>, which is a computationally expensive,
+          salted hash algorithm. The salt (random string) prevents rainbow
+          table attacks. Never store plaintext passwords, and use a slow
+          hashing algorithm (bcrypt, Argon2) to resist brute‑force
+          attacks.</span>
+      </div>
+    </div>
+
+    <!-- ========== ARCHITECTURE ========== -->
+    <h2 id="architecture">🧠 Architecture</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">MVC?</span>
+        <span class="a">MVC (Model‑View‑Controller) is a design pattern that
+          <span class="highlight">separates concerns</span> into three layers:
+          <strong>Model</strong> (data and business logic),
+          <strong>View</strong> (UI representation), and
+          <strong>Controller</strong> (handles user input, updates Model and
+          View). In backend applications, the View is often replaced by JSON
+          responses or templates, and the Controller orchestrates between
+          services and responses.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Layered Architecture?</span>
+        <span class="a">Layered architecture organizes code into
+          <span class="highlight">horizontal layers</span>, each with a
+          specific responsibility. Common layers:
+          <strong>Presentation</strong> (API controllers),
+          <strong>Business Logic</strong> (services),
+          <strong>Data Access</strong> (repositories/DAOs), and
+          <strong>Database</strong>. This separation improves maintainability,
+          testability, and allows swapping implementations (e.g., changing
+          databases) without affecting other layers.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Repository Pattern?</span>
+        <span class="a">The Repository pattern
+          <span class="highlight">abstracts data access</span> behind a
+          collection‑like interface. It acts as a bridge between the domain
+          and data mapping layers, providing a consistent API for querying and
+          persisting objects. It makes it easier to switch databases, mock
+          data for testing, and centralize query logic.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">SOLID?</span>
+        <span class="a"><strong>S</strong>ingle Responsibility: a class should have only
+          one reason to change. <strong>O</strong>pen/Closed: open for
+          extension, closed for modification. <strong>L</strong>iskov
+          Substitution: subclasses should be substitutable for their base
+          classes. <strong>I</strong>nterface Segregation: clients shouldn't
+          depend on interfaces they don't use. <strong>D</strong>ependency
+          Inversion: depend on abstractions, not concretions. Following SOLID
+          makes code more maintainable, testable, and scalable.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Design Patterns used?</span>
+        <span class="a"><strong>Singleton</strong>: ensuring a class has only one instance
+          (PrismaClient, Logger). <strong>Factory</strong>: creating objects
+          without specifying the exact class (service factories for different
+          environments). <strong>Observer</strong>: event‑driven architecture
+          for notifications and real‑time updates. <strong>Strategy</strong>:
+          encapsulating algorithms (e.g., different payment processors or
+          authentication strategies) that can be swapped at runtime.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why Dependency Injection?</span>
+        <span class="a">Dependency Injection
+          <span class="highlight">decouples classes</span> from their
+          dependencies, making the code more modular, testable, and
+          maintainable. Instead of a class creating its own dependencies
+          (tight coupling), dependencies are provided from the outside (loose
+          coupling). This allows for easier mocking in tests and swapping
+          implementations without changing the class itself.</span>
+      </div>
+    </div>
+
+    <!-- ========== BEHAVIORAL ========== -->
+    <h2 id="behavioral">🧑‍💻 Behavioral Questions</h2>
+    <div class="qa-grid">
+      <div class="qa-item">
+        <span class="q">Why leave current company?</span>
+        <span class="a">I'm looking for <span class="highlight">new challenges</span> and
+          opportunities to work with cutting‑edge technologies. I want to be
+          part of a team that values engineering excellence, innovation, and
+          continuous learning. I've learned a lot at my current company, but
+          I'm ready for a more complex environment where I can contribute at a
+          higher level.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Weakness?</span>
+        <span class="a">My weakness is that I sometimes
+          <span class="highlight">over‑engineer solutions</span> by planning
+          for every possible edge case, which can lead to unnecessary
+          complexity. I've learned to start with a simple MVP and iterate
+          based on feedback. I now focus on building scalable, maintainable
+          code without premature optimization, and I actively seek feedback
+          during design phases.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Strength?</span>
+        <span class="a">My strength is my ability to
+          <span class="highlight">learn quickly and deeply</span> understand
+          complex systems. I'm skilled at debugging production issues,
+          identifying root causes, and implementing reliable fixes. I also
+          communicate technical decisions clearly to both technical and
+          non‑technical stakeholders, bridging the gap between engineering and
+          business.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Disagreement with team?</span>
+        <span class="a">I believe in
+          <span class="highlight">open, data‑driven discussions</span>. I
+          present my reasoning with evidence, benchmarks, or documentation. If
+          we still disagree after thorough discussion, I respect the team's
+          decision and fully commit to the chosen direction. I document my
+          concerns for future reference, but I prioritize team cohesion and
+          moving forward.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Deadline slipping?</span>
+        <span class="a">I <span class="highlight">communicate immediately</span> when I
+          realize a deadline is at risk. I identify the blockers, prioritize
+          features, and suggest scope reduction or additional resources. I
+          work with the team to find creative solutions, like parallelizing
+          tasks or splitting the feature into phases. I never wait until the
+          last moment to raise the alarm.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Biggest technical challenge?</span>
+        <span class="a">Migrating a monolithic REST API to a
+          <span class="highlight">microservice architecture</span> while
+          maintaining data consistency and handling eventual consistency. This
+          involved implementing event‑driven communication (message queues),
+          database per service, and distributed transactions. The challenge
+          was managing the increased complexity while ensuring zero downtime
+          and data integrity.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Biggest bug you had?</span>
+        <span class="a">A
+          <span class="highlight">race condition in a transaction</span> that
+          caused duplicate records in a financial system. The issue was due to
+          missing optimistic locking and improper isolation levels. I fixed it
+          by adding <code>@Version</code> field for optimistic locking, using
+          proper transaction isolation (<code>REPEATABLE READ</code>), and
+          retrying on conflicts. I also added integration tests to cover the
+          scenario.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What have you learned most from?</span>
+        <span class="a">I've learned the most from
+          <span class="highlight">debugging production issues</span> and
+          analyzing root causes under pressure. Reading the source code of
+          open‑source libraries (Next.js, Prisma, NestJS) has deepened my
+          understanding of how they work internally. I've also learned a lot
+          from code reviews, where senior engineers challenge my thinking and
+          push me to write better, more idiomatic code.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Tell me about a time you failed.</span>
+        <span class="a">I once
+          <span class="highlight">underestimated the complexity of a migration</span>
+          and rolled it out without proper testing, causing a temporary
+          outage. I learned the importance of canary deployments and thorough
+          staging validation. Now I always create rollback plans and run
+          migrations in test environments before production.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you handle feedback?</span>
+        <span class="a">I <span class="highlight">welcome feedback</span> as a tool for
+          growth. I listen actively, ask clarifying questions, and reflect on
+          the input. I've learned to separate personal feelings from
+          professional critique. For example, when a senior engineer pointed
+          out performance issues in my code, I used it as an opportunity to
+          deep‑dive into optimization techniques and improved my overall
+          approach.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Describe a time you took initiative.</span>
+        <span class="a">I
+          <span class="highlight">proposed and led the migration</span> from a
+          legacy REST API to a more efficient GraphQL layer, which reduced
+          over‑fetching and improved frontend performance by 40%. I created a
+          proof‑of‑concept, presented it to stakeholders, and guided the team
+          through the transition, including training and documentation.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you prioritize tasks?</span>
+        <span class="a">I use the <span class="highlight">Eisenhower Matrix</span> (urgent
+          vs. important) and align with project milestones. I communicate with
+          product owners to clarify priorities. For engineering tasks, I
+          consider technical debt, dependencies, and risk. I break down large
+          tasks into smaller, actionable items and tackle critical path items
+          first.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you handle stress?</span>
+        <span class="a">I <span class="highlight">stay organized and focused</span> under
+          pressure. I break the problem into manageable parts, take short
+          breaks to clear my mind, and communicate proactively with
+          stakeholders. I also ensure I have a solid understanding of the root
+          cause before attempting fixes, which reduces stress by eliminating
+          guesswork.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Describe a time you helped a teammate.</span>
+        <span class="a">I once
+          <span class="highlight">paired with a junior developer</span> who
+          was struggling with a complex async bug. We worked through the event
+          loop, added proper error handling, and I introduced them to
+          debugging tools. Over time, they became more confident, and the
+          experience reinforced my own understanding. Mentorship is something
+          I enjoy and actively seek.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you stay updated with technology?</span>
+        <span class="a">I
+          <span class="highlight">read official documentation, follow engineering blogs</span>
+          (e.g., Next.js, Prisma, AWS), and participate in online communities.
+          I also build side projects to experiment with new features. For
+          example, I built a small app using the new Next.js App Router and
+          Server Components to deeply understand their benefits and pitfalls
+          before using them in production.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What do you do when you get stuck?</span>
+        <span class="a">I
+          <span class="highlight">systematically isolate the problem</span> by
+          reproducing it in a minimal environment, checking logs, and using
+          debugging tools. If I'm still stuck, I reach out to peers with a
+          clear, concise description of what I've tried. I'm not afraid to ask
+          for help — it's more efficient than spinning wheels. I also document
+          the solution for future reference.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you handle legacy code?</span>
+        <span class="a">I approach legacy code with
+          <span class="highlight">caution and respect</span>. I write tests to
+          understand existing behavior, make incremental changes, and refactor
+          gradually. I prioritize adding test coverage before making
+          functional changes. I also document any assumptions or magic logic I
+          discover, so the next person has a clearer picture.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Why do you want this role?</span>
+        <span class="a">I'm excited about
+          <span class="highlight">the tech stack and the problems</span>
+          you're solving. I've followed your company's work and admire the
+          emphasis on quality, scalability, and user experience. I believe my
+          experience with TypeScript, NestJS, and modern frontend frameworks
+          aligns perfectly with the role, and I'm eager to contribute to
+          impactful projects.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Where do you see yourself in 5 years?</span>
+        <span class="a">I see myself as a
+          <span class="highlight">technical lead or architect</span>, working
+          on complex systems and mentoring engineers. I want to stay hands‑on
+          with code but also contribute to system design, team strategy, and
+          architectural decisions. I'm passionate about building products that
+          solve real‑world problems and I want to help others grow the same
+          way I have.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you balance perfection vs. delivery?</span>
+        <span class="a">I follow the
+          <span class="highlight">"make it work, make it right, make it fast"</span>
+          principle. I prioritize delivering a functional feature that meets
+          the core requirements, then refactor and optimize in subsequent
+          iterations. I involve the team in deciding when a solution is "good
+          enough" for the current phase, and we schedule tech debt to be
+          addressed later.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Tell me about a time you had to make a decision without full
+          information.</span>
+        <span class="a">During an incident, we had to
+          <span class="highlight">rollback a deployment</span> while the root
+          cause was still unclear. I made the decision based on partial logs
+          and user reports, prioritizing stability. Later, we conducted a full
+          post‑mortem and implemented better monitoring. Sometimes, decisive
+          action is more important than waiting for perfect information.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you handle changing requirements?</span>
+        <span class="a">I
+          <span class="highlight">embrace change as part of agile development</span>. I communicate with stakeholders to
+          understand the new
+          requirements, assess the impact on the current work, and
+          re‑prioritize. I keep code modular so changes are isolated. I also
+          ensure the team is aligned and that the changes are documented for
+          all involved.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What's your approach to code reviews?</span>
+        <span class="a">I treat code reviews as a
+          <span class="highlight">collaborative learning opportunity</span>. I
+          provide constructive, actionable feedback, focusing on correctness,
+          clarity, and performance. I also learn from others' code, picking up
+          new patterns and approaches. I'm thorough but also appreciative — I
+          always highlight what the author did well before suggesting
+          improvements.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">Describe a time you improved a process.</span>
+        <span class="a">I <span class="highlight">streamlined our CI/CD pipeline</span> by
+          adding parallel test execution and caching dependencies, reducing
+          build times from 12 minutes to 4 minutes. I also introduced
+          automated linting and formatting checks, which reduced style‑related
+          review comments and allowed reviewers to focus on logic. This
+          improved team velocity and morale.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">How do you ensure code quality?</span>
+        <span class="a">I combine
+          <span class="highlight">automated and manual checks</span>: linting,
+          formatting, unit tests, integration tests, and end‑to‑end tests. I
+          write tests for critical paths and edge cases. I also advocate for
+          regular refactoring sessions and use tools like SonarQube to track
+          technical debt. Code quality is a team responsibility, so I
+          encourage knowledge sharing and pair programming.</span>
+      </div>
+      <div class="qa-item">
+        <span class="q">What motivates you as a developer?</span>
+        <span class="a">I'm motivated by
+          <span class="highlight">solving meaningful problems</span> that
+          impact users. I love the craft of writing clean, efficient code and
+          seeing it work in production. Continuous learning is also a big
+          driver — I enjoy mastering new tools and patterns. Finally, I'm
+          motivated by helping others succeed through mentoring and
+          collaboration.</span>
+      </div>
+    </div>
+
+    <div class="footnote">
+      ✅ Complete Q&amp;A · TypeScript · Next.js · React · NestJS · Prisma ·
+      Docker · OWASP · Architecture · Behavioral
+    </div>
+  </div>
+
+  <!-- ===== BACK TO TOP BUTTON ===== -->
+  <button class="back-to-top" id="backToTop" title="Back to top">↑</button>
+
+  <script>
+    // Back to top button functionality
+    const backToTopBtn = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add("visible");
+      } else {
+        backToTopBtn.classList.remove("visible");
+      }
+    });
+
+    backToTopBtn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll(".nav-menu a").forEach((link) => {
+      link.addEventListener("click", function (e) {
+        const targetId = this.getAttribute("href");
+        if (targetId.startsWith("#")) {
+          e.preventDefault();
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            const navHeight =
+              document.querySelector(".nav-menu").offsetHeight;
+            const targetPosition =
+              targetElement.getBoundingClientRect().top +
+              window.pageYOffset -
+              navHeight -
+              10;
+            window.scrollTo({ top: targetPosition, behavior: "smooth" });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

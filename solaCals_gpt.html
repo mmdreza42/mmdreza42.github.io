@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="محاسبه‌گر طراحی اولیه سیستم خورشیدی خانگی">
+    <title>محاسبه‌گر طراحی سیستم خورشیدی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/solarcalcGpt.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="hero">
+            <div>
+                <span class="eyebrow">SOLAR DESIGN TOOL</span>
+                <h1>محاسبه‌گر طراحی سیستم خورشیدی</h1>
+                <p>محاسبه مصرف، توان موردنیاز، تلفات، ظرفیت پنل، آرایش سری/موازی و بررسی اولیه سازگاری با اینورتر.</p>
+            </div>
+            <div class="hero-badge">
+                <span>⚡</span>
+                <strong>محاسبه اولیه مهندسی</strong>
+                <small>نتیجه نهایی باید با دیتاشیت تجهیزات و طراحی متخصص تأیید شود.</small>
+            </div>
+        </header>
+
+        <main>
+            <section class="mode-card card">
+                <div class="section-heading">
+                    <div>
+                        <span class="step-number">01</span>
+                        <h2>نوع سیستم را انتخاب کنید</h2>
+                    </div>
+                    <p>انتخاب شما مشخص می‌کند چه محاسباتی در ادامه فعال شوند.</p>
+                </div>
+
+                <div class="system-modes">
+                    <label class="mode-option">
+                        <input type="radio" name="systemType" value="on-grid" checked>
+                        <span class="mode-content">
+                            <span class="mode-icon">🌐</span>
+                            <span><strong>On-Grid</strong><small>متصل به شبکه برق</small></span>
+                        </span>
+                    </label>
+                    <label class="mode-option">
+                        <input type="radio" name="systemType" value="off-grid">
+                        <span class="mode-content">
+                            <span class="mode-icon">🔋</span>
+                            <span><strong>Off-Grid</strong><small>مستقل از شبکه + باتری</small></span>
+                        </span>
+                    </label>
+                </div>
+
+                <div id="modeExplanation" class="info-box"></div>
+            </section>
+
+            <form id="solarForm" novalidate>
+                <section class="card">
+                    <div class="section-heading">
+                        <div><span class="step-number">02</span>
+                            <h2>مصرف برق خانه</h2>
+                        </div>
+                        <p>می‌توانید مصرف را مستقیم وارد کنید یا وسایل خانه را اضافه کنید.</p>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="field">
+                            <label for="dailyEnergy">مصرف روزانه <span>(kWh/day)</span></label>
+                            <input id="dailyEnergy" type="number" min="0" step="0.01" placeholder="مثلاً 18">
+                            <small>اگر خالی باشد، از لیست وسایل محاسبه می‌شود.</small>
+                        </div>
+                        <div class="field">
+                            <label for="monthlyEnergy">مصرف ماهانه <span>(kWh/month)</span></label>
+                            <input id="monthlyEnergy" type="number" min="0" step="0.01" placeholder="مثلاً 540">
+                        </div>
+                        <div class="field">
+                            <label for="annualEnergy">مصرف سالانه <span>(kWh/year)</span></label>
+                            <input id="annualEnergy" type="number" min="0" step="0.01" placeholder="اختیاری">
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title">
+                            <h3>وسایل و بارهای خانه</h3>
+                            <button type="button" class="btn btn-secondary" id="addLoad">+ افزودن وسیله</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="loads-table">
+                                <thead>
+                                    <tr>
+                                        <th>وسیله</th>
+                                        <th>تعداد</th>
+                                        <th>توان (W)</th>
+                                        <th>ساعت/روز</th>
+                                        <th>روز/ماه</th>
+                                        <th>ضریب همزمانی</th>
+                                        <th>Surge (W)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="loadsBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="mini-summary">
+                            <span>انرژی محاسبه‌شده از وسایل: <b id="loadEnergyPreview">0 kWh/day</b></span>
+                            <span>Peak تقریبی: <b id="loadPeakPreview">0 W</b></span>
+                            <span>Peak با Surge: <b id="loadSurgePreview">0 W</b></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-heading">
+                        <div><span class="step-number">03</span>
+                            <h2>اینورتر</h2>
+                        </div>
+                        <p>اعداد را از دیتاشیت واقعی اینورتر وارد کنید.</p>
+                    </div>
+                    <div class="grid-4">
+                        <div class="field"><label for="invRated">توان نامی AC <span>(kW)</span></label><input
+                                id="invRated" type="number" min="0" step="0.01" placeholder="6"></div>
+                        <div class="field"><label for="invMax">توان حداکثری AC <span>(kW)</span></label><input
+                                id="invMax" type="number" min="0" step="0.01" placeholder="6.6"></div>
+                        <div class="field"><label for="invMinPv">حداقل ولتاژ PV <span>(V)</span></label><input
+                                id="invMinPv" type="number" min="0" step="0.1" placeholder="120"></div>
+                        <div class="field"><label for="invMaxPv">حداکثر ولتاژ PV <span>(V)</span></label><input
+                                id="invMaxPv" type="number" min="0" step="0.1" placeholder="550"></div>
+                        <div class="field"><label for="invMaxCurrent">حداکثر جریان PV <span>(A)</span></label><input
+                                id="invMaxCurrent" type="number" min="0" step="0.1" placeholder="18"></div>
+                        <div class="field"><label for="invMaxIsc">حداکثر Isc ورودی <span>(A)</span></label><input
+                                id="invMaxIsc" type="number" min="0" step="0.1" placeholder="22"></div>
+                        <div class="field"><label for="invMaxPower">حداکثر توان PV <span>(kW)</span></label><input
+                                id="invMaxPower" type="number" min="0" step="0.01" placeholder="8"></div>
+                        <div class="field"><label for="mpptCount">تعداد MPPT</label><input id="mpptCount" type="number"
+                                min="1" step="1" value="2"></div>
+                        <div class="field"><label for="invEfficiency">راندمان اینورتر <span>(%)</span></label><input
+                                id="invEfficiency" type="number" min="1" max="100" step="0.1" value="97"></div>
+                        <div class="field"><label for="mpptMin">حداقل MPPT <span>(V)</span></label><input id="mpptMin"
+                                type="number" min="0" step="0.1" placeholder="150"></div>
+                        <div class="field"><label for="mpptMax">حداکثر MPPT <span>(V)</span></label><input id="mpptMax"
+                                type="number" min="0" step="0.1" placeholder="500"></div>
+                        <div class="field"><label for="maxStringsPerMppt">حداکثر String/MPPT</label><input
+                                id="maxStringsPerMppt" type="number" min="1" step="1" value="2"></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-heading">
+                        <div><span class="step-number">04</span>
+                            <h2>پنل خورشیدی</h2>
+                        </div>
+                        <p>مشخصات STC پنل را از دیتاشیت وارد کنید.</p>
+                    </div>
+                    <div class="grid-4">
+                        <div class="field"><label for="panelPower">توان Pmax <span>(W)</span></label><input
+                                id="panelPower" type="number" min="0" step="1" placeholder="550"></div>
+                        <div class="field"><label for="panelVoc">Voc <span>(V)</span></label><input id="panelVoc"
+                                type="number" min="0" step="0.01" placeholder="49.5"></div>
+                        <div class="field"><label for="panelVmp">Vmp <span>(V)</span></label><input id="panelVmp"
+                                type="number" min="0" step="0.01" placeholder="41.8"></div>
+                        <div class="field"><label for="panelIsc">Isc <span>(A)</span></label><input id="panelIsc"
+                                type="number" min="0" step="0.01" placeholder="14"></div>
+                        <div class="field"><label for="panelImp">Imp <span>(A)</span></label><input id="panelImp"
+                                type="number" min="0" step="0.01" placeholder="13.16"></div>
+                        <div class="field"><label for="vocCoeff">ضریب دمای Voc <span>(%/°C)</span></label><input
+                                id="vocCoeff" type="number" step="0.01" value="-0.28"></div>
+                        <div class="field"><label for="vmpCoeff">ضریب دمای Vmp <span>(%/°C)</span></label><input
+                                id="vmpCoeff" type="number" step="0.01" value="-0.30"></div>
+                        <div class="field"><label for="pmaxCoeff">ضریب دمای Pmax <span>(%/°C)</span></label><input
+                                id="pmaxCoeff" type="number" step="0.01" value="-0.35"></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-heading">
+                        <div><span class="step-number">05</span>
+                            <h2>موقعیت، تابش و دما</h2>
+                        </div>
+                        <p>برای تخمین انرژی تولیدی، Peak Sun Hours و شرایط دما مهم هستند.</p>
+                    </div>
+                    <div class="grid-4">
+                        <div class="field"><label for="sunHours">Peak Sun Hours <span>(h/day)</span></label><input
+                                id="sunHours" type="number" min="0" step="0.1" placeholder="5"></div>
+                        <div class="field"><label for="minTemp">حداقل دمای محیط <span>(°C)</span></label><input
+                                id="minTemp" type="number" step="0.1" value="-5"></div>
+                        <div class="field"><label for="maxTemp">حداکثر دمای محیط <span>(°C)</span></label><input
+                                id="maxTemp" type="number" step="0.1" value="45"></div>
+                        <div class="field"><label for="cellTemp">دمای تقریبی سلول <span>(°C)</span></label><input
+                                id="cellTemp" type="number" step="0.1" value="45"></div>
+                        <div class="field"><label for="tilt">زاویه نصب <span>(°)</span></label><input id="tilt"
+                                type="number" min="0" max="90" step="0.1" placeholder="30"></div>
+                        <div class="field"><label for="azimuth">آزیموت <span>(°)</span></label><input id="azimuth"
+                                type="number" min="0" max="360" step="0.1" placeholder="180"></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-heading">
+                        <div><span class="step-number">06</span>
+                            <h2>تلفات سیستم</h2>
+                        </div>
+                        <p>هر تلفات به‌صورت زنجیره‌ای روی خروجی اثر می‌گذارد.</p>
+                    </div>
+                    <div class="grid-4">
+                        <div class="field"><label for="soiling">Soiling <span>(%)</span></label><input id="soiling"
+                                type="number" min="0" max="100" step="0.1" value="2"></div>
+                        <div class="field"><label for="shading">Shading <span>(%)</span></label><input id="shading"
+                                type="number" min="0" max="100" step="0.1" value="2"></div>
+                        <div class="field"><label for="mismatch">Mismatch <span>(%)</span></label><input id="mismatch"
+                                type="number" min="0" max="100" step="0.1" value="2"></div>
+                        <div class="field"><label for="dcWiring">کابل DC <span>(%)</span></label><input id="dcWiring"
+                                type="number" min="0" max="100" step="0.1" value="2"></div>
+                        <div class="field"><label for="connections">اتصالات <span>(%)</span></label><input
+                                id="connections" type="number" min="0" max="100" step="0.1" value="1"></div>
+                        <div class="field"><label for="acWiring">کابل AC <span>(%)</span></label><input id="acWiring"
+                                type="number" min="0" max="100" step="0.1" value="1"></div>
+                        <div class="field"><label for="otherLoss">سایر تلفات <span>(%)</span></label><input
+                                id="otherLoss" type="number" min="0" max="100" step="0.1" value="1"></div>
+                        <div class="field"><label for="degradation">افت/فرسودگی <span>(%)</span></label><input
+                                id="degradation" type="number" min="0" max="100" step="0.1" value="0"></div>
+                    </div>
+                </section>
+
+                <section class="card battery-section" id="batterySection">
+                    <div class="section-heading">
+                        <div><span class="step-number">07</span>
+                            <h2>باتری — مخصوص Off-Grid</h2>
+                        </div>
+                        <p>در Off-Grid، ظرفیت باتری بر اساس انرژی روزانه و مدت پشتیبانی تعیین می‌شود.</p>
+                    </div>
+                    <div class="grid-4">
+                        <div class="field"><label for="backupDays">روزهای پشتیبانی</label><input id="backupDays"
+                                type="number" min="0.1" step="0.1" value="1"></div>
+                        <div class="field"><label for="batteryVoltage">ولتاژ نامی <span>(V)</span></label><input
+                                id="batteryVoltage" type="number" min="1" step="1" value="48"></div>
+                        <div class="field"><label for="batteryAh">ظرفیت هر باتری <span>(Ah)</span></label><input
+                                id="batteryAh" type="number" min="1" step="1" placeholder="200"></div>
+                        <div class="field"><label for="batteryCount">تعداد باتری موجود</label><input id="batteryCount"
+                                type="number" min="1" step="1" value="1"></div>
+                        <div class="field"><label for="dod">Depth of Discharge <span>(%)</span></label><input id="dod"
+                                type="number" min="1" max="100" step="0.1" value="80"></div>
+                        <div class="field"><label for="batteryEfficiency">راندمان باتری <span>(%)</span></label><input
+                                id="batteryEfficiency" type="number" min="1" max="100" step="0.1" value="90"></div>
+                        <div class="field"><label for="chargeEfficiency">راندمان شارژ/سیستم
+                                <span>(%)</span></label><input id="chargeEfficiency" type="number" min="1" max="100"
+                                step="0.1" value="95"></div>
+                    </div>
+                </section>
+
+                <section class="actions">
+                    <button type="submit" class="btn btn-primary btn-large">⚡ محاسبه و طراحی آرایه</button>
+                    <button type="button" class="btn btn-ghost" id="resetBtn">پاک کردن فرم</button>
+                </section>
+            </form>
+
+            <section id="results" class="results hidden">
+                <div class="results-header">
+                    <div>
+                        <span class="eyebrow">CALCULATION REPORT</span>
+                        <h2>گزارش طراحی سیستم</h2>
+                        <p id="resultMode"></p>
+                    </div>
+                    <button class="btn btn-secondary" id="printBtn">🖨 چاپ گزارش</button>
+                </div>
+
+                <div id="warnings" class="alerts"></div>
+
+                <div class="metrics-grid" id="metricsGrid"></div>
+
+                <div class="result-grid">
+                    <article class="result-card">
+                        <h3>⚡ مصرف و بار</h3>
+                        <div id="loadResults" class="result-list"></div>
+                    </article>
+                    <article class="result-card">
+                        <h3>☀️ انرژی خورشیدی</h3>
+                        <div id="solarResults" class="result-list"></div>
+                    </article>
+                    <article class="result-card">
+                        <h3>🔲 آرایش پیشنهادی</h3>
+                        <div id="arrayResults" class="result-list"></div>
+                    </article>
+                    <article class="result-card" id="batteryResultsCard">
+                        <h3>🔋 باتری</h3>
+                        <div id="batteryResults" class="result-list"></div>
+                    </article>
+                </div>
+
+                <article class="result-card full">
+                    <h3>🔎 تمام آرایش‌های قابل بررسی</h3>
+                    <div class="table-wrap">
+                        <table class="array-table">
+                            <thead>
+                                <tr>
+                                    <th>سری</th>
+                                    <th>موازی</th>
+                                    <th>تعداد</th>
+                                    <th>توان</th>
+                                    <th>Vmp</th>
+                                    <th>Voc سرد</th>
+                                    <th>Imp</th>
+                                    <th>Isc</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="arrayTableBody"></tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="formula-card">
+                    <h3>فرمول‌های استفاده‌شده</h3>
+                    <div class="formula-grid">
+                        <code>E = P × t</code>
+                        <code>V<sub>series</sub> = V<sub>panel</sub> × N<sub>series</sub></code>
+                        <code>I<sub>parallel</sub> = I<sub>panel</sub> × N<sub>parallel</sub></code>
+                        <code>P<sub>array</sub> = P<sub>panel</sub> × N</code>
+                        <code>V<sub>oc,cold</sub> = V<sub>oc,STC</sub> × [1 + β<sub>Voc</sub>(T<sub>cell</sub> − 25)]</code>
+                        <code>E<sub>final</sub> = E<sub>raw</sub> × ∏(1 − loss)</code>
+                        <code>DC/AC = P<sub>PV</sub> / P<sub>inverter</sub></code>
+                        <code>E<sub>battery</sub> = V × Ah</code>
+                    </div>
+                </article>
+
+                <p class="disclaimer">
+                    این ابزار برای طراحی اولیه و آموزشی است. قبل از اجرا باید مقادیر نهایی با دیتاشیت سازنده، کدهای برق
+                    محلی، حفاظت‌ها، کابل‌کشی، ارت، فیوز/بریکر، SPD و طراحی مهندس برق بررسی شوند.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            Solar Design Calculator · فارسی · Dark UI
+        </footer>
+    </div>
+    <script src="assets/scripts/solarcalcGpt.js"></script>
+</body>
+
+</html>

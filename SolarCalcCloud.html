@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>طراحی آرایه خورشیدی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e1320;--card:#161d2e;--line:#27314a;--tx:#e8ecf5;--mut:#8b96b3;--sun:#ffb938;--cy:#4cc9f0;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(1200px 500px at 85% -10%,#2a2140 0,transparent 60%),var(--bg);color:var(--tx);font-family:'Vazirmatn',Tahoma,sans-serif;line-height:1.8}
+.wrap{max-width:1180px;margin:auto;padding:24px 16px 60px}
+h1{font-size:1.9rem;font-weight:800;margin:0 0 4px;color:var(--sun)}
+.sub{color:var(--mut);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+section h2{margin:0 0 10px;font-size:1.05rem;color:var(--cy);font-weight:600}
+.f{display:grid;grid-template-columns:1fr 110px;gap:8px;align-items:center;margin:6px 0}
+.f label{font-size:.88rem;color:var(--tx)}
+.f small{display:block;color:var(--mut);font-size:.74rem;line-height:1.4}
+input,select{width:100%;background:#0b101c;border:1px solid var(--line);border-radius:8px;color:var(--tx);padding:6px 8px;font:inherit;direction:ltr;text-align:left}
+input:focus,select:focus{outline:2px solid var(--cy);outline-offset:1px}
+#out{margin-top:22px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.k{background:#10172a;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.k b{display:block;font-size:1.6rem;color:var(--sun);direction:ltr;text-align:right;line-height:1.3}
+.k span{color:var(--mut);font-size:.82rem}
+.big{border-color:var(--sun)}
+.eq{direction:ltr;text-align:left;font-family:Consolas,monospace;font-size:.82rem;color:var(--mut);background:#0b101c;border-radius:8px;padding:8px 10px;margin:6px 0;overflow-x:auto;white-space:nowrap}
+.eq em{color:var(--sun);font-style:normal}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+th{color:var(--mut);font-weight:600}
+tr.rec td{background:#2a2412;color:var(--sun);font-weight:600}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:9px}
+.ok{background:var(--ok)}.bad{background:var(--bad)}.warn{background:var(--warn)}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-top:16px}
+.note{color:var(--mut);font-size:.8rem;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>طراحی آرایه خورشیدی</h1>
+<p class="sub">مشخصات اینورتر، پنل و مصرف را وارد کنید؛ تعداد سری، موازی، تلفات و ظرفیت لازم بلافاصله محاسبه می‌شود.</p>
+
+<div class="grid" id="form"></div>
+<div id="out"></div>
+<p class="note">فرمول‌ها: دمای سلول، حداقل/حداکثر ماژول سری با حاشیه اطمینان، جریان رشته با ضریب ایمنی (مشابه NEC 690.8). نتایج برآورد اولیه است؛ قبل از اجرا با دیتاشیت و استاندارد محلی تطبیق دهید.</p>
+</div>
+
+<script>
+const S=[
+['مصرف و تابش',[
+['dailyKwh','مصرف روزانه (kWh)','',15],
+['peakKw','توان پیک مصرف (kW)','مجموع بارهای هم‌زمان',5],
+['psh','ساعات آفتاب مؤثر (PSH)','میانگین kWh/m²/روز در محل شما',5]]],
+['اینورتر',[
+['invAc','توان خروجی AC (kW)','',5],
+['invDcMax','حداکثر توان ورودی DC (kW)','۰ = نامحدود',7.5],
+['invVmax','حداکثر ولتاژ ورودی (V)','',600],
+['invVmin','حداقل ولتاژ MPPT (V)','',100],
+['invVmpptMax','حداکثر ولتاژ MPPT (V)','',500],
+['invImax','حداکثر جریان هر MPPT (A)','',16],
+['invMppt','تعداد MPPT','',2],
+['invConn','ورودی (کانکتور) در هر MPPT','',2],
+['invEff','راندمان اینورتر (%)','',97]]],
+['پنل (ماژول)',[
+['mP','توان نامی Pmax (W)','',405],
+['mVoc','ولتاژ مدار باز Voc (V)','',41.4],
+['mIsc','جریان اتصال کوتاه Isc (A)','',12.34],
+['mVmp','ولتاژ نقطه ماکزیمم Vmp (V)','',34.4],
+['mImp','جریان نقطه ماکزیمم Imp (A)','',11.77],
+['gv','ضریب دمایی ولتاژ γv','',0.14],
+['gvU','واحد γv','',['V/°C','%/°C']],
+['pc','ضریب دمایی توان (%/°C)','معمولاً منفی',-0.35],
+['mL','طول (mm)','',1754],
+['mW','عرض (mm)','',1096]]],
+['دما و حاشیه ایمنی',[
+['tcell','حداکثر دمای مؤثر سلول (°C)','حدود دمای محیط + ۳۰',67],
+['tmin','کمترین دمای روزانه مورد انتظار (°C)','',-10],
+['tavg','میانگین دمای کارکرد سلول (°C)','برای تلفات دمایی',45],
+['margin','حاشیه اطمینان ولتاژ (%)','',10],
+['kI','ضریب ایمنی جریان','NEC: 1.25',1.25]]],
+['تلفات (%)',[
+['soil','گردوغبار و آلودگی','',3],
+['shade','سایه','',2],
+['mism','عدم تطابق و تلورانس پنل','',3],
+['dcw','کابل DC','',1.5],
+['acw','کابل AC','',1],
+['oth','سایر (کهولت، قطع شبکه، ...)','',1]]],
+['باتری (اختیاری)',[
+['night','سهم مصرف شب/پشتیبان (%)','',40],
+['days','روزهای خودکفایی','۰ = بدون باتری',1],
+['dod','عمق دشارژ مجاز (%)','',80],
+['bEff','راندمان باتری (%)','',95],
+['bV','ولتاژ بانک باتری (V)','',48]]]
+];
+const form=document.getElementById('form');
+form.innerHTML=S.map(([t,fs])=>`<section><h2>${t}</h2>${fs.map(([id,l,h,d])=>`<div class="f"><label for="${id}">${l}${h?`<small>${h}</small>`:''}</label>${Array.isArray(d)?`<select id="${id}">${d.map(o=>`<option>${o}</option>`).join('')}</select>`:`<input id="${id}" type="number" step="any" value="${d}">`}</div>`).join('')}</section>`).join('');
+const v=id=>parseFloat(document.getElementById(id).value)||0;
+const n=(x,d=2)=>(+x).toLocaleString('en',{maximumFractionDigits:d});
+const chk=(c,t)=>`<div class="chk"><span class="dot ${c}"></span><div>${t}</div></div>`;
+
+function calc(){
+const m=v('margin')/100,Tstc=25;
+const pct=document.getElementById('gvU').value==='%/°C';
+const gVoc=pct?v('gv')/100*v('mVoc'):v('gv');
+const gVmp=pct?v('gv')/100*v('mVmp'):v('gv');
+// دما
+const VmpHot=v('mVmp')-gVmp*(v('tcell')-Tstc);
+const VocCold=v('mVoc')-gVoc*(v('tmin')-Tstc);
+const VmpCold=v('mVmp')-gVmp*(v('tmin')-Tstc);
+// سری
+const sMin=Math.ceil(v('invVmin')*(1+m)/VmpHot);
+const sMaxA=Math.floor(v('invVmax')*(1-m)/VocCold);
+const sMaxB=v('invVmpptMax')?Math.floor(v('invVmpptMax')/VmpCold):1e9;
+const sMax=Math.min(sMaxA,sMaxB);
+// موازی
+const iStr=v('mIsc')*v('kI');
+const parMppt=Math.max(0,Math.min(v('invConn'),Math.floor(v('invImax')/iStr)));
+const strCap=parMppt*v('invMppt');
+// تلفات
+const tLoss=Math.max(0,-v('pc')/100*(v('tavg')-Tstc));
+const f=[v('soil'),v('shade'),v('mism'),v('dcw'),v('acw'),v('oth')].map(x=>1-x/100);
+const PR=f.reduce((a,b)=>a*b,1)*(1-tLoss)*(v('invEff')/100);
+// توان لازم
+const kWp=v('dailyKwh')/(v('psh')*PR);
+const Nreq=Math.ceil(kWp*1000/v('mP'));
+// گزینه‌ها
+const opts=[];
+for(let s=sMin;s<=sMax&&s>0&&s<=60;s++){
+ const st=Math.ceil(Nreq/s),ok=st<=strCap;
+ opts.push({s,st,mod:s*st,ok,kw:s*st*v('mP')/1000});
+}
+const good=opts.filter(o=>o.ok);
+let rec=null;
+if(good.length){rec=good.reduce((a,b)=>(b.mod<a.mod||(b.mod===a.mod&&b.s>a.s))?b:a)}
+else if(sMax>=sMin&&strCap>0){const s=sMax;rec={s,st:strCap,mod:s*strCap,ok:false,kw:s*strCap*v('mP')/1000}}
+let h='';
+h+=`<div class="kpis">
+<div class="k"><b>${n(PR*100,1)}%</b><span>ضریب عملکرد کل (PR)</span></div>
+<div class="k"><b>${n(kWp)} kWp</b><span>توان آرایه لازم</span></div>
+<div class="k"><b>${Nreq}</b><span>حداقل تعداد پنل لازم</span></div>
+<div class="k"><b>${n(tLoss*100,1)}%</b><span>تلفات دمایی</span></div></div>`;
+if(rec){
+ const perM=Math.ceil(rec.st/v('invMppt')),area=rec.mod*v('mL')*v('mW')/1e6;
+ const prod=rec.kw*v('psh')*PR,dcac=rec.kw/v('invAc');
+ h+=`<section class="big"><h2>طرح پیشنهادی آرایه</h2><div class="kpis">
+ <div class="k"><b>${rec.s} سری × ${rec.st} موازی</b><span>آرایش رشته‌ها</span></div>
+ <div class="k"><b>${rec.mod}</b><span>مجموع پنل‌ها (${n(rec.kw)} kWp)</span></div>
+ <div class="k"><b>${perM}</b><span>رشته روی هر MPPT</span></div>
+ <div class="k"><b>${n(area,1)} m²</b><span>سطح اشغالی پنل‌ها</span></div>
+ <div class="k"><b>${n(prod,1)} kWh</b><span>تولید روزانه (${n(prod/v('dailyKwh')*100,0)}% مصرف)</span></div>
+ <div class="k"><b>${n(rec.s*VmpHot)}–${n(rec.s*VocCold)} V</b><span>ولتاژ کاری گرم تا مدار باز سرد</span></div></div>`;
+ const chks=[];
+ chks.push(chk(rec.ok?'ok':'bad',rec.ok?'تعداد پنل لازم با ظرفیت ورودی‌های اینورتر جور است.':`با این اینورتر فقط ${rec.mod} پنل جا می‌شود (کمتر از ${Nreq}). اینورتر دوم یا MPPT بیشتر لازم است.`));
+ chks.push(chk(rec.s*VocCold<=v('invVmax')?'ok':'bad',`Voc سرد آرایه = ${n(rec.s*VocCold)} V (حد اینورتر ${v('invVmax')} V)`));
+ chks.push(chk(rec.s*VmpHot>=v('invVmin')?'ok':'bad',`Vmp گرم آرایه = ${n(rec.s*VmpHot)} V (حداقل MPPT ${v('invVmin')} V)`));
+ chks.push(chk(!v('invVmpptMax')||rec.s*VmpCold<=v('invVmpptMax')?'ok':'warn',`Vmp سرد آرایه = ${n(rec.s*VmpCold)} V (حداکثر MPPT ${v('invVmpptMax')} V)`));
+ chks.push(chk(parMppt>=1?'ok':'bad',`جریان رشته با ضریب ایمنی = ${n(iStr)} A از حد ${v('invImax')} A؛ حداکثر ${parMppt} رشته موازی در هر MPPT`));
+ chks.push(chk(dcac>=1&&dcac<=1.3?'ok':'warn',`نسبت DC/AC = ${n(dcac)} (محدوده معمول ۱ تا ۱٫۳)`));
+ chks.push(chk(!v('invDcMax')||rec.kw<=v('invDcMax')?'ok':'warn',`توان DC آرایه ${n(rec.kw)} kW در برابر سقف ${v('invDcMax')||'نامحدود'} kW`));
+ chks.push(chk(v('invAc')>=v('peakKw')?'ok':'bad',`توان AC اینورتر ${v('invAc')} kW در برابر پیک مصرف ${v('peakKw')} kW`));
+ if(rec.st%v('invMppt'))chks.push(chk('warn','تعداد رشته‌ها بر MPPTها به‌طور مساوی تقسیم نمی‌شود؛ توزیع نامتقارن بازده را کم می‌کند.'));
+ h+=chks.join('')+'</section>';
+}else{
+ h+=`<section class="big"><h2>طرح پیشنهادی آرایه</h2>${chk('bad',`هیچ ترکیب سری معتبری نیست: حداقل ${sMin} و حداکثر ${sMax} پنل در سری. ولتاژ پنل یا اینورتر را بازبینی کنید.`)}</section>`;
+}
+h+=`<div class="row2"><section><h2>فرمول‌ها و محاسبه ولتاژ</h2>
+<div class="eq">Vmp-hot = Vmp − γ×(Tcell − 25) = <em>${n(VmpHot)} V</em></div>
+<div class="eq">Voc-cold = Voc − γ×(Tmin − 25) = <em>${n(VocCold)} V</em></div>
+<div class="eq">Smin = ⌈Vmin×(1+${n(m*100,0)}%) / Vmp-hot⌉ = ⌈${n(v('invVmin')*(1+m)/VmpHot)}⌉ = <em>${sMin}</em></div>
+<div class="eq">Smax = ⌊Vmax×(1−${n(m*100,0)}%) / Voc-cold⌋ = ⌊${n(v('invVmax')*(1-m)/VocCold)}⌋ = <em>${sMaxA}</em></div>
+<div class="eq">Smax(MPPT) = ⌊Vmppt-max / Vmp-cold⌋ = <em>${sMaxB>1e8?'—':sMaxB}</em></div>
+<div class="eq">Parallel/MPPT = ⌊Imax / (Isc×${v('kI')})⌋ = <em>${parMppt}</em></div>
+<div class="eq">PR = ∏(1−loss) × (1−tempLoss) × ηinv = <em>${n(PR,3)}</em></div>
+<div class="eq">P(array) = E-day / (PSH × PR) = <em>${n(kWp)} kWp</em></div>
+<p class="note">بازه مجاز تعداد سری: <b>${sMin}</b> تا <b>${sMax}</b></p></section>
+<section><h2>گزینه‌های سری/موازی</h2><div class="scroll"><table><tr><th>سری</th><th>موازی</th><th>پنل</th><th>kWp</th><th>وضعیت</th></tr>
+${opts.length?opts.map(o=>`<tr class="${rec&&o.s===rec.s&&o.ok?'rec':''}"><td>${o.s}</td><td>${o.st}</td><td>${o.mod}</td><td>${n(o.kw)}</td><td>${o.ok?'مناسب':'بیش از ظرفیت'}</td></tr>`).join(''):'<tr><td colspan="5">گزینه‌ای وجود ندارد</td></tr>'}
+</table></div></section></div>`;
+// باتری
+if(v('days')>0){
+ const e=v('dailyKwh')*v('night')/100*v('days')/(v('dod')/100*v('bEff')/100);
+ h+=`<section style="margin-top:16px"><h2>باتری</h2><div class="kpis">
+ <div class="k"><b>${n(e)} kWh</b><span>ظرفیت اسمی لازم</span></div>
+ <div class="k"><b>${n(e*1000/v('bV'),0)} Ah</b><span>در ${v('bV')} ولت</span></div></div>
+ <div class="eq">C = E-night × days / (DoD × ηbat) = <em>${n(e)} kWh</em></div></section>`;
+}
+document.getElementById('out').innerHTML=h;
+}
+form.addEventListener('input',calc);calc();
+</script>
+</body>
+</html>

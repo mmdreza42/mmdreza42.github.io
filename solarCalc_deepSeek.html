@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماشین‌حساب طراحی سیستم خورشیدی آفگرید</title>
+    <link rel="stylesheet" href="assets/css/solarCalc.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔆 ماشین‌حساب طراحی سیستم خورشیدی آفگرید</h1>
+            <p>اطلاعات مورد نیاز را وارد کنید تا محاسبات به صورت زنده انجام شود.</p>
+        </header>
+
+        <main>
+            <!-- بخش ۱: اطلاعات مصرف -->
+            <section class="card">
+                <h2>۱. اطلاعات مصرف برق</h2>
+                <div class="input-group">
+                    <label for="dailyLoad">مصرف روزانه (وات‌ساعت - Wh):</label>
+                    <input type="number" id="dailyLoad" value="5000" step="100">
+                    <small>مجموع مصرف تمام وسایل برقی در طول ۲۴ ساعت.</small>
+                </div>
+                <div class="input-group">
+                    <label for="peakLoad">حداکثر بار همزمان (وات - W):</label>
+                    <input type="number" id="peakLoad" value="2000" step="100">
+                    <small>بیشترین توانی که در یک لحظه ممکن است مصرف شود.</small>
+                </div>
+            </section>
+
+            <!-- بخش ۲: اطلاعات اینورتر -->
+            <section class="card">
+                <h2>۲. اطلاعات اینورتر</h2>
+                <div class="input-group">
+                    <label for="invMinVoltage">حداقل ولتاژ ورودی اینورتر (V):</label>
+                    <input type="number" id="invMinVoltage" value="120" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="invMaxVoltage">حداکثر ولتاژ ورودی اینورتر (V):</label>
+                    <input type="number" id="invMaxVoltage" value="500" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="invMaxCurrent">حداکثر جریان ورودی اینورتر (A):</label>
+                    <input type="number" id="invMaxCurrent" value="30" step="1">
+                </div>
+            </section>
+
+            <!-- بخش ۳: اطلاعات پنل خورشیدی -->
+            <section class="card">
+                <h2>۳. اطلاعات پنل خورشیدی (ماژول)</h2>
+                <div class="input-group">
+                    <label for="panelPmax">توان نامی پنل (W):</label>
+                    <input type="number" id="panelPmax" value="550" step="10">
+                </div>
+                <div class="input-group">
+                    <label for="panelVoc">ولتاژ مدار باز (Voc) پنل (V):</label>
+                    <input type="number" id="panelVoc" value="49.5" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="panelVmp">ولتاژ نقطه حداکثر توان (Vmp) پنل (V):</label>
+                    <input type="number" id="panelVmp" value="41.8" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="panelImp">جریان نقطه حداکثر توان (Imp) پنل (A):</label>
+                    <input type="number" id="panelImp" value="13.15" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="tempCoeffVoc">ضریب دمایی Voc (%/°C):</label>
+                    <input type="number" id="tempCoeffVoc" value="-0.29" step="0.01">
+                    <small>مقدار معمول برای پنل‌های سیلیکونی: -0.25 تا -0.35</small>
+                </div>
+                <div class="input-group">
+                    <label for="tempCoeffVmp">ضریب دمایی Vmp (%/°C):</label>
+                    <input type="number" id="tempCoeffVmp" value="-0.35" step="0.01">
+                    <small>مقدار معمول برای پنل‌های سیلیکونی: -0.30 تا -0.45</small>
+                </div>
+            </section>
+
+            <!-- بخش ۴: شرایط محیطی و سیستم -->
+            <section class="card">
+                <h2>۴. شرایط محیطی و سیستم</h2>
+                <div class="input-group">
+                    <label for="minTemp">حداقل دمای محیط (°C):</label>
+                    <input type="number" id="minTemp" value="-5" step="1">
+                    <small>دمای سردترین روز سال.</small>
+                </div>
+                <div class="input-group">
+                    <label for="maxTemp">حداکثر دمای محیط (°C):</label>
+                    <input type="number" id="maxTemp" value="45" step="1">
+                    <small>دمای گرم‌ترین روز سال.</small>
+                </div>
+                <div class="input-group">
+                    <label for="psh">ساعات پیک آفتاب زمستانی (PSH):</label>
+                    <input type="number" id="psh" value="4" step="0.1">
+                    <small>مقدار PSH در بدترین ماه زمستان (بین ۲.۸ تا ۴.۸ در ایران).</small>
+                </div>
+                <div class="input-group">
+                    <label for="autonomyDays">روزهای استقلال (Days of Autonomy):</label>
+                    <input type="number" id="autonomyDays" value="2" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="systemLosses">تلفات کل سیستم (%):</label>
+                    <input type="number" id="systemLosses" value="25" step="1">
+                    <small>شامل تلفات کابل، اینورتر، باتری، گرد و غبار و دما.</small>
+                </div>
+            </section>
+
+            <!-- بخش ۵: اطلاعات باتری -->
+            <section class="card">
+                <h2>۵. اطلاعات باتری</h2>
+                <div class="input-group">
+                    <label for="batteryVoltage">ولتاژ نامی باتری (V):</label>
+                    <input type="number" id="batteryVoltage" value="48" step="12">
+                </div>
+                <div class="input-group">
+                    <label for="batteryDod">عمق دشارژ مجاز (DoD) (%):</label>
+                    <input type="number" id="batteryDod" value="80" step="5">
+                    <small>برای باتری لیتیوم ۸۰٪ و برای سرب-اسید ۵۰٪.</small>
+                </div>
+                <div class="input-group">
+                    <label for="batteryEfficiency">راندمان باتری (%):</label>
+                    <input type="number" id="batteryEfficiency" value="90" step="1">
+                </div>
+            </section>
+
+            <!-- بخش نتایج -->
+            <section class="card results-card">
+                <h2>📊 نتایج محاسبات</h2>
+                <div id="results">
+                    <!-- نتایج به صورت داینامیک اینجا نمایش داده می‌شوند -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="assets/scripts/SolarCalc.js"></script>
+</body>
+
+</html>

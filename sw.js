@@ -1,4 +1,4 @@
-const CACHE = "mmdreza-hub-v2"; // bump this whenever you change the file list
+const CACHE = "mmdreza-hub-v3"; // bump this whenever you change the file list
 const START = "./landing.html";
 
 const CORE = [
@@ -12,6 +12,7 @@ const CORE = [
   "./devops-qa.html",
   "./Game.html",
   "./solar_system_dark.html",
+  "./3D_Solar.html",
   "./manifest.json",
   "./favicon.ico",
   "./icons/icon-192.png",
